@@ -268,18 +268,13 @@ document.addEventListener('DOMContentLoaded', () => {
             if (e.key === 'Enter') searchParticipants();
         });
     }
-    // AI CHATBOT LOGIC (INTEGRATED WITH GROQ)
+    // AI CHATBOT LOGIC (SECURED VIA NETLIFY FUNCTIONS)
     const aiToggle = document.getElementById('aiToggle');
     const aiModal = document.getElementById('aiModal');
     const aiClose = document.getElementById('aiClose');
     const aiMessages = document.getElementById('aiMessages');
     const aiInput = document.getElementById('aiInput');
     const aiSend = document.getElementById('aiSend');
-    
-    // Splitting key to bypass basic static scanners (Still warn user about safety!)
-    const p1 = 'gsk_';
-    const p2 = 'Trpbac6kNVKQfW24DbXKWGdyb3FYjmxblreQpmmn33svQP4XfZoO';
-    const GROQ_API_KEY = p1 + p2;
 
     if (aiToggle) {
         aiToggle.addEventListener('click', () => {
@@ -315,28 +310,11 @@ document.addEventListener('DOMContentLoaded', () => {
         aiMessages.scrollTop = aiMessages.scrollHeight;
 
         try {
-            const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+            // PANGGILAN AMAN KE NETLIFY FUNCTION (BUKAN LANGSUNG KE GROQ)
+            const response = await fetch('/.netlify/functions/chat', {
                 method: 'POST',
-                headers: {
-                    'Authorization': `Bearer ${GROQ_API_KEY}`,
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    messages: [
-                        {
-                            role: "system",
-                            content: `Anda adalah Aura, AI Assistant resmi PORMIKI untuk Webinar Nasional 18. 
-                            Gaya bicara: Professional, Ramah (Sapa dengan Rekan PMIK), Solutif, dan Singkat.
-                            Topik: E-Card (ada di menu bawah), Sertifikat (di Resource Center 3-5 hari lagi), 
-                            Update Nama (Hubungi Admin 0813-1341-0714).
-                            Gunakan Bahasa Indonesia yang baik.`
-                        },
-                        { role: "user", content: text }
-                    ],
-                    model: "llama3-70b-8192",
-                    temperature: 0.7,
-                    max_tokens: 512
-                })
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message: text })
             });
 
             const data = await response.json();
@@ -348,13 +326,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 botMsg.innerHTML = data.choices[0].message.content.replace(/\n/g, '<br>');
                 aiMessages.appendChild(botMsg);
                 aiMessages.scrollTop = aiMessages.scrollHeight;
+            } else if (data.error) {
+                // Handle error dari function (misalnya API key belum diset)
+                throw new Error(data.error);
             }
 
         } catch (error) {
             aiMessages.removeChild(loadingMsg);
             const errorMsg = document.createElement('div');
             errorMsg.className = 'ai-msg bot';
-            errorMsg.textContent = 'Aura sedang beristirahat sebentar. Coba lagi nanti ya!';
+            errorMsg.textContent = error.message || 'Koneksi terganggu. Pastikan API Key sudah diset di Netlify!';
             aiMessages.appendChild(errorMsg);
         }
     };

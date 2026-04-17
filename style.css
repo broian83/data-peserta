@@ -241,30 +241,37 @@ main { padding: 1.5rem 1.25rem 8rem 1.25rem; flex: 1; }
 }
 .fab-help i { width: 18px; }
 
-/* CARD ACTIONS PREVIEW */
+/* CARD ACTIONS PREVIEW V3 */
 .actions-row {
-    display: flex; flex-direction: column; gap: 0.8rem; margin-top: 1.5rem;
-    padding: 0 1.25rem;
+    display: flex; flex-direction: column; gap: 0.85rem; margin-top: 0;
+    padding: 0 1.5rem;
 }
 .btn-action {
     width: 100%; display: flex; align-items: center; justify-content: center;
-    gap: 0.75rem; padding: 1rem; border-radius: 1.25rem;
-    font-size: 0.95rem; font-weight: 850; cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 10px 15px -3px rgba(0, 181, 165, 0.1);
+    gap: 0.85rem; padding: 1.15rem; border-radius: 1.5rem;
+    font-size: 1rem; font-weight: 850; cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     border: none;
 }
-.btn-action:active { transform: scale(0.96); opacity: 0.9; }
+.primary-action {
+    background: #1e293b; color: white;
+    box-shadow: 0 15px 30px -10px rgba(30, 41, 59, 0.3);
+}
+.secondary-action {
+    background: #ffffff; color: #1e293b;
+    border: 2px solid #e2e8f0;
+}
+.btn-action:active { transform: scale(0.94); }
 
 .btn-action-outline {
-    margin: 0.5rem 1.25rem 2rem 1.25rem;
+    margin: 1rem 1.5rem 3rem 1.5rem;
     display: flex; align-items: center; justify-content: center;
-    gap: 0.5rem; padding: 0.9rem; border-radius: 1.25rem;
-    font-size: 0.85rem; font-weight: 700; color: var(--text-muted);
-    background: #f1f5f9; border: 1.5px solid #e2e8f0;
-    cursor: pointer; transition: var(--transition);
+    gap: 0.5rem; padding: 1rem; border-radius: 1.5rem;
+    font-size: 0.85rem; font-weight: 800; color: #64748b;
+    background: transparent; border: 1px dashed #cbd5e1;
+    cursor: pointer; transition: all 0.3s ease;
 }
-.btn-action-outline:active { background: #e2e8f0; }
+.btn-action-outline:hover { background: #f8fafc; border-color: var(--primary); color: var(--primary); }
 
 /* UTIL */
 .hide-on-share { display: none !important; }

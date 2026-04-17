@@ -236,16 +236,16 @@ function displayResults(results) {
                         <span class="id-number">REG-ID: ${idPeserta}</span>
                         
                         <div class="actions-row">
-                            <button class="btn-action" style="background: linear-gradient(135deg, var(--primary), #00d1bd); color: white;" onclick="shareCard(this)">
-                                <i data-lucide="share-2" size="20"></i> Bagikan Ke WhatsApp
+                            <button class="btn-action primary-action" onclick="shareCard(this)">
+                                <i data-lucide="share-2" size="20"></i> Bagikan Ke Pesan
                             </button>
-                            <button class="btn-action" style="background: #f1f5f9; color: var(--text-main); border: 1.5px solid #e2e8f0;" onclick="window.print()">
-                                <i data-lucide="download-cloud" size="20"></i> Simpan File PDF
+                            <button class="btn-action secondary-action" onclick="window.print()">
+                                <i data-lucide="download-cloud" size="20"></i> Simpan Sebagai PDF
                             </button>
                         </div>
                         
                         <button class="btn-action-outline" onclick="navigator.clipboard.writeText('${idPeserta}'); alert('ID Disalin!')">
-                            <i data-lucide="copy" size="16"></i> ID Peserta: ${idPeserta} (Klik Salin)
+                            <i data-lucide="copy" size="16"></i> Salin ID: ${idPeserta}
                         </button>
                     </div>
                 </div>`;

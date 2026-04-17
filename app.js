@@ -51,6 +51,7 @@ function updateHomeInfo() {
 // VIEW SWITCHER
 function switchView(viewName) {
     const materiView = document.getElementById('materiView');
+    const profileView = document.getElementById('profileView');
     const viewTitle = document.getElementById('viewTitle');
     const navItems = document.querySelectorAll('.nav-item');
     const fab = document.getElementById('aiToggle') || document.querySelector('.fab-help');
@@ -58,6 +59,7 @@ function switchView(viewName) {
     if (homeView) homeView.style.display = 'none';
     if (ecardView) ecardView.style.display = 'none';
     if (materiView) materiView.style.display = 'none';
+    if (profileView) profileView.style.display = 'none';
     navItems.forEach(item => item.classList.remove('active'));
 
     if (viewName === 'home') {
@@ -79,6 +81,11 @@ function switchView(viewName) {
         }
         if (viewTitle) viewTitle.textContent = 'Pusat Materi Webinar';
         navItems[2].classList.add('active');
+        if (fab) fab.style.display = 'none';
+    } else if (viewName === 'profile') {
+        if (profileView) profileView.style.display = 'block';
+        if (viewTitle) viewTitle.textContent = 'Profil Saya';
+        navItems[3].classList.add('active');
         if (fab) fab.style.display = 'none';
     }
 

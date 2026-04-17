@@ -407,10 +407,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // 5. RESOURCE CENTER ENGINE
 const materiData = [
-    { title: "Komunikasi Profesional PMIK", speaker: "Dr. Budi Santoso", link: "#" },
-    { title: "Standardisasi RME 2024", speaker: "Siti Aminah, M.Kom", link: "#" },
-    { title: "Aspek Hukum Informasi Kesehatan", speaker: "Adv. Robertus Lee", link: "#" },
-    { title: "Audit Medis Berbasis Data", speaker: "Dra. Elly Risman", link: "#" }
+    { title: "Komunikasi Profesional PMIK", speaker: "Dr. Budi Santoso", type: "PDF", link: "#", icon: "file-text", size: "2.4 MB" },
+    { title: "Standardisasi RME 2024", speaker: "Siti Aminah, M.Kom", type: "PPTX", link: "#", icon: "presentation", size: "5.1 MB" },
+    { title: "Aspek Hukum Informasi Kesehatan", speaker: "Adv. Robertus Lee", type: "PDF", link: "#", icon: "file-text", size: "1.8 MB" },
+    { title: "Audit Medis Berbasis Data", speaker: "Dra. Elly Risman", type: "VIDEO", link: "#", icon: "video", size: "45 MB" }
 ];
 
 function renderMateri(filter = '') {
@@ -422,9 +422,16 @@ function renderMateri(filter = '') {
     );
     list.innerHTML = filtered.map(m => `
         <div class="materi-card">
+            <div class="materi-icon-wrap">
+                <i data-lucide="${m.icon}"></i>
+            </div>
             <div class="materi-info">
                 <h4>${m.title}</h4>
-                <span><i data-lucide="user"></i> ${m.speaker}</span>
+                <div class="materi-meta">
+                    <span><i data-lucide="user"></i> ${m.speaker}</span>
+                    <span class="m-type">${m.type}</span>
+                    <span class="m-type" style="background:transparent; padding:0;">${m.size}</span>
+                </div>
             </div>
             <a href="${m.link}" class="btn-download" title="Unduh">
                 <i data-lucide="download"></i>

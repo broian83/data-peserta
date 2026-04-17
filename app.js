@@ -31,15 +31,17 @@ function updateStats() {
 function updateHomeInfo() {
     const greetingEl = document.getElementById('greetingText');
     const dateEl = document.getElementById('currentDate');
-    
+
     if (!greetingEl || !dateEl) return;
-    
+
     const hour = new Date().getHours();
     let welcome = "Halo, Rekan PMIK! 👋";
-    if (hour >= 5 && hour < 11) welcome = "Selamat Pagi, Rekan! 🌅";
-    else if (hour >= 11 && hour < 15) welcome = "Selamat Siang, Rekan! ☀️";
-    else if (hour >= 15 && hour < 18) welcome = "Selamat Sore, Rekan! 🌇";
-    else welcome = "Selamat Malam, Rekan! 🌙";
+    if (hour >= 0 && hour < 3) welcome = "Selamat Dini Hari, Rekan PMIK! 🌌";
+    else if (hour >= 3 && hour < 5) welcome = "Selamat Subuh, Rekan PMIK! 🕌";
+    else if (hour >= 5 && hour < 11) welcome = "Selamat Pagi, Rekan PMIK! 🌅";
+    else if (hour >= 11 && hour < 15) welcome = "Selamat Siang, Rekan PMIK! ☀️";
+    else if (hour >= 15 && hour < 18) welcome = "Selamat Sore, Rekan PMIK! 🌇";
+    else welcome = "Selamat Malam, Rekan PMIK! 🌙";
     greetingEl.textContent = welcome;
 
     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
@@ -62,13 +64,13 @@ function switchView(viewName) {
         homeView.style.display = 'block';
         viewTitle.textContent = 'Portal Informasi PMIK';
         navItems[0].classList.add('active');
-        if(fab) fab.style.display = 'flex';
+        if (fab) fab.style.display = 'flex';
         updateHomeInfo();
     } else if (viewName === 'ecard') {
         if (ecardView) ecardView.style.display = 'block';
         if (viewTitle) viewTitle.textContent = 'Portal E-Card Peserta';
         navItems[1].classList.add('active');
-        if(fab) fab.style.display = 'none';
+        if (fab) fab.style.display = 'none';
         setTimeout(updateStats, 100);
     } else if (viewName === 'materi') {
         if (materiView) {
@@ -77,9 +79,9 @@ function switchView(viewName) {
         }
         if (viewTitle) viewTitle.textContent = 'Pusat Materi Webinar';
         navItems[2].classList.add('active');
-        if(fab) fab.style.display = 'none';
+        if (fab) fab.style.display = 'none';
     }
-    
+
     window.scrollTo({ top: 0, behavior: 'smooth' });
     lucide.createIcons();
 }
@@ -100,7 +102,7 @@ function searchParticipants() {
     const query = document.getElementById('emailSearch').value.toLowerCase().trim();
     const resultsContainer = document.getElementById('resultsContainer');
     const skeleton = document.getElementById('skeletonLoader');
-    
+
     if (!query) {
         resultsContainer.innerHTML = `
             <div class="welcome-card-new">
@@ -154,7 +156,7 @@ function getValueByPossibleKeys(obj, possibleKeys) {
 async function shareCard(btnElement) {
     const card = btnElement.closest('.virtual-card');
     const shareElements = card.querySelectorAll('.actions-row, .btn-action-outline');
-    
+
     const originalContent = btnElement.innerHTML;
     btnElement.innerHTML = '<i data-lucide="loader-2" class="animate-spin" size="16"></i> Tunggu...';
     lucide.createIcons();
@@ -218,7 +220,7 @@ function displayResults(results) {
             const email = getValueByPossibleKeys(p, ['Email', 'Email Address', 'Alamat Email', 'e-mail']) || '-';
             const instansi = getValueByPossibleKeys(p, ['Instansi', 'Organization', 'Workplace', 'Unit Kerja', 'Institusi', 'RS', 'Kantor', 'Institution / Workplace']) || '-';
             const phone = getValueByPossibleKeys(p, ['No HP', 'Phone', 'WhatsApp', 'Telepon', 'Mobile']) || '-';
-            
+
             const originalIndex = participants.indexOf(p);
             const idPeserta = (p.ID || p.id || p.No || (originalIndex !== -1 ? originalIndex + 1001 : index + 1001)).toString().padStart(6, '0');
 
@@ -268,7 +270,7 @@ document.addEventListener('DOMContentLoaded', () => {
     loadData();
     window.switchView = switchView; // Expose to global scope
     updateHomeInfo();
-    
+
     document.getElementById('searchBtn').addEventListener('click', searchParticipants);
     const searchInput = document.getElementById('searchInput');
     if (searchInput) {
@@ -337,7 +339,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             const data = await response.json();
-            
+
             // Hapus loading
             if (loadingMsg && loadingMsg.parentNode) loadingMsg.remove();
 
@@ -354,7 +356,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (error) {
             // Hapus loading
             if (loadingMsg && loadingMsg.parentNode) loadingMsg.remove();
-            
+
             const errorMsg = document.createElement('div');
             errorMsg.className = 'ai-msg bot';
             // Tampilkan pesan error yang lebih informatif
@@ -416,8 +418,8 @@ const materiData = [
 function renderMateri(filter = '') {
     const list = document.getElementById('materiList');
     if (!list) return;
-    const filtered = materiData.filter(m => 
-        m.title.toLowerCase().includes(filter.toLowerCase()) || 
+    const filtered = materiData.filter(m =>
+        m.title.toLowerCase().includes(filter.toLowerCase()) ||
         m.speaker.toLowerCase().includes(filter.toLowerCase())
     );
     list.innerHTML = filtered.map(m => `
@@ -461,7 +463,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (SpeechRecognition) {
                 const recognition = new SpeechRecognition();
                 recognition.lang = 'id-ID';
-                
+
                 voiceBtn.onclick = () => {
                     recognition.start();
                     voiceBtn.style.color = '#ff007b';

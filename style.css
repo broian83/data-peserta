@@ -308,5 +308,9 @@ main { padding: 1.5rem 1.25rem 8rem 1.25rem; flex: 1; }
 }
 
 @media print {
+    body { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    .view-section { padding: 0 !important; }
+    .ecard-container { margin: 0 !important; }
+    .virtual-card { border: none !important; box-shadow: none !important; }
     header, .top-bar, .bottom-nav, .actions-row, .btn-action-outline, .welcome-card-new, .info-grid, .hero-banner, .resource-section, .event-carousel, .section-header, .fab-help, .search-shortcut, .section-intro, .search-container-box, .stats-row { display: none !important; }
 }

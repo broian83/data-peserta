@@ -213,15 +213,19 @@ main { padding: 1.5rem 1.25rem 8rem 1.25rem; flex: 1; }
 .ecard-title { color: white; font-size: 0.75rem; font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase; }
 .avatar-container { width: 96px; height: 96px; background: white; border-radius: 50%; margin: -48px auto 1rem auto; display: flex; align-items: center; justify-content: center; border: 6px solid white; box-shadow: 0 10px 30px rgba(0,0,0,0.08); position: relative; z-index: 5;}
 .p-name { 
-    font-size: 1.75rem; color: #0f172a; font-weight: 900; 
-    margin-bottom: 0.75rem; padding: 0 1.5rem; line-height: 1.1;
-    letter-spacing: -0.02em; text-align: center;
+    font-size: 1.65rem; color: #0f172a; font-weight: 900; 
+    margin: 0 auto 0.75rem auto; 
+    padding: 0 1.25rem; line-height: 1.1;
+    letter-spacing: -0.01em; text-align: center;
+    word-wrap: break-word; overflow-wrap: break-word;
+    max-width: 100%; display: block;
 }
 .p-status {
-    background: #d9e021; color: #1a1a1a; padding: 0.5rem 1.25rem;
-    border-radius: 2rem; font-size: 0.7rem; font-weight: 900;
-    display: inline-block; margin: 0 auto 2rem auto; border: 1px solid rgba(0,0,0,0.05);
+    background: #d9e021; color: #1a1a1a; padding: 0.45rem 1.1rem;
+    border-radius: 2rem; font-size: 0.65rem; font-weight: 900;
+    display: table; margin: 0 auto 1.75rem auto; border: 1px solid rgba(0,0,0,0.05);
     text-transform: uppercase; letter-spacing: 1.5px;
+    text-align: center; white-space: nowrap;
 }
 
 .details-grid {
@@ -298,6 +302,10 @@ main { padding: 1.5rem 1.25rem 8rem 1.25rem; flex: 1; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes cardEntrance { from { opacity: 0; transform: translateY(30px) scale(0.95); } to { opacity: 1; transform: translateY(0); } }
 @keyframes bounceIn { from { opacity: 0; transform: scale(0.5); } to { opacity: 1; transform: scale(1); } }
+
+@media (max-width: 385px) {
+    .p-name { font-size: 1.45rem; }
+}
 
 @media print {
     header, .top-bar, .bottom-nav, .actions-row, .btn-action-outline, .welcome-card-new, .info-grid, .hero-banner, .resource-section, .event-carousel, .section-header, .fab-help, .search-shortcut, .section-intro, .search-container-box, .stats-row { display: none !important; }

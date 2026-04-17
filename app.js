@@ -89,7 +89,8 @@ function displayResults(results) {
             const email = getValueByPossibleKeys(p, ['Email', 'Email Address', 'Alamat Email', 'e-mail']) || '-';
             const instansi = getValueByPossibleKeys(p, ['Instansi', 'Organization', 'Workplace', 'Unit Kerja', 'Institusi', 'RS', 'Kantor', 'Instansi ']) || '-';
             const phone = getValueByPossibleKeys(p, ['No HP', 'Phone', 'WhatsApp', 'Telepon', 'Mobile', 'No HP ']) || '-';
-            const idPeserta = (p.ID || p.id || p.No || index + 1001).toString().padStart(6, '0');
+            const originalIndex = participants.indexOf(p);
+            const idPeserta = (p.ID || p.id || p.No || (originalIndex !== -1 ? originalIndex + 1001 : index + 1001)).toString().padStart(6, '0');
 
             const cardWrapper = document.createElement('div');
             cardWrapper.className = 'ecard-container';

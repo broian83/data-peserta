@@ -34,7 +34,6 @@ function updateHomeInfo() {
     
     if (!greetingEl || !dateEl) return;
     
-    // Greeting logic
     const hour = new Date().getHours();
     let welcome = "Halo, Rekan PMIK! 👋";
     if (hour >= 5 && hour < 11) welcome = "Selamat Pagi, Rekan! 🌅";
@@ -43,7 +42,6 @@ function updateHomeInfo() {
     else welcome = "Selamat Malam, Rekan! 🌙";
     greetingEl.textContent = welcome;
 
-    // Date logic
     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     dateEl.textContent = new Date().toLocaleDateString('id-ID', options);
 }
@@ -56,7 +54,6 @@ function switchView(viewName) {
     const navItems = document.querySelectorAll('.nav-item');
     const fab = document.getElementById('fabHelp');
 
-    // Reset visibility
     homeView.style.display = 'none';
     ecardView.style.display = 'none';
     navItems.forEach(item => item.classList.remove('active'));
@@ -71,7 +68,7 @@ function switchView(viewName) {
         ecardView.style.display = 'block';
         viewTitle.textContent = 'Portal E-Card Peserta';
         navItems[1].classList.add('active');
-        if(fab) fab.style.display = 'none'; // Hide FAB on search for focus
+        if(fab) fab.style.display = 'none';
         setTimeout(updateStats, 100);
     }
     
@@ -148,14 +145,14 @@ function getValueByPossibleKeys(obj, possibleKeys) {
 
 async function shareCard(btnElement) {
     const card = btnElement.closest('.virtual-card');
-    const shareElements = card.querySelectorAll('.hide-on-share');
+    const shareElements = card.querySelectorAll('.actions-row, .btn-action-outline');
     
     const originalContent = btnElement.innerHTML;
     btnElement.innerHTML = '<i data-lucide="loader-2" class="animate-spin" size="16"></i> Tunggu...';
     lucide.createIcons();
 
     try {
-        shareElements.forEach(el => el.style.display = 'none');
+        shareElements.forEach(el => el.style.setProperty('display', 'none', 'important'));
 
         const canvas = await html2canvas(card, {
             useCORS: true,
@@ -238,7 +235,7 @@ function displayResults(results) {
                         <div class="barcode-sim"></div>
                         <span class="id-number">REG-ID: ${idPeserta}</span>
                         
-                        <div class="actions-row hide-on-share">
+                        <div class="actions-row">
                             <button class="btn-action" style="background: var(--primary); color: white; border: none;" onclick="shareCard(this)">
                                 <i data-lucide="share-2" size="16"></i>Bagikan
                             </button>
@@ -247,7 +244,7 @@ function displayResults(results) {
                             </button>
                         </div>
                         
-                        <button class="btn-action-outline hide-on-share" onclick="navigator.clipboard.writeText('${idPeserta}'); alert('ID Disalin!')">
+                        <button class="btn-action-outline" onclick="navigator.clipboard.writeText('${idPeserta}'); alert('ID Disalin!')">
                             <i data-lucide="copy" size="16"></i> Salin ID Peserta
                         </button>
                     </div>

@@ -318,7 +318,9 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             const data = await response.json();
-            aiMessages.removeChild(loadingMsg);
+            
+            // Hapus loading dengan aman
+            if (loadingMsg && loadingMsg.parentNode) loadingMsg.remove();
 
             if (data.choices && data.choices[0]) {
                 const botMsg = document.createElement('div');
@@ -327,15 +329,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 aiMessages.appendChild(botMsg);
                 aiMessages.scrollTop = aiMessages.scrollHeight;
             } else if (data.error) {
-                // Handle error dari function (misalnya API key belum diset)
                 throw new Error(data.error);
             }
 
         } catch (error) {
-            aiMessages.removeChild(loadingMsg);
+            // Hapus loading dengan aman jika masih ada
+            if (loadingMsg && loadingMsg.parentNode) loadingMsg.remove();
+            
             const errorMsg = document.createElement('div');
             errorMsg.className = 'ai-msg bot';
-            errorMsg.textContent = error.message || 'Koneksi terganggu. Pastikan API Key sudah diset di Netlify!';
+            errorMsg.textContent = error.message.includes('API Key') 
+                ? 'Maaf, Aura belum siap. ' + error.message 
+                : 'Koneksi terganggu. Silakan coba lagi nanti!';
             aiMessages.appendChild(errorMsg);
         }
     };

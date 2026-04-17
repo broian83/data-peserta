@@ -239,7 +239,14 @@ button#searchBtn {
     text-align: center;
 }
 
-.p-name { font-size: 1.5rem; font-weight: 850; margin-bottom: 0.4rem; }
+.p-name { 
+    font-size: 1.5rem; 
+    font-weight: 850; 
+    margin-bottom: 0.4rem; 
+    word-spacing: 0.2rem;
+    white-space: pre-line;
+    line-height: 1.2;
+}
 .p-status {
     background: var(--secondary);
     color: #4d5700;

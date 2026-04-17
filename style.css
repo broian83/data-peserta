@@ -331,4 +331,25 @@ button#searchBtn {
 
 @media print {
     header, .search-box, .bottom-nav, .actions-row, .welcome-card { display: none !important; }
+    body { background: white !important; }
+    .app-container { box-shadow: none !important; border: none !important; max-width: none !important; width: 100% !important; }
+    .results-container { padding: 0 !important; display: flex !important; justify-content: center !important; align-items: flex-start !important; }
+    .ecard-container { margin: 0 auto !important; width: 400px !important; }
+    .virtual-card { 
+        box-shadow: none !important; 
+        border: 1px solid #eee !important;
+        -webkit-print-color-adjust: exact !important; 
+        print-color-adjust: exact !important;
+        color-adjust: exact !important;
+    }
+    .ecard-top { 
+        background-color: var(--primary) !important;
+        -webkit-print-color-adjust: exact !important; 
+        print-color-adjust: exact !important;
+    }
+    .p-status {
+        background-color: var(--secondary) !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
 }

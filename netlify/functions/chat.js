@@ -16,7 +16,7 @@ exports.handler = async (event) => {
   }
 
   try {
-    const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+    const groqResponse = await fetch('https://api.groq.com/openai/v1/chat/completions', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${apiKey}`,
@@ -40,7 +40,15 @@ exports.handler = async (event) => {
       })
     });
 
-    const data = await response.json();
+    const data = await groqResponse.json();
+
+    if (!groqResponse.ok) {
+      return {
+        statusCode: groqResponse.status,
+        body: JSON.stringify({ error: data.error?.message || 'Error dari Groq AI' })
+      };
+    }
+
     return {
       statusCode: 200,
       body: JSON.stringify(data)
@@ -48,7 +56,7 @@ exports.handler = async (event) => {
   } catch (error) {
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: 'Gagal menghubungi AI!' })
+      body: JSON.stringify({ error: 'Koneksi Server Gagal: ' + error.message })
     };
   }
 };

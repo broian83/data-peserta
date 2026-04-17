@@ -120,9 +120,14 @@ function displayResults(results) {
 
 // DIGITAL TOUR
 function initTour() {
+    if (localStorage.getItem('pormiki_tour_seen')) return;
+
     const driver = window.driver.js.driver;
     const driverObj = driver({
         showProgress: true,
+        onDestroyed: () => {
+            localStorage.setItem('pormiki_tour_seen', 'true');
+        },
         steps: [
             { element: '#tour-logo', popover: { title: 'Selamat Datang!', description: 'Ini adalah Portal Webinar PORMIKI. Ayo kita keliling sebentar!', side: "bottom", align: 'start' } },
             { element: '#totalStats', popover: { title: 'Statistik Peserta', description: 'Jumlah total peserta yang sudah terdaftar dalam sistem.', side: "bottom", align: 'start' } },
@@ -132,10 +137,8 @@ function initTour() {
         ]
     });
 
-    const startTourBtn = document.getElementById('startTour');
-    if (startTourBtn) {
-        startTourBtn.addEventListener('click', () => driverObj.drive());
-    }
+    // Auto start after 1.5s delay
+    setTimeout(() => driverObj.drive(), 1500);
 }
 
 // Initializations

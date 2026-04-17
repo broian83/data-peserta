@@ -310,16 +310,22 @@ document.addEventListener('DOMContentLoaded', () => {
         aiMessages.scrollTop = aiMessages.scrollHeight;
 
         try {
-            // PANGGILAN AMAN KE NETLIFY FUNCTION (BUKAN LANGSUNG KE GROQ)
+            // PANGGILAN AMAN KE NETLIFY FUNCTION
             const response = await fetch('/.netlify/functions/chat', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ message: text })
             });
 
+            // Cek jika respon server bermasalah (misal 500)
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({}));
+                throw new Error(errorData.error || `Server Error (${response.status})`);
+            }
+
             const data = await response.json();
             
-            // Hapus loading dengan aman
+            // Hapus loading
             if (loadingMsg && loadingMsg.parentNode) loadingMsg.remove();
 
             if (data.choices && data.choices[0]) {
@@ -328,19 +334,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 botMsg.innerHTML = data.choices[0].message.content.replace(/\n/g, '<br>');
                 aiMessages.appendChild(botMsg);
                 aiMessages.scrollTop = aiMessages.scrollHeight;
-            } else if (data.error) {
-                throw new Error(data.error);
             }
 
         } catch (error) {
-            // Hapus loading dengan aman jika masih ada
+            // Hapus loading
             if (loadingMsg && loadingMsg.parentNode) loadingMsg.remove();
             
             const errorMsg = document.createElement('div');
             errorMsg.className = 'ai-msg bot';
-            errorMsg.textContent = error.message.includes('API Key') 
-                ? 'Maaf, Aura belum siap. ' + error.message 
-                : 'Koneksi terganggu. Silakan coba lagi nanti!';
+            // Tampilkan pesan error yang lebih informatif
+            if (error.message.includes('API Key')) {
+                errorMsg.innerHTML = '🛡️ <strong>Aura:</strong> Mohon maaf, API Key belum dikonfigurasi di Netlify Dashboard. Segera hubungi Admin Anda!';
+            } else {
+                errorMsg.textContent = '⚠️ Maaf, terjadi gangguan teknis: ' + error.message;
+            }
             aiMessages.appendChild(errorMsg);
         }
     };

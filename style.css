@@ -28,7 +28,7 @@
     background: linear-gradient(90deg, var(--primary), #00d2c1);
     color: white; padding: 0.6rem 1rem;
     display: flex; justify-content: space-between; align-items: center;
-    position: sticky; top: 0; z-index: 2000; font-size: 0.8rem;
+    position: relative; z-index: 2000; font-size: 0.8rem;
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
 .announcement-content {

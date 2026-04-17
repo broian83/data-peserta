@@ -262,7 +262,74 @@ document.addEventListener('DOMContentLoaded', () => {
     updateHomeInfo();
     
     document.getElementById('searchBtn').addEventListener('click', searchParticipants);
-    document.getElementById('emailSearch').addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') searchParticipants();
+    const searchInput = document.getElementById('searchInput');
+    if (searchInput) {
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') searchParticipants();
+        });
+    }
+    // AI CHATBOT LOGIC
+    const aiToggle = document.getElementById('aiToggle');
+    const aiModal = document.getElementById('aiModal');
+    const aiClose = document.getElementById('aiClose');
+    const aiMessages = document.getElementById('aiMessages');
+    const aiInput = document.getElementById('aiInput');
+    const aiSend = document.getElementById('aiSend');
+
+    if (aiToggle) {
+        aiToggle.addEventListener('click', () => {
+            aiModal.classList.add('active');
+            if (aiMessages.children.length <= 1) {
+                setTimeout(() => {
+                    const welcome = document.createElement('div');
+                    welcome.className = 'ai-msg bot';
+                    welcome.innerHTML = 'Gunakan fitur <strong>Pencarian</strong> di menu E-Card dengan mengetik Nama Lengkap Anda ya! Ada lagi yang bisa saya bantu?';
+                    aiMessages.appendChild(welcome);
+                    aiMessages.scrollTop = aiMessages.scrollHeight;
+                }, 1000);
+            }
+        });
+    }
+
+    if (aiClose) aiClose.addEventListener('click', () => aiModal.classList.remove('active'));
+
+    const handleSendMessage = () => {
+        const text = aiInput.value.trim();
+        if (!text) return;
+
+        const userMsg = document.createElement('div');
+        userMsg.className = 'ai-msg user';
+        userMsg.textContent = text;
+        aiMessages.appendChild(userMsg);
+        aiInput.value = '';
+        aiMessages.scrollTop = aiMessages.scrollHeight;
+
+        setTimeout(() => {
+            const botMsg = document.createElement('div');
+            botMsg.className = 'ai-msg bot';
+            const lowText = text.toLowerCase();
+            
+            if (lowText.includes('ecard') || lowText.includes('cari')) {
+                botMsg.innerHTML = 'Pilih menu <strong>E-Card</strong>, masukkan nama Anda, lalu klik Cari. Gampang kan? 😊';
+            } else if (lowText.includes('sertifikat')) {
+                botMsg.innerHTML = 'Sertifikat biasanya tersedia di <strong>Resource Center</strong> beberapa hari setelah acara. Stay tuned!';
+            } else if (lowText.includes('update') || lowText.includes('data')) {
+                botMsg.innerHTML = 'Hubungi admin di <strong>081313410714</strong> untuk koreksi data ya!';
+            } else {
+                botMsg.innerHTML = 'Aura belum mengerti. Coba tanya "Cara cari E-Card" atau klik tombol bantuan di bawah!';
+            }
+            aiMessages.appendChild(botMsg);
+            aiMessages.scrollTop = aiMessages.scrollHeight;
+        }, 800);
+    };
+
+    window.askAI = (q) => {
+        aiInput.value = q;
+        handleSendMessage();
+    };
+
+    if (aiSend) aiSend.addEventListener('click', handleSendMessage);
+    if (aiInput) aiInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') handleSendMessage();
     });
 });

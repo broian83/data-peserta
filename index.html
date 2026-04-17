@@ -225,11 +225,39 @@
             </a>
         </nav>
 
-        <!-- FLOATING ACTION BUTTON -->
-        <a href="https://wa.me/62812345678" target="_blank" class="fab-help">
+        <!-- PORMIKI AI BUTTON -->
+        <button class="fab-help" id="aiToggle">
             <i data-lucide="message-square"></i>
-            <span>Bantuan</span>
-        </a>
+            <span>Tanya AI</span>
+        </button>
+
+        <!-- AI CHATMODAL -->
+        <div class="ai-chat-modal" id="aiModal">
+            <div class="ai-chat-header">
+                <div class="ai-status">
+                    <div class="ai-avatar">AI</div>
+                    <div class="ai-details">
+                        <strong>PORMIKI Assistant</strong>
+                        <span>Online • Aura Siap Membantu</span>
+                    </div>
+                </div>
+                <button class="ai-close" id="aiClose"><i data-lucide="x"></i></button>
+            </div>
+            <div class="ai-chat-body" id="aiMessages">
+                <div class="ai-msg bot">
+                    Halo Rekan Perekam Medis! 👋 Saya **Aura**, asisten virtual Anda. Ada yang bisa saya bantu terkait E-Card atau info Webinar?
+                </div>
+            </div>
+            <div class="ai-quick-replies" id="aiQuick">
+                <button onclick="askAI('Cara cari E-Card?')">E-Card</button>
+                <button onclick="askAI('Sertifikat belum ada?')">Sertifikat</button>
+                <button onclick="askAI('Update Profil?')">Update Data</button>
+            </div>
+            <div class="ai-chat-footer">
+                <input type="text" id="aiInput" placeholder="Ketik pesan Anda...">
+                <button id="aiSend"><i data-lucide="send"></i></button>
+            </div>
+        </div>
     </div>
 
     <script src="app.js"></script>

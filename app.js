@@ -45,7 +45,18 @@ function searchParticipants() {
     const skeleton = document.getElementById('skeletonLoader');
     
     if (!query) {
-        resultsContainer.innerHTML = `<div class="empty-state"><i data-lucide="mail-search" size="48"></i><p>Silakan masukkan alamat email lengkap Anda</p></div>`;
+        resultsContainer.innerHTML = `<div class="welcome-card">
+                    <div class="welcome-icon">
+                        <img src="https://pormiki.or.id/wp-content/uploads/2025/07/logo-dpp-transparan-Tanpa-Nama-2019-2048x1872.png" alt="PORMIKI" style="width: 80%; height: auto;">
+                    </div>
+                    <h3>Siap Mencari?</h3>
+                    <p>Masukkan email yang terdaftar untuk menemukan E-Card dan ID Peserta Anda.</p>
+                    <div class="step-guide">
+                        <span><i data-lucide="check-circle-2"></i> Ketik Email</span>
+                        <span><i data-lucide="check-circle-2"></i> Klik Cari</span>
+                        <span><i data-lucide="check-circle-2"></i> Unduh Kartu</span>
+                    </div>
+                </div>`;
         lucide.createIcons();
         return;
     }
@@ -68,13 +79,61 @@ function searchParticipants() {
 function getValueByPossibleKeys(obj, possibleKeys) {
     for (let key of possibleKeys) {
         if (obj[key] !== undefined && obj[key] !== null && obj[key] !== "") return obj[key];
-        // Check for keys with trailing/leading spaces (common in spreadsheet exports)
         const trimmedKey = key.trim();
         for (let actualKey in obj) {
             if (actualKey.trim() === trimmedKey && obj[actualKey] !== "") return obj[actualKey];
         }
     }
     return null;
+}
+
+// SHARE CARD LOGIC
+async function shareCard(btnElement) {
+    const card = btnElement.closest('.virtual-card');
+    const actions = card.querySelector('.actions-row');
+    const outlineBtn = card.querySelector('.btn-action-outline');
+    
+    // Temporarily hide buttons for clean capture
+    if(actions) actions.style.visibility = 'hidden';
+    if(outlineBtn) outlineBtn.style.visibility = 'hidden';
+    
+    btnElement.innerHTML = '<i data-lucide="loader-2" class="animate-spin" size="16"></i> Tunggu...';
+    lucide.createIcons();
+
+    try {
+        const canvas = await html2canvas(card, {
+            useCORS: true,
+            scale: 2,
+            backgroundColor: '#ffffff',
+            borderRadius: 32
+        });
+
+        const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
+        const file = new File([blob], 'Kartu-Peserta-PORMIKI.png', { type: 'image/png' });
+
+        if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
+            await navigator.share({
+                files: [file],
+                title: 'Kartu Peserta Webinar PORMIKI',
+                text: 'Saya sudah terdaftar di Webinar PORMIKI! Cek juga milikmu.'
+            });
+        } else {
+            // Fallback: Download
+            const link = document.createElement('a');
+            link.href = canvas.toDataURL('image/png');
+            link.download = 'Kartu-Peserta-PORMIKI.png';
+            link.click();
+            alert('Gambar berhasil diunduh! Silakan bagikan ke WhatsApp Status Anda.');
+        }
+    } catch (err) {
+        console.error('Error sharing:', err);
+        alert('Maaf, gagal memproses gambar. Silakan gunakan tombol Simpan/Screenshot manual.');
+    } finally {
+        if(actions) actions.style.visibility = 'visible';
+        if(outlineBtn) outlineBtn.style.visibility = 'visible';
+        btnElement.innerHTML = '<i data-lucide="share-2" size="16"></i> Bagikan';
+        lucide.createIcons();
+    }
 }
 
 function displayResults(results) {
@@ -106,25 +165,19 @@ function displayResults(results) {
                         <h2 class="p-name">${name}</h2>
                         <span class="p-status">PARTICIPANT</span>
                         <div class="details-grid">
-                            <div class="detail-row">
-                                <span class="detail-label">Email Address</span>
-                                <span class="detail-value">${email}</span>
-                            </div>
-                            <div class="detail-row">
-                                <span class="detail-label">Institution / Workplace</span>
-                                <span class="detail-value">${instansi}</span>
-                            </div>
-                            <div class="detail-row">
-                                <span class="detail-label">WhatsApp Number</span>
-                                <span class="detail-value">${phone}</span>
-                            </div>
+                            <div class="detail-row"><span class="detail-label">Email Address</span><span class="detail-value">${email}</span></div>
+                            <div class="detail-row"><span class="detail-label">Institution / Workplace</span><span class="detail-value">${instansi}</span></div>
+                            <div class="detail-row"><span class="detail-label">WhatsApp Number</span><span class="detail-value">${phone}</span></div>
                         </div>
                         <div class="barcode-sim"></div>
                         <span class="id-number">REG-ID: ${idPeserta}</span>
                         <div class="actions-row">
+                            <button class="btn-action" style="background: var(--primary); color: white; border: none;" onclick="shareCard(this)"><i data-lucide="share-2" size="16"></i>Bagikan</button>
                             <button class="btn-action" onclick="window.print()"><i data-lucide="download" size="16"></i>Simpan</button>
-                            <button class="btn-action" onclick="navigator.clipboard.writeText('${idPeserta}'); alert('ID Disalin!')"><i data-lucide="copy" size="16"></i>Salin ID</button>
                         </div>
+                        <button class="btn-action-outline" onclick="navigator.clipboard.writeText('${idPeserta}'); alert('ID Disalin!')">
+                            <i data-lucide="copy" size="16"></i> Salin ID Peserta
+                        </button>
                     </div>
                 </div>`;
             container.appendChild(cardWrapper);

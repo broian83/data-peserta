@@ -290,6 +290,31 @@ button#searchBtn {
     justify-content: center;
     gap: 0.5rem;
     cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-action-outline {
+    width: 100%;
+    margin-top: 0.75rem;
+    padding: 0.8rem;
+    border-radius: 1rem;
+    border: 1.5px solid var(--border-color);
+    background: transparent;
+    color: var(--text-muted);
+    font-weight: 700;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-action-outline:hover {
+    background: #f8fafc;
+    color: var(--primary);
+    border-color: var(--primary);
 }
 
 .empty-state {

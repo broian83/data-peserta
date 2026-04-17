@@ -278,6 +278,23 @@ document.addEventListener('DOMContentLoaded', () => {
             if (e.key === 'Enter') searchParticipants();
         });
     }
+
+    // PWA & NOTIFICATION SYSTEM
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js')
+            .then(reg => console.log('SW Registered!', reg))
+            .catch(err => console.error('SW Registration Failed!', err));
+    }
+
+    // Request Notification Permission
+    if ('Notification' in window) {
+        Notification.requestPermission().then(permission => {
+            if (permission === 'granted') {
+                console.log('Notification permission granted.');
+            }
+        });
+    }
+
     // AI CHATBOT LOGIC (SECURED VIA NETLIFY FUNCTIONS)
     const aiToggle = document.getElementById('aiToggle');
     const aiModal = document.getElementById('aiModal');

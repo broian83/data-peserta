@@ -149,7 +149,7 @@ function displayResults(results) {
                     </div>
                     <div class="ecard-body">
                         <div class="avatar-container">
-                            <i data-lucide="user" size="48"></i>
+                            <img src="https://pormiki.or.id/wp-content/uploads/2025/07/logo-dpp-transparan-Tanpa-Nama-2019-2048x1872.png" alt="Logo PORMIKI" style="width: 70%; height: auto;">
                         </div>
                         <h2 class="p-name">${name}</h2>
                         <span class="p-status">PARTICIPANT</span>

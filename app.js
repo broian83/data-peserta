@@ -73,7 +73,7 @@ function searchParticipants() {
         skeleton.style.display = 'none';
         if (filtered.length > 0) runCelebration();
         displayResults(filtered);
-    }, 400); // Faster search
+    }, 400);
 }
 
 function getValueByPossibleKeys(obj, possibleKeys) {
@@ -92,13 +92,11 @@ async function shareCard(btnElement) {
     const actions = card.querySelector('.actions-row');
     const outlineBtn = card.querySelector('.btn-action-outline');
     
-    // UI state for loading
     const originalContent = btnElement.innerHTML;
     btnElement.innerHTML = '<i data-lucide="loader-2" class="animate-spin" size="16"></i> Tunggu...';
     lucide.createIcons();
 
     try {
-        // Prepare card for image capture (Hide buttons)
         if(actions) actions.style.display = 'none';
         if(outlineBtn) outlineBtn.style.display = 'none';
 
@@ -107,7 +105,15 @@ async function shareCard(btnElement) {
             allowTaint: true,
             scale: 2,
             backgroundColor: '#ffffff',
-            logging: false
+            logging: false,
+            // Force spaces to render correctly by avoiding letter-spacing issues during capture
+            onclone: (clonedDoc) => {
+                const clonedName = clonedDoc.querySelector('.p-name');
+                if (clonedName) {
+                    clonedName.style.letterSpacing = 'normal';
+                    clonedName.style.wordSpacing = '4px';
+                }
+            }
         });
 
         const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
@@ -130,7 +136,6 @@ async function shareCard(btnElement) {
         console.error('Error sharing:', err);
         alert('Gagal membagikan gambar. Silakan coba simpan secara manual atau screenshot.');
     } finally {
-        // Restore UI
         if(actions) actions.style.display = 'flex';
         if(outlineBtn) outlineBtn.style.display = 'flex';
         btnElement.innerHTML = originalContent;
@@ -146,8 +151,11 @@ function displayResults(results) {
         container.innerHTML = `<div class="empty-state"><i data-lucide="user-x" size="64"></i><p>Alamat email tidak terdaftar.<br>Pastikan email sudah sesuai.</p></div>`;
     } else {
         results.forEach((p, index) => {
-            // Updated mappings to prioritize "Nama Anggota"
-            const name = getValueByPossibleKeys(p, ['Nama Anggota', 'Nama', 'Full Name', 'Nama Lengkap', 'Name', 'Lengkap']) || 'Peserta Webinar';
+            // Parse name and replace multiple spaces with non-breaking spaces for safe rendering
+            let rawName = getValueByPossibleKeys(p, ['Nama Anggota', 'Nama', 'Full Name', 'Nama Lengkap', 'Name', 'Lengkap']) || 'Peserta Webinar';
+            const cleanName = rawName.trim().replace(/\s+/g, ' ');
+            const htmlName = cleanName.split(' ').join('&nbsp;');
+
             const email = getValueByPossibleKeys(p, ['Email', 'Email Address', 'Alamat Email', 'e-mail']) || '-';
             const instansi = getValueByPossibleKeys(p, ['Instansi', 'Organization', 'Workplace', 'Unit Kerja', 'Institusi', 'RS', 'Kantor', 'Institution / Workplace']) || '-';
             const phone = getValueByPossibleKeys(p, ['No HP', 'Phone', 'WhatsApp', 'Telepon', 'Mobile']) || '-';
@@ -166,7 +174,7 @@ function displayResults(results) {
                         <div class="avatar-container">
                             <img src="pormiki-logo.png" alt="PORMIKI" style="width: 70%; height: auto;">
                         </div>
-                        <h2 class="p-name">${name}</h2>
+                        <h2 class="p-name">${htmlName}</h2>
                         <span class="p-status">PARTICIPANT</span>
                         <div class="details-grid">
                             <div class="detail-row"><span class="detail-label">Email Address</span><span class="detail-value">${email}</span></div>

@@ -241,10 +241,11 @@ button#searchBtn {
 
 .p-name { 
     font-size: 1.5rem; 
-    font-weight: 850; 
+    font-weight: 800; 
     margin-bottom: 0.4rem; 
-    word-spacing: 0.2rem;
-    white-space: pre-line;
+    letter-spacing: 0.015em;
+    word-spacing: 0.25rem;
+    white-space: nowrap;
     line-height: 1.2;
 }
 .p-status {

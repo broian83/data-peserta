@@ -27,20 +27,25 @@ function updateStats() {
     }
 }
 
-// SMART GREETING
-function updateGreeting() {
+// SMART GREETING & DATE
+function updateHomeInfo() {
     const greetingEl = document.getElementById('greetingText');
-    if (!greetingEl) return;
+    const dateEl = document.getElementById('currentDate');
     
+    if (!greetingEl || !dateEl) return;
+    
+    // Greeting logic
     const hour = new Date().getHours();
     let welcome = "Halo, Rekan PMIK! 👋";
-    
     if (hour >= 5 && hour < 11) welcome = "Selamat Pagi, Rekan! 🌅";
     else if (hour >= 11 && hour < 15) welcome = "Selamat Siang, Rekan! ☀️";
     else if (hour >= 15 && hour < 18) welcome = "Selamat Sore, Rekan! 🌇";
     else welcome = "Selamat Malam, Rekan! 🌙";
-    
     greetingEl.textContent = welcome;
+
+    // Date logic
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    dateEl.textContent = new Date().toLocaleDateString('id-ID', options);
 }
 
 // VIEW SWITCHER
@@ -49,6 +54,7 @@ function switchView(viewName) {
     const ecardView = document.getElementById('ecardView');
     const viewTitle = document.getElementById('viewTitle');
     const navItems = document.querySelectorAll('.nav-item');
+    const fab = document.getElementById('fabHelp');
 
     // Reset visibility
     homeView.style.display = 'none';
@@ -59,11 +65,13 @@ function switchView(viewName) {
         homeView.style.display = 'block';
         viewTitle.textContent = 'Portal Informasi PMIK';
         navItems[0].classList.add('active');
-        updateGreeting();
+        if(fab) fab.style.display = 'flex';
+        updateHomeInfo();
     } else if (viewName === 'ecard') {
         ecardView.style.display = 'block';
         viewTitle.textContent = 'Portal E-Card Peserta';
         navItems[1].classList.add('active');
+        if(fab) fab.style.display = 'none'; // Hide FAB on search for focus
         setTimeout(updateStats, 100);
     }
     
@@ -244,7 +252,7 @@ function displayResults(results) {
 document.addEventListener('DOMContentLoaded', () => {
     loadData();
     window.switchView = switchView; // Expose to global scope
-    updateGreeting();
+    updateHomeInfo();
     
     document.getElementById('searchBtn').addEventListener('click', searchParticipants);
     document.getElementById('emailSearch').addEventListener('keypress', (e) => {

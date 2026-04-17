@@ -4,13 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Webinar Participant Search</title>
+    <title>PORMIKI APPS - Portal PMIK</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="stylesheet" href="style.css">
-    <!-- Driver.js for Digital Tour -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/driver.js@1.0.1/dist/driver.css" />
     <script src="https://cdn.jsdelivr.net/npm/driver.js@1.0.1/dist/driver.js.iife.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -46,15 +45,28 @@
             <section id="homeView" class="view-section active">
                 <div class="hero-banner">
                     <div class="hero-content">
+                        <div class="hero-top-info">
+                            <span id="currentDate" class="date-badge">Memuat Tanggal...</span>
+                        </div>
                         <h2 id="greetingText">Halo, Rekan PMIK! 👋</h2>
                         <p>Wujudkan digitalisasi kesehatan yang akurat dan profesional bersama PORMIKI.</p>
                     </div>
                 </div>
 
-                <!-- NEW: UPCOMING EVENTS CAROUSEL -->
+                <!-- QUICK SEARCH SHORTCUT -->
+                <div class="search-shortcut" onclick="switchView('ecard')">
+                    <div class="ss-icon"><i data-lucide="search"></i></div>
+                    <div class="ss-text">
+                        <strong>Cari E-Card Peserta</strong>
+                        <span>Klik di sini untuk cek ID & Sertifikat</span>
+                    </div>
+                    <i data-lucide="chevron-right" class="ss-arrow"></i>
+                </div>
+
+                <!-- UPCOMING EVENTS CAROUSEL -->
                 <div class="section-header">
                     <h3>Agenda Mendatang</h3>
-                    <a href="#" class="see-all">Lihat Semua</a>
+                    <a href="https://lms.kemkes.go.id" target="_blank" class="see-all">Ke LMS</a>
                 </div>
                 <div class="event-carousel">
                     <!-- Webinar 1 -->
@@ -66,7 +78,6 @@
                             <span>Daftar melalui LMS Kemkes</span>
                         </div>
                     </a>
-                    
                     <!-- Webinar 2 -->
                     <a href="https://lms.kemkes.go.id/courses/a79f23f4-78d6-408e-a7a5-b3722b356d2a" target="_blank" class="event-card">
                         <div class="event-tag">WEBINAR</div>
@@ -79,19 +90,19 @@
                 </div>
 
                 <div class="info-grid">
-                    <div class="info-card">
+                    <div class="info-card" onclick="alert('Panduan Etika sedang dalam pembaruan')">
                         <div class="ic-icon"><i data-lucide="shield-check"></i></div>
                         <h4>Etika Profesi</h4>
-                        <p>Panduan standar perilaku PMIK.</p>
+                        <p>Panduan perilaku PMIK.</p>
                     </div>
-                    <div class="info-card">
+                    <div class="info-card" onclick="alert('Detail STR sedang dalam pembaruan')">
                         <div class="ic-icon gold"><i data-lucide="award"></i></div>
                         <h4>STR & SKP</h4>
                         <p>Update tata cara LMS.</p>
                     </div>
                 </div>
 
-                <!-- NEW: RESOURCE CENTER -->
+                <!-- RESOURCE CENTER -->
                 <div class="resource-section">
                     <h3>Pusat Unduhan (PDF)</h3>
                     <div class="resource-list">
@@ -114,10 +125,14 @@
                     </div>
                 </div>
 
-                <div class="quick-links">
+                <div class="quick-links" style="margin-top: 1rem;">
                     <a href="https://pormiki.or.id" target="_blank" class="q-link">
                         <i data-lucide="layout"></i>
-                        <span>Web DPP</span>
+                        <span>Website DPP</span>
+                    </a>
+                    <a href="https://lms.kemkes.go.id" target="_blank" class="q-link">
+                        <i data-lucide="graduation-cap"></i>
+                        <span>LMS Kemkes</span>
                     </a>
                 </div>
             </section>
@@ -170,23 +185,24 @@
                 <i data-lucide="credit-card"></i>
                 <span>E-Card</span>
             </a>
-            <a href="https://us06web.zoom.us/j/81033258483?pwd=8G4Bxg9aaRnvZHbI2yOqiCXQFechbh.1" target="_blank"
-                class="nav-item">
+            <a href="https://us06web.zoom.us/j/81033258483?pwd=8G4Bxg9aaRnvZHbI2yOqiCXQFechbh.1" target="_blank" class="nav-item">
                 <i data-lucide="video"></i>
                 <span>Zoom</span>
             </a>
-            <a href="https://lms.kemkes.go.id/courses/a79f23f4-78d6-408e-a7a5-b3722b356d2a" target="_blank"
-                class="nav-item">
-                <i data-lucide="graduation-cap"></i>
-                <span>LMS</span>
+            <a href="https://pormiki.or.id" target="_blank" class="nav-item">
+                <i data-lucide="globe"></i>
+                <span>Portal</span>
             </a>
         </nav>
+
+        <!-- FLOATING ACTION BUTTON -->
+        <a href="https://wa.me/62812345678" target="_blank" class="fab-help">
+            <i data-lucide="message-square"></i>
+            <span>Bantuan</span>
+        </a>
     </div>
 
     <script src="app.js"></script>
-    <script>
-        lucide.createIcons();
-    </script>
+    <script>lucide.createIcons();</script>
 </body>
-
 </html>

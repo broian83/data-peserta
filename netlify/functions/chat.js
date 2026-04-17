@@ -1,5 +1,4 @@
-const fetch = require('node-fetch');
-
+// Menggunakan native fetch (tersedia di Node 18+)
 exports.handler = async (event) => {
   // Hanya izinkan metode POST
   if (event.httpMethod !== 'POST') {

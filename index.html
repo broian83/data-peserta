@@ -146,15 +146,32 @@
 
             <!-- E-CARD VIEW (SEARCH) -->
             <section id="ecardView" class="view-section" style="display: none;">
-                <div class="search-box">
-                    <i data-lucide="search" class="search-icon"></i>
-                    <input type="email" id="emailSearch" placeholder="Masukkan alamat email..." autocomplete="email">
-                    <button id="searchBtn">Cari</button>
+                <!-- SEARCH HEADER -->
+                <div class="section-intro" style="margin-bottom: 1.5rem;">
+                    <h2 style="font-size: 1.4rem; font-weight: 850; margin-bottom: 0.5rem;">Cari E-Card Anda</h2>
+                    <p style="font-size: 0.85rem; color: var(--text-muted);">Temukan Kartu Peserta dan akses Sertifikat Webinar Anda di sini.</p>
                 </div>
 
-                <div class="participant-badge" style="margin-bottom: 2rem;">
-                    <i data-lucide="users" size="16"></i>
-                    <span id="totalStats">Memuat data...</span>
+                <div class="search-container-box">
+                    <div class="search-input-wrapper">
+                        <i data-lucide="mail" class="si-icon"></i>
+                        <input type="email" id="emailSearch" placeholder="Ketik alamat email Anda..." autocomplete="email">
+                    </div>
+                    <button id="searchBtn" class="search-action-btn">
+                        <i data-lucide="search" size="18"></i>
+                        <span>Cari</span>
+                    </button>
+                </div>
+
+                <div class="stats-row" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                    <div class="participant-badge">
+                        <i data-lucide="verified" size="14"></i>
+                        <span id="totalStats">Memuat...</span>
+                    </div>
+                    <div class="support-badge" onclick="switchView('home')" style="font-size: 0.72rem; color: var(--primary); font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 0.4rem;">
+                        <i data-lucide="info" size="14"></i>
+                        <span>Butuh Bantuan?</span>
+                    </div>
                 </div>
 
                 <div id="skeletonLoader" class="skeleton-card" style="display: none;">
@@ -162,20 +179,26 @@
                     <div class="s-line"></div>
                     <div class="s-line"></div>
                     <div class="s-line short"></div>
-                    <div class="s-footer"></div>
                 </div>
 
                 <div id="resultsContainer" class="results-container">
-                    <div class="welcome-card">
-                        <div class="welcome-icon">
-                            <img src="pormiki-logo.png" alt="PORMIKI" style="width: 80%; height: auto;">
+                    <div class="welcome-card-new">
+                        <div class="welcome-illustration">
+                            <img src="pormiki-logo.png" alt="PORMIKI">
                         </div>
-                        <h3>E-Card Peserta</h3>
-                        <p>Cari email Anda untuk mendapatkan ID Digital dan Sertifikat.</p>
-                        <div class="step-guide">
-                            <span><i data-lucide="check-circle-2"></i> Ketik Email</span>
-                            <span><i data-lucide="check-circle-2"></i> Klik Cari</span>
-                            <span><i data-lucide="check-circle-2"></i> Bagikan Kartu</span>
+                        <h3>Mencari Sertifikat?</h3>
+                        <p>Pastikan email yang Anda masukkan sama dengan saat pendaftaran webinar.</p>
+                        
+                        <div class="step-guide-horizontal">
+                            <div class="step-item">
+                                <div class="step-num">1</div>
+                                <span>Input Email</span>
+                            </div>
+                            <div class="step-sep"></div>
+                            <div class="step-item">
+                                <div class="step-num">2</div>
+                                <span>Cari Data</span>
+                            </div>
                         </div>
                     </div>
                 </div>

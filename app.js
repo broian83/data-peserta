@@ -97,18 +97,25 @@ function searchParticipants() {
     const skeleton = document.getElementById('skeletonLoader');
     
     if (!query) {
-        resultsContainer.innerHTML = `<div class="welcome-card">
-                        <div class="welcome-icon">
-                            <img src="pormiki-logo.png" alt="PORMIKI" style="width: 80%; height: auto;">
-                        </div>
-                        <h3>E-Card Peserta</h3>
-                        <p>Cari email Anda untuk mendapatkan ID Digital dan Sertifikat.</p>
-                        <div class="step-guide">
-                            <span><i data-lucide="check-circle-2"></i> Ketik Email</span>
-                            <span><i data-lucide="check-circle-2"></i> Klik Cari</span>
-                            <span><i data-lucide="check-circle-2"></i> Bagikan Kartu</span>
-                        </div>
-                    </div>`;
+        resultsContainer.innerHTML = `
+            <div class="welcome-card-new">
+                <div class="welcome-illustration">
+                    <img src="pormiki-logo.png" alt="PORMIKI">
+                </div>
+                <h3>Mencari Sertifikat?</h3>
+                <p>Pastikan email yang Anda masukkan sama dengan saat pendaftaran webinar.</p>
+                <div class="step-guide-horizontal">
+                    <div class="step-item">
+                        <div class="step-num">1</div>
+                        <span>Input Email</span>
+                    </div>
+                    <div class="step-sep"></div>
+                    <div class="step-item">
+                        <div class="step-num">2</div>
+                        <span>Cari Data</span>
+                    </div>
+                </div>
+            </div>`;
         lucide.createIcons();
         return;
     }

@@ -176,7 +176,7 @@ async function shareCard(btnElement) {
             await navigator.share({
                 files: [file],
                 title: 'E-Card Peserta Webinar PORMIKI',
-                text: 'Saya sudah terdaftar di Webinar Nasional PORMIKI! Cek juga E-Card kamu di sini.'
+                text: 'Saya sudah terdaftar di *Webinar Penguatan Komunikasi Profesional pada Perekam Medis dan informasi kesehatan dalam Pelayanan dan Pengelolaan Rekam Medis*\n\nCek juga E-Card kamu di sini\n\nhttps://pormiki.netlify.app/'
             });
         } else {
             const link = document.createElement('a');

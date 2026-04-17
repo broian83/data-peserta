@@ -295,9 +295,14 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!text) return;
 
         // User Message
+        const getChatTime = () => {
+            const now = new Date();
+            return now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
+        };
+
         const userMsg = document.createElement('div');
         userMsg.className = 'ai-msg user';
-        userMsg.textContent = text;
+        userMsg.innerHTML = `${text}<span class="ai-time">${getChatTime()}</span>`;
         aiMessages.appendChild(userMsg);
         aiInput.value = '';
         aiMessages.scrollTop = aiMessages.scrollHeight;
@@ -331,7 +336,9 @@ document.addEventListener('DOMContentLoaded', () => {
             if (data.choices && data.choices[0]) {
                 const botMsg = document.createElement('div');
                 botMsg.className = 'ai-msg bot';
-                botMsg.innerHTML = data.choices[0].message.content.replace(/\n/g, '<br>');
+                // Render Markdown menggunakan marked.js
+                const rawContent = data.choices[0].message.content;
+                botMsg.innerHTML = marked.parse(rawContent) + `<span class="ai-time">${getChatTime()}</span>`;
                 aiMessages.appendChild(botMsg);
                 aiMessages.scrollTop = aiMessages.scrollHeight;
             }
@@ -344,9 +351,9 @@ document.addEventListener('DOMContentLoaded', () => {
             errorMsg.className = 'ai-msg bot';
             // Tampilkan pesan error yang lebih informatif
             if (error.message.includes('API Key')) {
-                errorMsg.innerHTML = '🛡️ <strong>Aura:</strong> Mohon maaf, API Key belum dikonfigurasi di Netlify Dashboard. Segera hubungi Admin Anda!';
+                errorMsg.innerHTML = `🛡️ <strong>Aura:</strong> API Key belum dikonfigurasi.<span class="ai-time">${getChatTime()}</span>`;
             } else {
-                errorMsg.textContent = '⚠️ Maaf, terjadi gangguan teknis: ' + error.message;
+                errorMsg.innerHTML = `⚠️ Gangguan teknis: ${error.message}<span class="ai-time">${getChatTime()}</span>`;
             }
             aiMessages.appendChild(errorMsg);
         }

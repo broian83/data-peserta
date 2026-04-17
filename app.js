@@ -27,6 +27,34 @@ function updateStats() {
     }
 }
 
+// VIEW SWITCHER
+function switchView(viewName) {
+    const homeView = document.getElementById('homeView');
+    const ecardView = document.getElementById('ecardView');
+    const viewTitle = document.getElementById('viewTitle');
+    const navItems = document.querySelectorAll('.nav-item');
+
+    // Reset visibility
+    homeView.style.display = 'none';
+    ecardView.style.display = 'none';
+    navItems.forEach(item => item.classList.remove('active'));
+
+    if (viewName === 'home') {
+        homeView.style.display = 'block';
+        viewTitle.textContent = 'Hub Informasi & Edukasi PMIK';
+        navItems[0].classList.add('active');
+    } else if (viewName === 'ecard') {
+        ecardView.style.display = 'block';
+        viewTitle.textContent = 'Portal E-Card Peserta';
+        navItems[1].classList.add('active');
+        // Small fix for stats when switching
+        setTimeout(updateStats, 100);
+    }
+    
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    lucide.createIcons();
+}
+
 function runCelebration() {
     if (typeof confetti === 'function') {
         const duration = 2 * 1000;
@@ -46,17 +74,17 @@ function searchParticipants() {
     
     if (!query) {
         resultsContainer.innerHTML = `<div class="welcome-card">
-                    <div class="welcome-icon">
-                        <img src="pormiki-logo.png" alt="PORMIKI" style="width: 80%; height: auto;">
-                    </div>
-                    <h3>Siap Mencari?</h3>
-                    <p>Masukkan email yang terdaftar untuk menemukan E-Card dan ID Peserta Anda.</p>
-                    <div class="step-guide">
-                        <span><i data-lucide="check-circle-2"></i> Ketik Email</span>
-                        <span><i data-lucide="check-circle-2"></i> Klik Cari</span>
-                        <span><i data-lucide="check-circle-2"></i> Unduh Kartu</span>
-                    </div>
-                </div>`;
+                        <div class="welcome-icon">
+                            <img src="pormiki-logo.png" alt="PORMIKI" style="width: 80%; height: auto;">
+                        </div>
+                        <h3>E-Card Peserta</h3>
+                        <p>Cari email Anda untuk mendapatkan ID Digital dan Sertifikat.</p>
+                        <div class="step-guide">
+                            <span><i data-lucide="check-circle-2"></i> Ketik Email</span>
+                            <span><i data-lucide="check-circle-2"></i> Klik Cari</span>
+                            <span><i data-lucide="check-circle-2"></i> Bagikan Kartu</span>
+                        </div>
+                    </div>`;
         lucide.createIcons();
         return;
     }
@@ -78,8 +106,8 @@ function searchParticipants() {
 
 function getValueByPossibleKeys(obj, possibleKeys) {
     for (let key of possibleKeys) {
-        if (obj[key] !== undefined && obj[key] !== null && obj[key] !== "") return obj[key];
         const trimmedKey = key.trim();
+        if (obj[key] !== undefined && obj[key] !== null && obj[key] !== "") return obj[key];
         for (let actualKey in obj) {
             if (actualKey.trim() === trimmedKey && obj[actualKey] !== "") return obj[actualKey];
         }
@@ -106,7 +134,6 @@ async function shareCard(btnElement) {
             scale: 2,
             backgroundColor: '#ffffff',
             logging: false,
-            // Force spaces to render correctly by avoiding letter-spacing issues during capture
             onclone: (clonedDoc) => {
                 const clonedName = clonedDoc.querySelector('.p-name');
                 if (clonedName) {
@@ -151,7 +178,6 @@ function displayResults(results) {
         container.innerHTML = `<div class="empty-state"><i data-lucide="user-x" size="64"></i><p>Alamat email tidak terdaftar.<br>Pastikan email sudah sesuai.</p></div>`;
     } else {
         results.forEach((p, index) => {
-            // Parse name and replace multiple spaces with non-breaking spaces for safe rendering
             let rawName = getValueByPossibleKeys(p, ['Nama Anggota', 'Nama', 'Full Name', 'Nama Lengkap', 'Name', 'Lengkap']) || 'Peserta Webinar';
             const cleanName = rawName.trim().replace(/\s+/g, ' ');
             const htmlName = cleanName.split(' ').join('&nbsp;');
@@ -198,42 +224,13 @@ function displayResults(results) {
     lucide.createIcons();
 }
 
-// DIGITAL TOUR
-function initTour() {
-    if (localStorage.getItem('pormiki_tour_seen')) return;
-
-    const driver = window.driver.js.driver;
-    const driverObj = driver({
-        showProgress: true,
-        onDestroyed: () => {
-            localStorage.setItem('pormiki_tour_seen', 'true');
-        },
-        steps: [
-            { element: '#tour-logo', popover: { title: 'Selamat Datang!', description: 'Ini adalah Portal Webinar PORMIKI. Ayo kita keliling sebentar!', side: "bottom", align: 'start' } },
-            { element: '#totalStats', popover: { title: 'Statistik Peserta', description: 'Jumlah total peserta yang sudah terdaftar dalam sistem.', side: "bottom", align: 'start' } },
-            { element: '.search-box', popover: { title: 'Cari Data', description: 'Masukkan email lengkap Anda di sini.', side: "top", align: 'start' } },
-            { element: '.bottom-nav', popover: { title: 'Menu Navigasi', description: 'Akses cepat ke Zoom, WhatsApp, dan LMS.', side: "top", align: 'center' } },
-            { popover: { title: 'Selesai!', description: 'Silakan cari email Anda dan cetak E-Card kebanggaan Anda!' } }
-        ]
-    });
-
-    setTimeout(() => driverObj.drive(), 1500);
-}
-
 // Initializations
 document.addEventListener('DOMContentLoaded', () => {
     loadData();
-    initTour();
+    window.switchView = switchView; // Expose to global scope
     
     document.getElementById('searchBtn').addEventListener('click', searchParticipants);
     document.getElementById('emailSearch').addEventListener('keypress', (e) => {
         if (e.key === 'Enter') searchParticipants();
-    });
-
-    document.querySelectorAll('.nav-item').forEach(item => {
-        item.addEventListener('click', function() {
-            document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
-            this.classList.add('active');
-        });
     });
 });

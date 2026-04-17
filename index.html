@@ -18,66 +18,126 @@
 
 <body>
     <div class="app-container">
-        <!-- Background Decor -->
-        <div class="bg-glow bg-glow-1"></div>
-        <div class="bg-glow bg-glow-2"></div>
-
-        <header>
+        <!-- HEADER -->
+        <header id="appHeader">
             <div class="logo-container" id="tour-logo">
-                <i data-lucide="users" class="logo-icon"></i>
-                <h1>Data Peserta</h1>
+                <img src="pormiki-logo.png" alt="PORMIKI" class="logo-img">
+                <h1>PORMIKI HQ</h1>
             </div>
-            <p class="subtitle">Cari data keikutsertaan webinar Anda</p>
-            <div class="participant-badge">
-                <i data-lucide="award"></i>
-                <span id="totalStats">Memuat data...</span>
-            </div>
+            <p class="subtitle" id="viewTitle">Hub Informasi & Edukasi PMIK</p>
         </header>
 
+        <!-- MAIN VIEWS -->
         <main>
-            <div class="search-box">
-                <i data-lucide="search" class="search-icon"></i>
-                <input type="email" id="emailSearch" placeholder="Masukkan alamat email..." autocomplete="email">
-                <button id="searchBtn">Cari</button>
-            </div>
-
-            <div id="skeletonLoader" class="skeleton-card" style="display: none;">
-                <div class="s-header"></div>
-                <div class="s-line"></div>
-                <div class="s-line"></div>
-                <div class="s-line short"></div>
-                <div class="s-footer"></div>
-            </div>
-
-            <div id="resultsContainer" class="results-container">
-                <!-- Data will be injected here -->
-                <div class="welcome-card">
-                    <div class="welcome-icon">
-                        <img src="pormiki-logo.png" alt="PORMIKI" style="width: 80%; height: auto;">
-                    </div>
-                    <h3>Siap Mencari?</h3>
-                    <p>Masukkan email yang terdaftar untuk menemukan E-Card dan ID Peserta Anda.</p>
-                    <div class="step-guide">
-                        <span><i data-lucide="check-circle-2"></i> Ketik Email</span>
-                        <span><i data-lucide="check-circle-2"></i> Klik Cari</span>
-                        <span><i data-lucide="check-circle-2"></i> Unduh Kartu</span>
+            <!-- HOME VIEW -->
+            <section id="homeView" class="view-section active">
+                <div class="hero-banner">
+                    <div class="hero-content">
+                        <h2>Satu Data PMIK 👋</h2>
+                        <p>Wujudkan digitalisasi kesehatan yang akurat dan profesional bersama PORMIKI.</p>
                     </div>
                 </div>
-            </div>
+
+                <div class="info-grid">
+                    <div class="info-card">
+                        <div class="ic-icon"><i data-lucide="shield-check"></i></div>
+                        <h4>Etika Profesi</h4>
+                        <p>Panduan standar perilaku dan tanggung jawab PMIK dalam fasyankes.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="ic-icon gold"><i data-lucide="award"></i></div>
+                        <h4>STR & SKP</h4>
+                        <p>Informasi tata cara perpanjangan STR dan pengumpulan SKP melalui LMS.</p>
+                    </div>
+                </div>
+
+                <div class="updates-card">
+                    <h3>Update Kompetensi</h3>
+                    <div class="update-item">
+                        <div class="u-icon"><i data-lucide="zap"></i></div>
+                        <div class="u-text">
+                            <strong>Implementasi ICD-11</strong>
+                            <span>Persiapan transisi klasifikasi penyakit terbaru di Indonesia.</span>
+                        </div>
+                    </div>
+                    <div class="update-item">
+                        <div class="u-icon"><i data-lucide="database"></i></div>
+                        <div class="u-text">
+                            <strong>SatuSehat Integrasi</strong>
+                            <span>Kesiapan RME untuk sinkronisasi data kesehatan nasional.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="quick-links">
+                    <a href="https://pormiki.or.id" target="_blank" class="q-link">
+                        <i data-lucide="layout"></i>
+                        <span>Web DPP</span>
+                    </a>
+                    <a href="#" class="q-link">
+                        <i data-lucide="file-text"></i>
+                        <span>Juknis RME</span>
+                    </a>
+                    <a href="#" class="q-link">
+                        <i data-lucide="calendar"></i>
+                        <span>Jadwal CPD</span>
+                    </a>
+                </div>
+            </section>
+
+            <!-- E-CARD VIEW (SEARCH) -->
+            <section id="ecardView" class="view-section" style="display: none;">
+                <div class="search-box">
+                    <i data-lucide="search" class="search-icon"></i>
+                    <input type="email" id="emailSearch" placeholder="Masukkan alamat email..." autocomplete="email">
+                    <button id="searchBtn">Cari</button>
+                </div>
+
+                <div class="participant-badge" style="margin-bottom: 2rem;">
+                    <i data-lucide="users" size="16"></i>
+                    <span id="totalStats">Memuat data...</span>
+                </div>
+
+                <div id="skeletonLoader" class="skeleton-card" style="display: none;">
+                    <div class="s-header"></div>
+                    <div class="s-line"></div>
+                    <div class="s-line"></div>
+                    <div class="s-line short"></div>
+                    <div class="s-footer"></div>
+                </div>
+
+                <div id="resultsContainer" class="results-container">
+                    <div class="welcome-card">
+                        <div class="welcome-icon">
+                            <img src="pormiki-logo.png" alt="PORMIKI" style="width: 80%; height: auto;">
+                        </div>
+                        <h3>E-Card Peserta</h3>
+                        <p>Cari email Anda untuk mendapatkan ID Digital dan Sertifikat.</p>
+                        <div class="step-guide">
+                            <span><i data-lucide="check-circle-2"></i> Ketik Email</span>
+                            <span><i data-lucide="check-circle-2"></i> Klik Cari</span>
+                            <span><i data-lucide="check-circle-2"></i> Bagikan Kartu</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </main>
 
+        <!-- BOTTOM NAVIGATION -->
         <nav class="bottom-nav">
-            <a href="https://us06web.zoom.us/j/81033258483?pwd=8G4Bxg9aaRnvZHbI2yOqiCXQFechbh.1" target="_blank"
-                class="nav-item">
+            <a href="javascript:void(0)" class="nav-item active" onclick="switchView('home')">
+                <i data-lucide="home"></i>
+                <span>Beranda</span>
+            </a>
+            <a href="javascript:void(0)" class="nav-item" onclick="switchView('ecard')">
+                <i data-lucide="credit-card"></i>
+                <span>E-Card</span>
+            </a>
+            <a href="https://us06web.zoom.us/j/81033258483?pwd=8G4Bxg9aaRnvZHbI2yOqiCXQFechbh.1" target="_blank" class="nav-item">
                 <i data-lucide="video"></i>
                 <span>Zoom</span>
             </a>
-            <a href="https://chat.whatsapp.com/Ju8f0XPU1jBCvHspxMSsWB?mode=gi_t" target="_blank" class="nav-item">
-                <i data-lucide="message-circle"></i>
-                <span>WhatsApp</span>
-            </a>
-            <a href="https://lms.kemkes.go.id/courses/a79f23f4-78d6-408e-a7a5-b3722b356d2a" target="_blank"
-                class="nav-item">
+            <a href="https://lms.kemkes.go.id/courses/a79f23f4-78d6-408e-a7a5-b3722b356d2a" target="_blank" class="nav-item">
                 <i data-lucide="graduation-cap"></i>
                 <span>LMS</span>
             </a>

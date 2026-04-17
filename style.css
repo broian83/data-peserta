@@ -546,6 +546,24 @@ main { padding: 1.5rem 1.25rem 8rem 1.25rem; flex: 1; }
 .profile-menu-item i[data-lucide="chevron-right"] { color: var(--text-muted); width: 18px; }
 .profile-menu-item.logout span { color: #ef4444; }
 
+/* UPDATE NOTIFICATION */
+.update-toast {
+    position: fixed; top: -100px; left: 50%; transform: translateX(-50%);
+    background: rgba(15, 23, 42, 0.95); color: white;
+    padding: 0.8rem 1.2rem; border-radius: 1rem;
+    display: flex; align-items: center; gap: 1rem;
+    z-index: 9999; box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    width: 90%; max-width: 400px; backdrop-filter: blur(10px);
+}
+.update-toast.show { top: 20px; }
+.update-toast span { font-size: 0.85rem; font-weight: 600; flex: 1; }
+.btn-refresh-app {
+    background: var(--primary); color: white; border: none;
+    padding: 0.4rem 0.8rem; border-radius: 0.6rem;
+    font-size: 0.75rem; font-weight: 800; cursor: pointer;
+}
+
 /* UTIL */
 .hide-on-share { display: none !important; }
 

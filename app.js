@@ -288,18 +288,39 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // PWA & NOTIFICATION SYSTEM
     if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('/sw.js')
-            .then(reg => console.log('SW Registered!', reg))
-            .catch(err => console.error('SW Registration Failed!', err));
+        navigator.serviceWorker.register('/sw.js').then(reg => {
+            console.log('SW Registered!', reg);
+            
+            // Listen for updates
+            reg.addEventListener('updatefound', () => {
+                const newWorker = reg.installing;
+                newWorker.addEventListener('statechange', () => {
+                    if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                        showUpdateToast();
+                    }
+                });
+            });
+        }).catch(err => console.error('SW Registration Failed!', err));
     }
 
     // Request Notification Permission
     if ('Notification' in window) {
         Notification.requestPermission().then(permission => {
-            if (permission === 'granted') {
-                console.log('Notification permission granted.');
-            }
+            if (permission === 'granted') console.log('Notification permission granted.');
         });
+    }
+
+    function showUpdateToast() {
+        if (document.getElementById('updateToast')) return;
+        const toast = document.createElement('div');
+        toast.id = 'updateToast';
+        toast.className = 'update-toast';
+        toast.innerHTML = `
+            <span>✨ Versi baru tersedia!</span>
+            <button class="btn-refresh-app" onclick="location.reload()">Refresh</button>
+        `;
+        document.body.appendChild(toast);
+        setTimeout(() => toast.classList.add('show'), 100);
     }
 
     // AI CHATBOT LOGIC (SECURED VIA NETLIFY FUNCTIONS)

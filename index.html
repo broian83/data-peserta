@@ -18,6 +18,15 @@
 </head>
 
 <body>
+    <!-- 4. LIVE ANNOUNCEMENT BANNER -->
+    <div id="announcementBanner" class="announcement-bar">
+        <div class="announcement-content">
+            <i data-lucide="megaphone" class="banner-icon"></i>
+            <span><strong>PENTING:</strong> Webinar akan segera dimulai pukul 09:00 WIB! Masuk ke Zoom sekarang.</span>
+        </div>
+        <button class="close-banner" onclick="document.getElementById('announcementBanner').style.display='none'"><i data-lucide="x"></i></button>
+    </div>
+
     <div class="app-container">
         <!-- HEADER -->
         <header id="appHeader">
@@ -32,6 +41,11 @@
                     </div>
                 </div>
                 <div class="action-side">
+                    <!-- 3. DARK MODE TOGGLE -->
+                    <button class="icon-btn" id="darkModeToggle" title="Ganti Mode">
+                        <i data-lucide="moon" id="moonIcon"></i>
+                        <i data-lucide="sun" id="sunIcon" style="display:none"></i>
+                    </button>
                     <button class="icon-btn" onclick="alert('Belum ada notifikasi baru')">
                         <i data-lucide="bell"></i>
                         <span class="dot"></span>
@@ -205,6 +219,22 @@
                     </div>
                 </div>
             </section>
+            <!-- RESOURCE CENTER VIEW -->
+            <section id="materiView" class="view-section">
+                <div class="section-header-mini">
+                    <h2>Pusat Materi</h2>
+                    <p>Unduh materi presentasi pembicara</p>
+                </div>
+
+                <div class="search-box-mini">
+                    <i data-lucide="search"></i>
+                    <input type="text" id="materiSearch" placeholder="Cari materi atau pembicara...">
+                </div>
+
+                <div class="materi-list" id="materiList">
+                    <!-- Materi akan diisi via JS -->
+                </div>
+            </section>
         </main>
 
         <!-- BOTTOM NAVIGATION -->
@@ -217,13 +247,13 @@
                 <i data-lucide="credit-card"></i>
                 <span>E-Card</span>
             </a>
+            <a href="javascript:void(0)" class="nav-item" onclick="switchView('materi')">
+                <i data-lucide="book-open"></i>
+                <span>Materi</span>
+            </a>
             <a href="https://us06web.zoom.us/j/81033258483?pwd=8G4Bxg9aaRnvZHbI2yOqiCXQFechbh.1" target="_blank" class="nav-item">
                 <i data-lucide="video"></i>
                 <span>Zoom</span>
-            </a>
-            <a href="https://pormiki.or.id" target="_blank" class="nav-item">
-                <i data-lucide="globe"></i>
-                <span>Portal</span>
             </a>
         </nav>
 

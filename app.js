@@ -48,14 +48,14 @@ function updateHomeInfo() {
 
 // VIEW SWITCHER
 function switchView(viewName) {
-    const homeView = document.getElementById('homeView');
-    const ecardView = document.getElementById('ecardView');
+    const materiView = document.getElementById('materiView');
     const viewTitle = document.getElementById('viewTitle');
     const navItems = document.querySelectorAll('.nav-item');
-    const fab = document.getElementById('fabHelp');
+    const fab = document.getElementById('aiToggle') || document.querySelector('.fab-help');
 
-    homeView.style.display = 'none';
-    ecardView.style.display = 'none';
+    if (homeView) homeView.style.display = 'none';
+    if (ecardView) ecardView.style.display = 'none';
+    if (materiView) materiView.style.display = 'none';
     navItems.forEach(item => item.classList.remove('active'));
 
     if (viewName === 'home') {
@@ -65,11 +65,19 @@ function switchView(viewName) {
         if(fab) fab.style.display = 'flex';
         updateHomeInfo();
     } else if (viewName === 'ecard') {
-        ecardView.style.display = 'block';
-        viewTitle.textContent = 'Portal E-Card Peserta';
+        if (ecardView) ecardView.style.display = 'block';
+        if (viewTitle) viewTitle.textContent = 'Portal E-Card Peserta';
         navItems[1].classList.add('active');
         if(fab) fab.style.display = 'none';
         setTimeout(updateStats, 100);
+    } else if (viewName === 'materi') {
+        if (materiView) {
+            materiView.style.display = 'block';
+            renderMateri();
+        }
+        if (viewTitle) viewTitle.textContent = 'Pusat Materi Webinar';
+        navItems[2].classList.add('active');
+        if(fab) fab.style.display = 'none';
     }
     
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -364,8 +372,107 @@ document.addEventListener('DOMContentLoaded', () => {
         handleSendMessage();
     };
 
+    // 3. DARK MODE ENGINE
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    const moonIcon = document.getElementById('moonIcon');
+    const sunIcon = document.getElementById('sunIcon');
+    const currentTheme = localStorage.getItem('theme') || 'light';
+
+    const setTheme = (theme) => {
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem('theme', theme);
+        if (theme === 'dark') {
+            moonIcon.style.display = 'none';
+            sunIcon.style.display = 'block';
+        } else {
+            moonIcon.style.display = 'block';
+            sunIcon.style.display = 'none';
+        }
+    };
+
+    setTheme(currentTheme);
+
+    if (darkModeToggle) {
+        darkModeToggle.addEventListener('click', () => {
+            const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+            setTheme(theme);
+        });
+    }
+
     if (aiSend) aiSend.addEventListener('click', handleSendMessage);
     if (aiInput) aiInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') handleSendMessage();
     });
+});
+
+// 5. RESOURCE CENTER ENGINE
+const materiData = [
+    { title: "Komunikasi Profesional PMIK", speaker: "Dr. Budi Santoso", link: "#" },
+    { title: "Standardisasi RME 2024", speaker: "Siti Aminah, M.Kom", link: "#" },
+    { title: "Aspek Hukum Informasi Kesehatan", speaker: "Adv. Robertus Lee", link: "#" },
+    { title: "Audit Medis Berbasis Data", speaker: "Dra. Elly Risman", link: "#" }
+];
+
+function renderMateri(filter = '') {
+    const list = document.getElementById('materiList');
+    if (!list) return;
+    const filtered = materiData.filter(m => 
+        m.title.toLowerCase().includes(filter.toLowerCase()) || 
+        m.speaker.toLowerCase().includes(filter.toLowerCase())
+    );
+    list.innerHTML = filtered.map(m => `
+        <div class="materi-card">
+            <div class="materi-info">
+                <h4>${m.title}</h4>
+                <span><i data-lucide="user"></i> ${m.speaker}</span>
+            </div>
+            <a href="${m.link}" class="btn-download" title="Unduh">
+                <i data-lucide="download"></i>
+            </a>
+        </div>
+    `).join('');
+    if (window.lucide) window.lucide.createIcons();
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('materiSearch')?.addEventListener('input', (e) => {
+        renderMateri(e.target.value);
+    });
+
+    // 2. VOICE TO AURA ENGINE
+    setTimeout(() => {
+        const aiChatFooter = document.querySelector('.ai-chat-footer');
+        if (aiChatFooter) {
+            const voiceBtn = document.createElement('button');
+            voiceBtn.className = 'icon-btn voice-trigger';
+            voiceBtn.innerHTML = '<i data-lucide="mic"></i>';
+            voiceBtn.style.marginRight = '8px';
+            aiChatFooter.prepend(voiceBtn);
+            if (window.lucide) window.lucide.createIcons();
+
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (SpeechRecognition) {
+                const recognition = new SpeechRecognition();
+                recognition.lang = 'id-ID';
+                
+                voiceBtn.onclick = () => {
+                    recognition.start();
+                    voiceBtn.style.color = '#ff007b';
+                };
+
+                recognition.onresult = (event) => {
+                    const transcript = event.results[0][0].transcript;
+                    const aiInput = document.getElementById('aiInput');
+                    if (aiInput) {
+                        aiInput.value = transcript;
+                        handleSendMessage();
+                    }
+                    voiceBtn.style.color = '';
+                };
+
+                recognition.onerror = () => { voiceBtn.style.color = ''; };
+                recognition.onend = () => { voiceBtn.style.color = ''; };
+            }
+        }
+    }, 1000);
 });

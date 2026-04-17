@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webinar Participant Search</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+</head>
+
+<body>
+    <!-- PWA Install Banner -->
+    <div id="installBanner" class="install-banner" style="display: none;">
+        <div class="banner-content">
+            <i data-lucide="download-cloud"></i>
+            <span>Pasang Aplikasi di HP Anda</span>
+        </div>
+        <button id="installBtn">Pasang</button>
+    </div>
+
+    <div class="app-container">
+        <!-- Background Decor -->
+        <div class="bg-glow bg-glow-1"></div>
+        <div class="bg-glow bg-glow-2"></div>
+
+        <header>
+            <div class="logo-container">
+                <i data-lucide="users" class="logo-icon"></i>
+                <h1>Data Peserta</h1>
+            </div>
+            <p class="subtitle">Cari data keikutsertaan webinar Anda</p>
+            <div class="participant-badge">
+                <i data-lucide="award"></i>
+                <span id="totalStats">Memuat data...</span>
+            </div>
+        </header>
+
+        <main>
+            <div class="search-box">
+                <i data-lucide="search" class="search-icon"></i>
+                <input type="email" id="emailSearch" placeholder="Masukkan alamat email..." autocomplete="email">
+                <button id="searchBtn">Cari</button>
+            </div>
+
+            <div id="skeletonLoader" class="skeleton-card" style="display: none;">
+                <div class="s-header"></div>
+                <div class="s-line"></div>
+                <div class="s-line"></div>
+                <div class="s-line short"></div>
+                <div class="s-footer"></div>
+            </div>
+
+            <div id="resultsContainer" class="results-container">
+                <!-- Data will be injected here -->
+                <div class="empty-state">
+                    <i data-lucide="mail-search" size="48"></i>
+                    <p>Mulai dengan mencari email Anda</p>
+                </div>
+            </div>
+        </main>
+
+        <nav class="bottom-nav">
+            <a href="https://us06web.zoom.us/j/81033258483?pwd=8G4Bxg9aaRnvZHbI2yOqiCXQFechbh.1" target="_blank"
+                class="nav-item">
+                <i data-lucide="video"></i>
+                <span>Zoom</span>
+            </a>
+            <a href="https://chat.whatsapp.com/Ju8f0XPU1jBCvHspxMSsWB?mode=gi_t" target="_blank" class="nav-item">
+                <i data-lucide="message-circle"></i>
+                <span>WhatsApp</span>
+            </a>
+            <a href="https://lms.kemkes.go.id/courses/a79f23f4-78d6-408e-a7a5-b3722b356d2a" target="_blank"
+                class="nav-item">
+                <i data-lucide="graduation-cap"></i>
+                <span>LMS</span>
+            </a>
+        </nav>
+    </div>
+
+    <!-- Modal for details -->
+    <div id="detailModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+
+</html>

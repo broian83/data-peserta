@@ -47,7 +47,7 @@ function searchParticipants() {
     if (!query) {
         resultsContainer.innerHTML = `<div class="welcome-card">
                     <div class="welcome-icon">
-                        <img src="https://pormiki.or.id/wp-content/uploads/2025/07/logo-dpp-transparan-Tanpa-Nama-2019-2048x1872.png" alt="PORMIKI" style="width: 80%; height: auto;">
+                        <img src="pormiki-logo.png" alt="PORMIKI" style="width: 80%; height: auto;">
                     </div>
                     <h3>Siap Mencari?</h3>
                     <p>Masukkan email yang terdaftar untuk menemukan E-Card dan ID Peserta Anda.</p>
@@ -73,7 +73,7 @@ function searchParticipants() {
         skeleton.style.display = 'none';
         if (filtered.length > 0) runCelebration();
         displayResults(filtered);
-    }, 800);
+    }, 400); // Faster search
 }
 
 function getValueByPossibleKeys(obj, possibleKeys) {
@@ -87,51 +87,53 @@ function getValueByPossibleKeys(obj, possibleKeys) {
     return null;
 }
 
-// SHARE CARD LOGIC
 async function shareCard(btnElement) {
     const card = btnElement.closest('.virtual-card');
     const actions = card.querySelector('.actions-row');
     const outlineBtn = card.querySelector('.btn-action-outline');
     
-    // Temporarily hide buttons for clean capture
-    if(actions) actions.style.visibility = 'hidden';
-    if(outlineBtn) outlineBtn.style.visibility = 'hidden';
-    
+    // UI state for loading
+    const originalContent = btnElement.innerHTML;
     btnElement.innerHTML = '<i data-lucide="loader-2" class="animate-spin" size="16"></i> Tunggu...';
     lucide.createIcons();
 
     try {
+        // Prepare card for image capture (Hide buttons)
+        if(actions) actions.style.display = 'none';
+        if(outlineBtn) outlineBtn.style.display = 'none';
+
         const canvas = await html2canvas(card, {
             useCORS: true,
+            allowTaint: true,
             scale: 2,
             backgroundColor: '#ffffff',
-            borderRadius: 32
+            logging: false
         });
 
         const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
-        const file = new File([blob], 'Kartu-Peserta-PORMIKI.png', { type: 'image/png' });
+        const file = new File([blob], 'E-Card-PORMIKI.png', { type: 'image/png' });
 
         if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
             await navigator.share({
                 files: [file],
-                title: 'Kartu Peserta Webinar PORMIKI',
-                text: 'Saya sudah terdaftar di Webinar PORMIKI! Cek juga milikmu.'
+                title: 'E-Card Peserta Webinar PORMIKI',
+                text: 'Saya sudah terdaftar di Webinar Nasional PORMIKI! Cek juga E-Card kamu di sini.'
             });
         } else {
-            // Fallback: Download
             const link = document.createElement('a');
             link.href = canvas.toDataURL('image/png');
-            link.download = 'Kartu-Peserta-PORMIKI.png';
+            link.download = 'E-Card-PORMIKI.png';
             link.click();
             alert('Gambar berhasil diunduh! Silakan bagikan ke WhatsApp Status Anda.');
         }
     } catch (err) {
         console.error('Error sharing:', err);
-        alert('Maaf, gagal memproses gambar. Silakan gunakan tombol Simpan/Screenshot manual.');
+        alert('Gagal membagikan gambar. Silakan coba simpan secara manual atau screenshot.');
     } finally {
-        if(actions) actions.style.visibility = 'visible';
-        if(outlineBtn) outlineBtn.style.visibility = 'visible';
-        btnElement.innerHTML = '<i data-lucide="share-2" size="16"></i> Bagikan';
+        // Restore UI
+        if(actions) actions.style.display = 'flex';
+        if(outlineBtn) outlineBtn.style.display = 'flex';
+        btnElement.innerHTML = originalContent;
         lucide.createIcons();
     }
 }
@@ -144,10 +146,12 @@ function displayResults(results) {
         container.innerHTML = `<div class="empty-state"><i data-lucide="user-x" size="64"></i><p>Alamat email tidak terdaftar.<br>Pastikan email sudah sesuai.</p></div>`;
     } else {
         results.forEach((p, index) => {
-            const name = getValueByPossibleKeys(p, ['Nama', 'Full Name', 'Nama Lengkap', 'Name', 'Lengkap', 'Nama ']) || 'Peserta Webinar';
+            // Updated mappings to prioritize "Nama Anggota"
+            const name = getValueByPossibleKeys(p, ['Nama Anggota', 'Nama', 'Full Name', 'Nama Lengkap', 'Name', 'Lengkap']) || 'Peserta Webinar';
             const email = getValueByPossibleKeys(p, ['Email', 'Email Address', 'Alamat Email', 'e-mail']) || '-';
-            const instansi = getValueByPossibleKeys(p, ['Instansi', 'Organization', 'Workplace', 'Unit Kerja', 'Institusi', 'RS', 'Kantor', 'Instansi ']) || '-';
-            const phone = getValueByPossibleKeys(p, ['No HP', 'Phone', 'WhatsApp', 'Telepon', 'Mobile', 'No HP ']) || '-';
+            const instansi = getValueByPossibleKeys(p, ['Instansi', 'Organization', 'Workplace', 'Unit Kerja', 'Institusi', 'RS', 'Kantor', 'Institution / Workplace']) || '-';
+            const phone = getValueByPossibleKeys(p, ['No HP', 'Phone', 'WhatsApp', 'Telepon', 'Mobile']) || '-';
+            
             const originalIndex = participants.indexOf(p);
             const idPeserta = (p.ID || p.id || p.No || (originalIndex !== -1 ? originalIndex + 1001 : index + 1001)).toString().padStart(6, '0');
 
@@ -160,7 +164,7 @@ function displayResults(results) {
                     </div>
                     <div class="ecard-body">
                         <div class="avatar-container">
-                            <img src="https://pormiki.or.id/wp-content/uploads/2025/07/logo-dpp-transparan-Tanpa-Nama-2019-2048x1872.png" alt="Logo PORMIKI" style="width: 70%; height: auto;">
+                            <img src="pormiki-logo.png" alt="PORMIKI" style="width: 70%; height: auto;">
                         </div>
                         <h2 class="p-name">${name}</h2>
                         <span class="p-status">PARTICIPANT</span>

@@ -148,16 +148,14 @@ function getValueByPossibleKeys(obj, possibleKeys) {
 
 async function shareCard(btnElement) {
     const card = btnElement.closest('.virtual-card');
-    const actions = card.querySelector('.actions-row');
-    const outlineBtn = card.querySelector('.btn-action-outline');
+    const shareElements = card.querySelectorAll('.hide-on-share');
     
     const originalContent = btnElement.innerHTML;
     btnElement.innerHTML = '<i data-lucide="loader-2" class="animate-spin" size="16"></i> Tunggu...';
     lucide.createIcons();
 
     try {
-        if(actions) actions.style.display = 'none';
-        if(outlineBtn) outlineBtn.style.display = 'none';
+        shareElements.forEach(el => el.style.display = 'none');
 
         const canvas = await html2canvas(card, {
             useCORS: true,
@@ -194,8 +192,7 @@ async function shareCard(btnElement) {
         console.error('Error sharing:', err);
         alert('Gagal membagikan gambar. Silakan coba simpan secara manual atau screenshot.');
     } finally {
-        if(actions) actions.style.display = 'flex';
-        if(outlineBtn) outlineBtn.style.display = 'flex';
+        shareElements.forEach(el => el.style.display = '');
         btnElement.innerHTML = originalContent;
         lucide.createIcons();
     }
@@ -240,11 +237,17 @@ function displayResults(results) {
                         </div>
                         <div class="barcode-sim"></div>
                         <span class="id-number">REG-ID: ${idPeserta}</span>
-                        <div class="actions-row">
-                            <button class="btn-action" style="background: var(--primary); color: white; border: none;" onclick="shareCard(this)"><i data-lucide="share-2" size="16"></i>Bagikan</button>
-                            <button class="btn-action" onclick="window.print()"><i data-lucide="download" size="16"></i>Simpan</button>
+                        
+                        <div class="actions-row hide-on-share">
+                            <button class="btn-action" style="background: var(--primary); color: white; border: none;" onclick="shareCard(this)">
+                                <i data-lucide="share-2" size="16"></i>Bagikan
+                            </button>
+                            <button class="btn-action" onclick="window.print()">
+                                <i data-lucide="download" size="16"></i>Simpan
+                            </button>
                         </div>
-                        <button class="btn-action-outline" onclick="navigator.clipboard.writeText('${idPeserta}'); alert('ID Disalin!')">
+                        
+                        <button class="btn-action-outline hide-on-share" onclick="navigator.clipboard.writeText('${idPeserta}'); alert('ID Disalin!')">
                             <i data-lucide="copy" size="16"></i> Salin ID Peserta
                         </button>
                     </div>

@@ -27,6 +27,22 @@ function updateStats() {
     }
 }
 
+// SMART GREETING
+function updateGreeting() {
+    const greetingEl = document.getElementById('greetingText');
+    if (!greetingEl) return;
+    
+    const hour = new Date().getHours();
+    let welcome = "Halo, Rekan PMIK! 👋";
+    
+    if (hour >= 5 && hour < 11) welcome = "Selamat Pagi, Rekan! 🌅";
+    else if (hour >= 11 && hour < 15) welcome = "Selamat Siang, Rekan! ☀️";
+    else if (hour >= 15 && hour < 18) welcome = "Selamat Sore, Rekan! 🌇";
+    else welcome = "Selamat Malam, Rekan! 🌙";
+    
+    greetingEl.textContent = welcome;
+}
+
 // VIEW SWITCHER
 function switchView(viewName) {
     const homeView = document.getElementById('homeView');
@@ -41,13 +57,13 @@ function switchView(viewName) {
 
     if (viewName === 'home') {
         homeView.style.display = 'block';
-        viewTitle.textContent = 'Hub Informasi & Edukasi PMIK';
+        viewTitle.textContent = 'Portal Informasi PMIK';
         navItems[0].classList.add('active');
+        updateGreeting();
     } else if (viewName === 'ecard') {
         ecardView.style.display = 'block';
         viewTitle.textContent = 'Portal E-Card Peserta';
         navItems[1].classList.add('active');
-        // Small fix for stats when switching
         setTimeout(updateStats, 100);
     }
     
@@ -228,6 +244,7 @@ function displayResults(results) {
 document.addEventListener('DOMContentLoaded', () => {
     loadData();
     window.switchView = switchView; // Expose to global scope
+    updateGreeting();
     
     document.getElementById('searchBtn').addEventListener('click', searchParticipants);
     document.getElementById('emailSearch').addEventListener('keypress', (e) => {

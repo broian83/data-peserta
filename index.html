@@ -11,7 +11,7 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="stylesheet" href="style.css">
     <!-- Driver.js for Digital Tour -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/driver.js@1.0.1/dist/driver.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/driver.js@1.0.1/dist/driver.css" />
     <script src="https://cdn.jsdelivr.net/npm/driver.js@1.0.1/dist/driver.js.iife.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
@@ -20,11 +20,24 @@
     <div class="app-container">
         <!-- HEADER -->
         <header id="appHeader">
-            <div class="logo-container" id="tour-logo">
-                <img src="pormiki-logo.png" alt="PORMIKI" class="logo-img">
-                <h1>PORMIKI HQ</h1>
+            <div class="top-bar">
+                <div class="brand-side" id="tour-logo">
+                    <div class="mini-logo">
+                        <img src="pormiki-logo.png" alt="PORMIKI">
+                    </div>
+                    <div class="brand-text">
+                        <h1>PORMIKI APPS</h1>
+                        <span class="view-indicator" id="viewTitle">Portal Informasi PMIK</span>
+                    </div>
+                </div>
+                <div class="action-side">
+                    <button class="icon-btn" onclick="alert('Belum ada notifikasi baru')">
+                        <i data-lucide="bell"></i>
+                        <span class="dot"></span>
+                    </button>
+                    <div class="user-avatar" onclick="switchView('home')">PM</div>
+                </div>
             </div>
-            <p class="subtitle" id="viewTitle">Hub Informasi & Edukasi PMIK</p>
         </header>
 
         <!-- MAIN VIEWS -->
@@ -133,11 +146,13 @@
                 <i data-lucide="credit-card"></i>
                 <span>E-Card</span>
             </a>
-            <a href="https://us06web.zoom.us/j/81033258483?pwd=8G4Bxg9aaRnvZHbI2yOqiCXQFechbh.1" target="_blank" class="nav-item">
+            <a href="https://us06web.zoom.us/j/81033258483?pwd=8G4Bxg9aaRnvZHbI2yOqiCXQFechbh.1" target="_blank"
+                class="nav-item">
                 <i data-lucide="video"></i>
                 <span>Zoom</span>
             </a>
-            <a href="https://lms.kemkes.go.id/courses/a79f23f4-78d6-408e-a7a5-b3722b356d2a" target="_blank" class="nav-item">
+            <a href="https://lms.kemkes.go.id/courses/a79f23f4-78d6-408e-a7a5-b3722b356d2a" target="_blank"
+                class="nav-item">
                 <i data-lucide="graduation-cap"></i>
                 <span>LMS</span>
             </a>

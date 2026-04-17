@@ -16,10 +16,6 @@ async function loadData() {
         updateStats();
     } catch (error) {
         console.error('Error loading data:', error);
-        participants = [
-            { "Nama": "Budi Santoso", "Email": "budi@example.com", "Instansi": "RS Harapan", "Provinsi": "Jawa Tengah", "No HP": "08123456789" },
-            { "Nama": "Siti Aminah", "Email": "siti@gmail.com", "Instansi": "Puskesmas Maju", "Provinsi": "DKI Jakarta", "No HP": "08129999999" }
-        ];
         updateStats();
     }
 }
@@ -59,7 +55,7 @@ function searchParticipants() {
 
     setTimeout(() => {
         const filtered = participants.filter(p => {
-            const email = (getValueByPossibleKeys(p, ['Email', 'Email Address', 'Alamat Email', 'e-mail']) || '').toString().toLowerCase().trim();
+            const email = (getValueByPossibleKeys(p, ['Email', 'Email Address', 'Alamat Email', 'e-mail', 'EMAIL']) || '').toString().toLowerCase().trim();
             return email === query;
         });
 
@@ -71,7 +67,12 @@ function searchParticipants() {
 
 function getValueByPossibleKeys(obj, possibleKeys) {
     for (let key of possibleKeys) {
-        if (obj[key] !== undefined && obj[key] !== null) return obj[key];
+        if (obj[key] !== undefined && obj[key] !== null && obj[key] !== "") return obj[key];
+        // Check for keys with trailing/leading spaces (common in spreadsheet exports)
+        const trimmedKey = key.trim();
+        for (let actualKey in obj) {
+            if (actualKey.trim() === trimmedKey && obj[actualKey] !== "") return obj[actualKey];
+        }
     }
     return null;
 }
@@ -84,25 +85,38 @@ function displayResults(results) {
         container.innerHTML = `<div class="empty-state"><i data-lucide="user-x" size="64"></i><p>Alamat email tidak terdaftar.<br>Pastikan email sudah sesuai.</p></div>`;
     } else {
         results.forEach((p, index) => {
-            const name = getValueByPossibleKeys(p, ['Nama', 'Full Name', 'Nama Lengkap', 'Name', 'Lengkap']) || 'N/A';
-            const email = getValueByPossibleKeys(p, ['Email', 'Email Address', 'Alamat Email', 'e-mail']) || 'N/A';
-            const instansi = getValueByPossibleKeys(p, ['Instansi', 'Organization', 'Workplace', 'Unit Kerja', 'Institusi', 'RS', 'Kantor']) || '-';
-            const phone = getValueByPossibleKeys(p, ['No HP', 'Phone', 'WhatsApp', 'Telepon', 'Mobile']) || '-';
+            const name = getValueByPossibleKeys(p, ['Nama', 'Full Name', 'Nama Lengkap', 'Name', 'Lengkap', 'Nama ']) || 'Peserta Webinar';
+            const email = getValueByPossibleKeys(p, ['Email', 'Email Address', 'Alamat Email', 'e-mail']) || '-';
+            const instansi = getValueByPossibleKeys(p, ['Instansi', 'Organization', 'Workplace', 'Unit Kerja', 'Institusi', 'RS', 'Kantor', 'Instansi ']) || '-';
+            const phone = getValueByPossibleKeys(p, ['No HP', 'Phone', 'WhatsApp', 'Telepon', 'Mobile', 'No HP ']) || '-';
             const idPeserta = (p.ID || p.id || p.No || index + 1001).toString().padStart(6, '0');
 
             const cardWrapper = document.createElement('div');
             cardWrapper.className = 'ecard-container';
             cardWrapper.innerHTML = `
                 <div class="virtual-card">
-                    <div class="ecard-top"><i data-lucide="activity" class="ecard-logo"></i><span class="ecard-title">Kartu Peserta Webinar</span></div>
+                    <div class="ecard-top">
+                        <span class="ecard-title">KARTU PESERTA WEBINAR</span>
+                    </div>
                     <div class="ecard-body">
-                        <div class="avatar-container"><img src="https://pormiki.or.id/wp-content/uploads/2025/07/logo-dpp-transparan-Tanpa-Nama-2019-2048x1872.png" alt="Logo PORMIKI" style="width: 70%; height: auto;"></div>
+                        <div class="avatar-container">
+                            <img src="https://pormiki.or.id/wp-content/uploads/2025/07/logo-dpp-transparan-Tanpa-Nama-2019-2048x1872.png" alt="Logo PORMIKI" style="width: 70%; height: auto;">
+                        </div>
                         <h2 class="p-name">${name}</h2>
                         <span class="p-status">PARTICIPANT</span>
                         <div class="details-grid">
-                            <div class="detail-row"><span class="detail-label">Email Address</span><span class="detail-value">${email}</span></div>
-                            <div class="detail-row"><span class="detail-label">Institution / Workplace</span><span class="detail-value">${instansi}</span></div>
-                            <div class="detail-row"><span class="detail-label">WhatsApp Number</span><span class="detail-value">${phone}</span></div>
+                            <div class="detail-row">
+                                <span class="detail-label">Email Address</span>
+                                <span class="detail-value">${email}</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Institution / Workplace</span>
+                                <span class="detail-value">${instansi}</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">WhatsApp Number</span>
+                                <span class="detail-value">${phone}</span>
+                            </div>
                         </div>
                         <div class="barcode-sim"></div>
                         <span class="id-number">REG-ID: ${idPeserta}</span>
@@ -137,7 +151,6 @@ function initTour() {
         ]
     });
 
-    // Auto start after 1.5s delay
     setTimeout(() => driverObj.drive(), 1500);
 }
 

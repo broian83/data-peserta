@@ -138,41 +138,10 @@ function initTour() {
     }
 }
 
-// PWA Logic
-function initPWA() {
-    if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-            navigator.serviceWorker.register('sw.js').then(() => console.log('SW Registered'));
-        });
-    }
-
-    let deferredPrompt;
-    const installBanner = document.getElementById('installBanner');
-    const installBtn = document.getElementById('installBtn');
-
-    window.addEventListener('beforeinstallprompt', (e) => {
-        e.preventDefault();
-        deferredPrompt = e;
-        installBanner.style.display = 'flex';
-    });
-
-    if (installBtn) {
-        installBtn.addEventListener('click', async () => {
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                const { outcome } = await deferredPrompt.userChoice;
-                if (outcome === 'accepted') installBanner.style.display = 'none';
-                deferredPrompt = null;
-            }
-        });
-    }
-}
-
 // Initializations
 document.addEventListener('DOMContentLoaded', () => {
     loadData();
     initTour();
-    initPWA();
     
     document.getElementById('searchBtn').addEventListener('click', searchParticipants);
     document.getElementById('emailSearch').addEventListener('keypress', (e) => {

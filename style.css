@@ -38,38 +38,6 @@ body {
     box-shadow: 0 0 50px rgba(0,0,0,0.05);
 }
 
-/* PWA BANNER FIX */
-.install-banner {
-    background: var(--primary);
-    color: white;
-    padding: 1rem 1.25rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-bottom: 2px solid rgba(0,0,0,0.05);
-    animation: slideDown 0.5s ease-out;
-}
-
-.banner-content {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    font-weight: 600;
-    font-size: 0.85rem;
-}
-
-.install-banner button {
-    background: white;
-    color: var(--primary);
-    border: none;
-    padding: 0.4rem 1rem;
-    border-radius: 2rem;
-    font-weight: 800;
-    font-size: 0.75rem;
-    cursor: pointer;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-}
-
 header {
     padding: 2.5rem 1.5rem 2rem 1.5rem;
     text-align: center;

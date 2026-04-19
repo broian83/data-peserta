@@ -453,9 +453,10 @@ main { padding: 1.5rem 1.25rem 8rem 1.25rem; flex: 1; }
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+    background: linear-gradient(160deg, #0f172a 0%, #134e4a 40%, #00b5a5 100%);
+    border: none;
+    box-shadow: 0 15px 40px rgba(0, 181, 165, 0.25);
+    color: white;
 }
 
 .ecard-v2.back {
@@ -482,32 +483,32 @@ main { padding: 1.5rem 1.25rem 8rem 1.25rem; flex: 1; }
     width: 32px;
     height: 32px;
     border-radius: 0.5rem;
-    background: white;
+    background: rgba(255,255,255,0.15);
     padding: 3px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    box-shadow: none;
 }
 
 .ecard-v2-org strong {
     display: block;
     font-size: 0.85rem;
     font-weight: 900;
-    color: var(--text-main);
+    color: #ffffff;
     letter-spacing: 0.08em;
 }
 
 .ecard-v2-org span {
     display: block;
     font-size: 0.62rem;
-    color: var(--text-muted);
+    color: rgba(255,255,255,0.6);
     font-weight: 600;
 }
 
 .ecard-v2-badge {
     width: 30px; height: 30px;
-    background: rgba(0, 181, 165, 0.1);
+    background: rgba(255,255,255,0.15);
     border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
-    color: var(--primary);
+    color: #c4d600;
 }
 
 /* --- FRONT: Avatar Area --- */
@@ -538,14 +539,14 @@ main { padding: 1.5rem 1.25rem 8rem 1.25rem; flex: 1; }
 .ecard-v2-name-block h3 {
     font-size: 1.35rem;
     font-weight: 900;
-    color: var(--text-main);
+    color: #ffffff;
     margin-bottom: 0.15rem;
     letter-spacing: -0.01em;
 }
 
 .ecard-v2-name-block span {
     font-size: 0.78rem;
-    color: var(--text-muted);
+    color: rgba(255,255,255,0.65);
     font-weight: 600;
 }
 
@@ -563,7 +564,7 @@ main { padding: 1.5rem 1.25rem 8rem 1.25rem; flex: 1; }
     justify-content: space-between;
     align-items: center;
     padding: 0.65rem 0;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 1px solid rgba(255,255,255,0.12);
 }
 
 .ecard-v2-row:last-child {
@@ -573,20 +574,20 @@ main { padding: 1.5rem 1.25rem 8rem 1.25rem; flex: 1; }
 .ecard-v2-label {
     font-size: 0.7rem;
     font-weight: 700;
-    color: var(--text-muted);
+    color: rgba(255,255,255,0.55);
     display: flex;
     align-items: center;
     gap: 0.4rem;
 }
 
 .ecard-v2-label i {
-    color: var(--primary);
+    color: #c4d600;
 }
 
 .ecard-v2-value {
     font-size: 0.8rem;
     font-weight: 800;
-    color: var(--text-main);
+    color: #ffffff;
     text-align: right;
 }
 
@@ -597,8 +598,8 @@ main { padding: 1.5rem 1.25rem 8rem 1.25rem; flex: 1; }
     align-items: center;
     padding: 0.75rem 1.25rem;
     margin-top: auto;
-    border-top: 1px solid var(--border-color);
-    background: rgba(0, 181, 165, 0.03);
+    border-top: 1px solid rgba(255,255,255,0.12);
+    background: rgba(0, 0, 0, 0.1);
 }
 
 .ecard-v2-status {
@@ -607,7 +608,7 @@ main { padding: 1.5rem 1.25rem 8rem 1.25rem; flex: 1; }
     gap: 0.35rem;
     font-size: 0.65rem;
     font-weight: 800;
-    color: var(--primary);
+    color: #c4d600;
     text-transform: uppercase;
     letter-spacing: 0.06em;
 }
@@ -618,8 +619,7 @@ main { padding: 1.5rem 1.25rem 8rem 1.25rem; flex: 1; }
     gap: 0.3rem;
     font-size: 0.68rem;
     font-weight: 700;
-    color: var(--text-muted);
-    opacity: 0.7;
+    color: rgba(255,255,255,0.5);
 }
 
 /* --- BACK --- */

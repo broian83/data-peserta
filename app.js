@@ -788,7 +788,129 @@ function renderECard() {
 
                     <div class="ecard-v2-back-body">
                         <div class="ecard-v2-qr">
-                            <div class="qr-code-sim"></div>
+                            <svg viewBox="0 0 29 29" width="110" height="110" style="background:white;border-radius:10px;padding:8px;display:block;margin:0 auto 0.6rem;">
+                                <rect x="0" y="0" width="7" height="7" fill="#0f172a"/>
+                                <rect x="1" y="1" width="5" height="5" fill="white"/>
+                                <rect x="2" y="2" width="3" height="3" fill="#0f172a"/>
+                                <rect x="22" y="0" width="7" height="7" fill="#0f172a"/>
+                                <rect x="23" y="1" width="5" height="5" fill="white"/>
+                                <rect x="24" y="2" width="3" height="3" fill="#0f172a"/>
+                                <rect x="0" y="22" width="7" height="7" fill="#0f172a"/>
+                                <rect x="1" y="23" width="5" height="5" fill="white"/>
+                                <rect x="2" y="24" width="3" height="3" fill="#0f172a"/>
+                                <rect x="8" y="0" width="1" height="1" fill="#0f172a"/>
+                                <rect x="10" y="0" width="1" height="1" fill="#0f172a"/>
+                                <rect x="11" y="1" width="1" height="1" fill="#0f172a"/>
+                                <rect x="9" y="2" width="2" height="1" fill="#0f172a"/>
+                                <rect x="12" y="2" width="1" height="1" fill="#0f172a"/>
+                                <rect x="8" y="4" width="1" height="1" fill="#0f172a"/>
+                                <rect x="10" y="4" width="3" height="1" fill="#0f172a"/>
+                                <rect x="9" y="6" width="1" height="1" fill="#0f172a"/>
+                                <rect x="11" y="5" width="2" height="1" fill="#0f172a"/>
+                                <rect x="14" y="0" width="1" height="1" fill="#0f172a"/>
+                                <rect x="16" y="1" width="1" height="1" fill="#0f172a"/>
+                                <rect x="18" y="0" width="1" height="1" fill="#0f172a"/>
+                                <rect x="15" y="3" width="1" height="1" fill="#0f172a"/>
+                                <rect x="17" y="2" width="2" height="1" fill="#0f172a"/>
+                                <rect x="19" y="4" width="1" height="1" fill="#0f172a"/>
+                                <rect x="14" y="5" width="2" height="1" fill="#0f172a"/>
+                                <rect x="17" y="5" width="1" height="1" fill="#0f172a"/>
+                                <rect x="19" y="6" width="1" height="1" fill="#0f172a"/>
+                                <rect x="0" y="8" width="1" height="1" fill="#0f172a"/>
+                                <rect x="2" y="8" width="2" height="1" fill="#0f172a"/>
+                                <rect x="5" y="9" width="1" height="1" fill="#0f172a"/>
+                                <rect x="0" y="10" width="1" height="1" fill="#0f172a"/>
+                                <rect x="3" y="10" width="2" height="1" fill="#0f172a"/>
+                                <rect x="6" y="10" width="1" height="1" fill="#0f172a"/>
+                                <rect x="1" y="12" width="1" height="1" fill="#0f172a"/>
+                                <rect x="4" y="11" width="1" height="1" fill="#0f172a"/>
+                                <rect x="6" y="12" width="1" height="1" fill="#0f172a"/>
+                                <rect x="8" y="8" width="1" height="1" fill="#0f172a"/>
+                                <rect x="10" y="8" width="2" height="1" fill="#0f172a"/>
+                                <rect x="9" y="10" width="1" height="1" fill="#0f172a"/>
+                                <rect x="11" y="9" width="1" height="1" fill="#0f172a"/>
+                                <rect x="13" y="9" width="1" height="1" fill="#0f172a"/>
+                                <rect x="8" y="12" width="2" height="1" fill="#0f172a"/>
+                                <rect x="12" y="11" width="1" height="1" fill="#0f172a"/>
+                                <rect x="14" y="8" width="1" height="2" fill="#0f172a"/>
+                                <rect x="16" y="9" width="1" height="1" fill="#0f172a"/>
+                                <rect x="18" y="8" width="1" height="1" fill="#0f172a"/>
+                                <rect x="20" y="9" width="1" height="1" fill="#0f172a"/>
+                                <rect x="15" y="11" width="1" height="1" fill="#0f172a"/>
+                                <rect x="17" y="10" width="2" height="1" fill="#0f172a"/>
+                                <rect x="14" y="12" width="1" height="1" fill="#0f172a"/>
+                                <rect x="16" y="12" width="2" height="1" fill="#0f172a"/>
+                                <rect x="22" y="8" width="1" height="1" fill="#0f172a"/>
+                                <rect x="24" y="8" width="2" height="1" fill="#0f172a"/>
+                                <rect x="27" y="8" width="1" height="1" fill="#0f172a"/>
+                                <rect x="23" y="10" width="1" height="1" fill="#0f172a"/>
+                                <rect x="25" y="9" width="1" height="1" fill="#0f172a"/>
+                                <rect x="28" y="10" width="1" height="1" fill="#0f172a"/>
+                                <rect x="22" y="12" width="2" height="1" fill="#0f172a"/>
+                                <rect x="26" y="11" width="1" height="1" fill="#0f172a"/>
+                                <rect x="28" y="12" width="1" height="1" fill="#0f172a"/>
+                                <rect x="0" y="14" width="1" height="1" fill="#0f172a"/>
+                                <rect x="2" y="14" width="2" height="1" fill="#0f172a"/>
+                                <rect x="5" y="14" width="1" height="1" fill="#0f172a"/>
+                                <rect x="8" y="14" width="1" height="2" fill="#0f172a"/>
+                                <rect x="10" y="14" width="2" height="1" fill="#0f172a"/>
+                                <rect x="14" y="14" width="1" height="1" fill="#0f172a"/>
+                                <rect x="16" y="15" width="1" height="1" fill="#0f172a"/>
+                                <rect x="18" y="14" width="2" height="1" fill="#0f172a"/>
+                                <rect x="22" y="14" width="1" height="1" fill="#0f172a"/>
+                                <rect x="25" y="14" width="1" height="1" fill="#0f172a"/>
+                                <rect x="27" y="15" width="1" height="1" fill="#0f172a"/>
+                                <rect x="8" y="16" width="1" height="1" fill="#0f172a"/>
+                                <rect x="10" y="17" width="1" height="1" fill="#0f172a"/>
+                                <rect x="12" y="16" width="2" height="1" fill="#0f172a"/>
+                                <rect x="9" y="18" width="2" height="1" fill="#0f172a"/>
+                                <rect x="14" y="18" width="1" height="1" fill="#0f172a"/>
+                                <rect x="16" y="17" width="1" height="1" fill="#0f172a"/>
+                                <rect x="18" y="18" width="2" height="1" fill="#0f172a"/>
+                                <rect x="8" y="20" width="1" height="1" fill="#0f172a"/>
+                                <rect x="12" y="19" width="1" height="1" fill="#0f172a"/>
+                                <rect x="10" y="20" width="2" height="1" fill="#0f172a"/>
+                                <rect x="22" y="16" width="1" height="1" fill="#0f172a"/>
+                                <rect x="24" y="17" width="2" height="1" fill="#0f172a"/>
+                                <rect x="27" y="16" width="1" height="1" fill="#0f172a"/>
+                                <rect x="23" y="18" width="1" height="1" fill="#0f172a"/>
+                                <rect x="26" y="18" width="1" height="1" fill="#0f172a"/>
+                                <rect x="28" y="19" width="1" height="1" fill="#0f172a"/>
+                                <rect x="22" y="20" width="2" height="1" fill="#0f172a"/>
+                                <rect x="25" y="20" width="1" height="1" fill="#0f172a"/>
+                                <rect x="28" y="20" width="1" height="1" fill="#0f172a"/>
+                                <rect x="8" y="22" width="1" height="1" fill="#0f172a"/>
+                                <rect x="10" y="22" width="2" height="1" fill="#0f172a"/>
+                                <rect x="13" y="22" width="1" height="1" fill="#0f172a"/>
+                                <rect x="9" y="24" width="1" height="1" fill="#0f172a"/>
+                                <rect x="11" y="23" width="1" height="1" fill="#0f172a"/>
+                                <rect x="13" y="24" width="1" height="1" fill="#0f172a"/>
+                                <rect x="8" y="26" width="2" height="1" fill="#0f172a"/>
+                                <rect x="12" y="25" width="1" height="1" fill="#0f172a"/>
+                                <rect x="10" y="27" width="1" height="1" fill="#0f172a"/>
+                                <rect x="12" y="28" width="1" height="1" fill="#0f172a"/>
+                                <rect x="14" y="22" width="1" height="1" fill="#0f172a"/>
+                                <rect x="16" y="23" width="1" height="1" fill="#0f172a"/>
+                                <rect x="18" y="22" width="2" height="1" fill="#0f172a"/>
+                                <rect x="15" y="24" width="1" height="1" fill="#0f172a"/>
+                                <rect x="17" y="25" width="1" height="1" fill="#0f172a"/>
+                                <rect x="19" y="24" width="1" height="1" fill="#0f172a"/>
+                                <rect x="14" y="26" width="2" height="1" fill="#0f172a"/>
+                                <rect x="18" y="26" width="1" height="1" fill="#0f172a"/>
+                                <rect x="16" y="28" width="1" height="1" fill="#0f172a"/>
+                                <rect x="18" y="27" width="1" height="1" fill="#0f172a"/>
+                                <rect x="22" y="22" width="1" height="1" fill="#0f172a"/>
+                                <rect x="24" y="22" width="2" height="1" fill="#0f172a"/>
+                                <rect x="28" y="22" width="1" height="1" fill="#0f172a"/>
+                                <rect x="23" y="24" width="1" height="1" fill="#0f172a"/>
+                                <rect x="25" y="23" width="1" height="1" fill="#0f172a"/>
+                                <rect x="27" y="24" width="1" height="1" fill="#0f172a"/>
+                                <rect x="22" y="26" width="2" height="1" fill="#0f172a"/>
+                                <rect x="26" y="25" width="1" height="1" fill="#0f172a"/>
+                                <rect x="28" y="26" width="1" height="1" fill="#0f172a"/>
+                                <rect x="24" y="28" width="1" height="1" fill="#0f172a"/>
+                                <rect x="26" y="27" width="2" height="1" fill="#0f172a"/>
+                            </svg>
                             <p>Pindai untuk Validasi Anggota</p>
                         </div>
 
@@ -807,8 +929,8 @@ function renderECard() {
                     <div class="ecard-v2-back-footer">
                         <img src="pormiki-logo.png" alt="" style="width:24px;height:24px;border-radius:6px;">
                         <div>
-                            <strong>PORMIKI APPS</strong>
-                            <span>pormiki.netlify.app</span>
+                            <strong>PORMIKI</strong>
+                            <span>Versi 1.0.0</span>
                         </div>
                     </div>
                 </div>

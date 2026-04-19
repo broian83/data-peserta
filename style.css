@@ -215,8 +215,14 @@ main { padding: 1.5rem 1.25rem 8rem 1.25rem; flex: 1; }
     border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; margin-bottom: 0.75rem;
 }
 .ic-icon.gold { background: rgba(196, 214, 0, 0.1); color: #8a9600; }
-.info-card h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.3rem; }
-.info-card p { font-size: 0.72rem; color: var(--text-muted); line-height: 1.4; }
+.info-card h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.3rem; transition: var(--transition); }
+.info-card p { font-size: 0.72rem; color: var(--text-muted); line-height: 1.4; transition: var(--transition); }
+.info-card:hover { 
+    transform: translateY(-8px); 
+    border-color: var(--primary);
+    box-shadow: 0 15px 30px rgba(0, 181, 165, 0.12);
+}
+.info-card:hover h4 { color: var(--primary); }
 
 /* RESOURCES */
 .resource-section h3 { font-size: 1.1rem; font-weight: 850; margin-bottom: 1rem; }
@@ -230,13 +236,12 @@ main { padding: 1.5rem 1.25rem 8rem 1.25rem; flex: 1; }
 .res-body { flex: 1; min-width: 0; }
 .res-body strong { display: block; font-size: 0.85rem; font-weight: 700; color: var(--text-main); margin-bottom: 2px; }
 .res-body span { font-size: 0.7rem; color: var(--text-muted); display: block; }
-.res-btn {
-    width: 40px; height: 40px; background: var(--primary); border: none;
-    border-radius: 50%; color: white; display: flex;
-    align-items: center; justify-content: center; cursor: pointer;
-    flex-shrink: 0; text-decoration: none;
-    box-shadow: 0 4px 10px rgba(0, 181, 165, 0.2);
+.resource-item:hover {
+    transform: translateY(-4px);
+    border-color: var(--primary);
+    box-shadow: 0 8px 20px rgba(0, 181, 165, 0.08);
 }
+.res-btn:hover { transform: scale(1.1) rotate(5deg); filter: brightness(1.1); }
 
 /* QUICK LINKS */
 .quick-links { display: flex; gap: 0.75rem; overflow-x: auto; padding-bottom: 0.5rem; scrollbar-width: none; }
@@ -245,6 +250,13 @@ main { padding: 1.5rem 1.25rem 8rem 1.25rem; flex: 1; }
     border: 1.5px solid var(--border-color); display: flex; align-items: center;
     gap: 0.6rem; text-decoration: none; color: var(--text-main);
     font-size: 0.8rem; font-weight: 700; white-space: nowrap;
+    transition: var(--transition);
+}
+.q-link:hover {
+    transform: translateY(-4px);
+    border-color: var(--primary);
+    color: var(--primary);
+    box-shadow: 0 8px 20px rgba(0, 181, 165, 0.08);
 }
 
 /* SEARCH & ECARD */
@@ -278,6 +290,10 @@ main { padding: 1.5rem 1.25rem 8rem 1.25rem; flex: 1; }
 @media (max-width: 360px) {
     .search-action-btn span { display: none; }
     .search-action-btn { padding: 0.7rem; border-radius: 50%; }
+}
+.search-action-btn:hover {
+    filter: brightness(1.1);
+    box-shadow: 0 8px 20px rgba(0, 181, 165, 0.2);
 }
 .search-action-btn:active { transform: scale(0.95); }
 
@@ -361,6 +377,7 @@ main { padding: 1.5rem 1.25rem 8rem 1.25rem; flex: 1; }
 }
 .nav-item i { transition: var(--transition); color: #cbd5e1; width: 20px; }
 .nav-item.active { color: var(--primary); }
+.nav-item:hover i { color: var(--primary); transform: translateY(-3px); }
 .nav-item.active i { color: var(--primary); transform: translateY(-3px); }
 
 /* FAB AI ASSISTANT */

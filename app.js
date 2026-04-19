@@ -2,6 +2,7 @@ import { homeView } from './js/views/homeView.js';
 import { materiView } from './js/views/materiView.js';
 import { profileView } from './js/views/profileView.js';
 import { authView } from './js/views/authView.js';
+import { taskView } from './js/views/taskView.js';
 
 let participants = [];
 let isLoggedIn = false; // Simulation state
@@ -129,11 +130,17 @@ function switchView(viewId, btn) {
         const navItems = document.querySelectorAll('.nav-item');
         if (viewId === 'home') navItems[0].classList.add('active');
         else if (viewId === 'materi') navItems[1].classList.add('active');
-        else if (viewId === 'profile') navItems[2].classList.add('active');
+        else if (viewId === 'task') navItems[2].classList.add('active');
+        else if (viewId === 'profile') navItems[3].classList.add('active');
     }
 
     // Update Header Text
-    const titles = { 'home': 'Dashboard', 'materi': 'Materi Webinar', 'profile': 'Profil Anggota' };
+    const titles = { 
+        'home': 'Dashboard', 
+        'materi': 'Materi Webinar', 
+        'task': 'Manajemen Tugas',
+        'profile': 'Profil Anggota' 
+    };
     const titleEl = document.querySelector('.view-indicator');
     if (titleEl) titleEl.textContent = titles[viewId] || 'Dashboard';
 
@@ -959,7 +966,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Inject Modular Views
     const mainContent = document.getElementById('mainContent');
     if (mainContent) {
-        mainContent.innerHTML = homeView + materiView + profileView;
+        mainContent.innerHTML = homeView + materiView + taskView + profileView;
     }
 
     checkAuth(); // Cek status login pertama kali

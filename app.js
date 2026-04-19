@@ -97,32 +97,6 @@ function updateHomeInfo() {
     dateEl.textContent = new Date().toLocaleDateString('id-ID', options);
 }
 
-// 7. COUNTDOWN LOGIC
-function startCountdown() {
-    const targetDate = new Date();
-    targetDate.setHours(9, 0, 0, 0); // Set ke jam 9 pagi hari ini
-    if (new Date() > targetDate) targetDate.setDate(targetDate.getDate() + 1); // Jika sudah lewat, set besok
-
-    function update() {
-        const now = new Date();
-        const diff = targetDate - now;
-
-        const hours = Math.floor(diff / (1000 * 60 * 60));
-        const mins = Math.floor((diff / (1000 * 60)) % 60);
-        const secs = Math.floor((diff / 1000) % 60);
-
-        const hEl = document.querySelector('#timer-hour .t-val');
-        const mEl = document.querySelector('#timer-min .t-val');
-        const sEl = document.querySelector('#timer-sec .t-val');
-
-        if (hEl) hEl.textContent = hours.toString().padStart(2, '0');
-        if (mEl) mEl.textContent = mins.toString().padStart(2, '0');
-        if (sEl) sEl.textContent = secs.toString().padStart(2, '0');
-    }
-
-    update();
-    setInterval(update, 1000);
-}
 
 // VIEW SWITCHER
 function switchView(viewName) {
@@ -353,7 +327,6 @@ document.addEventListener('DOMContentLoaded', () => {
     loadData();
     window.switchView = switchView; // Expose to global scope
     updateHomeInfo();
-    startCountdown();
 
     document.getElementById('searchBtn').addEventListener('click', searchParticipants);
     const searchInput = document.getElementById('searchInput');

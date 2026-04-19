@@ -5,66 +5,47 @@ export const taskView = `
                 <span class="task-badge">Status Produktivitas</span>
                 <h2>Target Hari Ini</h2>
                 <div class="productivity-card">
-                    <div class="prod-info">
-                        <strong>Coding Berkas</strong>
-                        <span>32 / 50 Selesai</span>
+                    <div class="prod-info" id="taskStats">
+                        <strong>Target Berkas</strong>
+                        <span>0 / 0 Selesai</span>
                     </div>
                     <div class="prod-progress-bar">
-                        <div class="prod-progress-fill" style="width: 64%"></div>
+                        <div class="prod-progress-fill" id="taskProgressBar" style="width: 0%"></div>
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="task-container">
-            <div class="section-header">
-                <h3>Daftar Tugas</h3>
-                <button class="btn-add-task" onclick="alert('Fitur tambah tugas sedang disiapkan')">
-                    <i data-lucide="plus"></i>
+            <!-- QUICK ADD TASK -->
+            <div class="quick-add-task-card">
+                <input type="text" id="newTaskInput" placeholder="Tulis tugas baru (misal: Coding 20 RM)...">
+                <select id="taskCategorySelect">
+                    <option value="normal">Normal</option>
+                    <option value="urgent">Urgent</option>
+                    <option value="routine">Routine</option>
+                </select>
+                <button onclick="window.addTask()"><i data-lucide="plus"></i></button>
+            </div>
+
+            <div class="section-header" style="margin-top: 2rem;">
+                <h3>Daftar Tugas Saya</h3>
+                <button class="btn-clear-tasks" onclick="window.clearFinishedTasks()" title="Hapus yang selesai">
+                    <i data-lucide="trash-2"></i>
                 </button>
             </div>
 
-            <div class="task-list">
-                <div class="task-item prioritized">
-                    <div class="task-checkbox"><i data-lucide="check"></i></div>
-                    <div class="task-text">
-                        <strong>Klaim BPJS - Berkas RJ</strong>
-                        <span>Batas waktu: Pukul 15:00 WIB</span>
-                    </div>
-                    <div class="task-tag urgent">URGENT</div>
-                </div>
-
-                <div class="task-item">
-                    <div class="task-checkbox active"><i data-lucide="check"></i></div>
-                    <div class="task-text">
-                        <strong>Analisis Kuantitatif RM</strong>
-                        <span>Bangsal Melati - 15 Berkas</span>
-                    </div>
-                    <div class="task-tag">NORMAL</div>
-                </div>
-
-                <div class="task-item">
-                    <div class="task-checkbox"><i data-lucide="check"></i></div>
-                    <div class="task-text">
-                        <strong>Update SIRS Online</strong>
-                        <span>Laporan bulanan Maret</span>
-                    </div>
-                    <div class="task-tag routine">ROUTINE</div>
-                </div>
-
-                <div class="task-item">
-                    <div class="task-checkbox"><i data-lucide="check"></i></div>
-                    <div class="task-text">
-                        <strong>Verifikasi SIP Dokter</strong>
-                        <span>Update database kepegawaian</span>
-                    </div>
-                    <div class="task-tag routine">ROUTINE</div>
+            <div class="task-list" id="taskListContainer">
+                <!-- Dynamic Tasks will be injected here -->
+                <div class="empty-state-tasks">
+                    <i data-lucide="list-todo"></i>
+                    <p>Belum ada tugas. Tambahkan sekarang!</p>
                 </div>
             </div>
 
             <div class="task-quote">
                 <i data-lucide="quote"></i>
-                <p>"Data yang akurat menyelamatkan nyawa. Semangat bekerja, PMIK!"</p>
+                <p id="dynamicQuote">"Data yang akurat menyelamatkan nyawa. Semangat bekerja, PMIK!"</p>
             </div>
         </div>
     </section>

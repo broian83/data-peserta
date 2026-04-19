@@ -145,12 +145,113 @@ function switchView(viewId, btn) {
     if (titleEl) titleEl.textContent = titles[viewId] || 'Dashboard';
 
     if (viewId === 'materi') renderMateri();
+    if (viewId === 'task') renderTasks();
     if (viewId === 'profile') renderECard();
     if (viewId === 'home') updateHomeInfo();
     
     window.scrollTo({ top: 0, behavior: 'smooth' });
     if (window.lucide) window.lucide.createIcons();
 }
+
+// TASK SYSTEM LOGIC
+let myTasks = JSON.parse(localStorage.getItem('pormiki_tasks')) || [
+    { id: 1, text: 'Coding Berkas RI - Melati', category: 'urgent', completed: false },
+    { id: 2, text: 'Verifikasi Klaim BPJS', category: 'normal', completed: true },
+    { id: 3, text: 'Laporan Bulanan SIRS', category: 'routine', completed: false }
+];
+
+function saveTasks() {
+    localStorage.setItem('pormiki_tasks', JSON.stringify(myTasks));
+}
+
+window.addTask = () => {
+    const input = document.getElementById('newTaskInput');
+    const category = document.getElementById('taskCategorySelect');
+    if (!input || !input.value.trim()) return;
+
+    const newTask = {
+        id: Date.now(),
+        text: input.value.trim(),
+        category: category.value,
+        completed: false
+    };
+
+    myTasks.unshift(newTask);
+    saveTasks();
+    input.value = '';
+    renderTasks();
+    showToast('Tugas ditambahkan!', 'success');
+};
+
+window.toggleTask = (id) => {
+    const task = myTasks.find(t => t.id === id);
+    if (task) {
+        task.completed = !task.completed;
+        if (task.completed) runCelebration();
+        saveTasks();
+        renderTasks();
+    }
+};
+
+window.clearFinishedTasks = () => {
+    myTasks = myTasks.filter(t => !t.completed);
+    saveTasks();
+    renderTasks();
+    showToast('Tugas selesai dihapus', 'info');
+};
+
+function renderTasks() {
+    const container = document.getElementById('taskListContainer');
+    const statsEl = document.getElementById('taskStats');
+    const progressEl = document.getElementById('taskProgressBar');
+    
+    if (!container) return;
+
+    if (myTasks.length === 0) {
+        container.innerHTML = `
+            <div class="empty-state-tasks">
+                <i data-lucide="list-todo"></i>
+                <p>Belum ada tugas. Tambahkan sekarang!</p>
+            </div>
+        `;
+    } else {
+        container.innerHTML = myTasks.map(task => `
+            <div class="task-item ${task.category === 'urgent' ? 'prioritized' : ''}" onclick="window.toggleTask(${task.id})">
+                <div class="task-checkbox ${task.completed ? 'active' : ''}">
+                    <i data-lucide="check"></i>
+                </div>
+                <div class="task-text ${task.completed ? 'completed' : ''}">
+                    <strong>${task.text}</strong>
+                    <span>Kategori: ${task.category.toUpperCase()}</span>
+                </div>
+                <div class="task-tag ${task.category}">${task.category.toUpperCase()}</div>
+                <button class="btn-del-single" onclick="event.stopPropagation(); window.deleteSingleTask(${task.id})">
+                    <i data-lucide="trash-2"></i>
+                </button>
+            </div>
+        `).join('');
+    }
+
+    // Update Stats & Progress
+    const total = myTasks.length;
+    const completed = myTasks.filter(t => t.completed).length;
+    const percent = total === 0 ? 0 : Math.round((completed / total) * 100);
+
+    if (statsEl) {
+        statsEl.innerHTML = `<strong>Tugas Harian</strong> <span>${completed} / ${total} Selesai</span>`;
+    }
+    if (progressEl) {
+        progressEl.style.width = percent + '%';
+    }
+
+    if (window.lucide) window.lucide.createIcons();
+}
+
+window.deleteSingleTask = (id) => {
+    myTasks = myTasks.filter(t => t.id !== id);
+    saveTasks();
+    renderTasks();
+};
 
 function runCelebration() {
     if (typeof confetti === 'function') {

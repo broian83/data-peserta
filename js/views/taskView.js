@@ -17,15 +17,24 @@ export const taskView = `
         </div>
 
         <div class="task-container">
-            <!-- QUICK ADD TASK -->
-            <div class="quick-add-task-card">
-                <input type="text" id="newTaskInput" placeholder="Tulis tugas baru...">
-                <select id="taskCategorySelect">
-                    <option value="normal">Normal</option>
-                    <option value="urgent">Urgent</option>
-                    <option value="routine">Routine</option>
-                </select>
-                <button onclick="window.addTask()"><i data-lucide="plus"></i></button>
+            <!-- SOPHISTICATED QUICK ADD TASK -->
+            <div class="advanced-add-card">
+                <input type="text" id="newTaskInput" placeholder="Tulis tugas baru (misal: Coding 10 RM)...">
+                <div class="add-options-row">
+                    <div class="opt-group">
+                        <i data-lucide="tag"></i>
+                        <select id="taskCategorySelect">
+                            <option value="normal">Normal</option>
+                            <option value="urgent">Urgent</option>
+                            <option value="routine">Routine</option>
+                        </select>
+                    </div>
+                    <div class="opt-group">
+                        <i data-lucide="calendar"></i>
+                        <input type="date" id="taskDateInput">
+                    </div>
+                    <button onclick="window.addTask()" class="btn-primary-add"><i data-lucide="plus"></i></button>
+                </div>
             </div>
 
             <!-- FILTER TABS -->
@@ -39,14 +48,14 @@ export const taskView = `
             </div>
 
             <div class="section-header" style="margin-top: 1rem;">
-                <h3 id="currentFilterTitle">Daftar Tugas</h3>
+                <h3 id="currentFilterTitle">Daftar Tugas Anda</h3>
                 <button class="btn-clear-tasks" onclick="window.clearFinishedTasks()" title="Hapus yang selesai">
                     <i data-lucide="trash-2"></i>
                 </button>
             </div>
 
             <div class="task-list" id="taskListContainer">
-                <!-- Dynamic Tasks will be injected here -->
+                <!-- Dynamic Tasks -->
             </div>
 
             <div class="task-quote">

@@ -183,12 +183,15 @@ window.filterTasks = (category, btn) => {
 window.addTask = () => {
     const input = document.getElementById('newTaskInput');
     const category = document.getElementById('taskCategorySelect');
+    const dateInput = document.getElementById('taskDateInput');
+    
     if (!input || !input.value.trim()) return;
 
     const newTask = {
         id: Date.now(),
         text: input.value.trim(),
         category: category.value,
+        dueDate: dateInput.value || null,
         completed: false
     };
 
@@ -236,21 +239,36 @@ function renderTasks() {
             </div>
         `;
     } else {
-        container.innerHTML = filteredTasks.map(task => `
-            <div class="task-item ${task.category === 'urgent' ? 'prioritized' : ''}" onclick="window.toggleTask(${task.id})">
-                <div class="task-checkbox ${task.completed ? 'active' : ''}">
-                    <i data-lucide="check"></i>
+        container.innerHTML = filteredTasks.map(task => {
+            const dateObj = task.dueDate ? new Date(task.dueDate) : null;
+            const diffDays = dateObj ? Math.ceil((dateObj - new Date().setHours(0,0,0,0)) / (1000 * 60 * 60 * 24)) : null;
+            let dateClass = '';
+            let dateText = task.dueDate || 'Tanpa Limit';
+
+            if (dateObj) {
+                if (diffDays === 0) { dateText = 'HARI INI'; dateClass = 'due-today'; }
+                else if (diffDays < 0) { dateText = 'TERLAMBAT'; dateClass = 'overdue'; }
+                else if (diffDays === 1) { dateText = 'BESOK'; }
+            }
+
+            return `
+                <div class="task-item ${task.category === 'urgent' ? 'prioritized' : ''} ${dateClass}" onclick="window.toggleTask(${task.id})">
+                    <div class="task-checkbox ${task.completed ? 'active' : ''}">
+                        <i data-lucide="check"></i>
+                    </div>
+                    <div class="task-text ${task.completed ? 'completed' : ''}">
+                        <strong>${task.text}</strong>
+                        <div class="task-meta-info">
+                            <span class="meta-cat"><i data-lucide="tag"></i> ${task.category.toUpperCase()}</span>
+                            <span class="meta-date ${dateClass}"><i data-lucide="calendar"></i> ${dateText}</span>
+                        </div>
+                    </div>
+                    <button class="btn-del-single" onclick="event.stopPropagation(); window.deleteSingleTask(${task.id})">
+                        <i data-lucide="trash-2"></i>
+                    </button>
                 </div>
-                <div class="task-text ${task.completed ? 'completed' : ''}">
-                    <strong>${task.text}</strong>
-                    <span>Kategori: ${task.category.toUpperCase()}</span>
-                </div>
-                <div class="task-tag ${task.category}">${task.category.toUpperCase()}</div>
-                <button class="btn-del-single" onclick="event.stopPropagation(); window.deleteSingleTask(${task.id})">
-                    <i data-lucide="trash-2"></i>
-                </button>
-            </div>
-        `).join('');
+            `;
+        }).join('');
     }
 
     // Update Stats & Progress
@@ -1089,6 +1107,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const mainContent = document.getElementById('mainContent');
     if (mainContent) {
         mainContent.innerHTML = homeView + materiView + taskView + profileView;
+        // Set default date for task input
+        const dateInput = document.getElementById('taskDateInput');
+        if (dateInput) {
+            const today = new Date().toISOString().split('T')[0];
+            dateInput.value = today;
+        }
     }
 
     checkAuth(); // Cek status login pertama kali

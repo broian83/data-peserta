@@ -625,16 +625,18 @@ window.closeMateriDetail = () => {
 // 7. AUTHENTICATION LOGIC
 function checkAuth() {
     const loginView = document.getElementById('loginView');
+    const bottomNav = document.querySelector('.bottom-nav');
+
     if (!isLoggedIn) {
         if (loginView) {
             loginView.innerHTML = authView;
             loginView.style.display = 'flex';
         }
-        document.querySelector('.bottom-nav')?.style.setProperty('display', 'none', 'important');
+        if (bottomNav) bottomNav.style.setProperty('display', 'none', 'important');
     } else {
         if (loginView) loginView.style.display = 'none';
-        document.querySelector('.bottom-nav')?.style.display = 'flex';
-        renderECard(); // Pastikan ecard ter-render
+        if (bottomNav) bottomNav.style.display = 'flex';
+        renderECard(); 
     }
     if (window.lucide) window.lucide.createIcons();
 }

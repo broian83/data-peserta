@@ -660,6 +660,8 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('materiSearch')?.addEventListener('input', (e) => {
         renderMateri(e.target.value, currentMateriCategory);
     });
+
+    setTimeout(() => {
         const aiChatFooter = document.querySelector('.ai-chat-footer');
         if (aiChatFooter) {
             const voiceBtn = document.createElement('button');

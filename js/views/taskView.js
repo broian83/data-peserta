@@ -19,7 +19,7 @@ export const taskView = `
         <div class="task-container">
             <!-- QUICK ADD TASK -->
             <div class="quick-add-task-card">
-                <input type="text" id="newTaskInput" placeholder="Tulis tugas baru (misal: Coding 20 RM)...">
+                <input type="text" id="newTaskInput" placeholder="Tulis tugas baru...">
                 <select id="taskCategorySelect">
                     <option value="normal">Normal</option>
                     <option value="urgent">Urgent</option>
@@ -28,8 +28,18 @@ export const taskView = `
                 <button onclick="window.addTask()"><i data-lucide="plus"></i></button>
             </div>
 
-            <div class="section-header" style="margin-top: 2rem;">
-                <h3>Daftar Tugas Saya</h3>
+            <!-- FILTER TABS -->
+            <div class="task-filters-scroll">
+                <div class="task-filter-tabs">
+                    <button class="filter-tab active" onclick="window.filterTasks('all', this)">Semua</button>
+                    <button class="filter-tab" onclick="window.filterTasks('urgent', this)">Urgent</button>
+                    <button class="filter-tab" onclick="window.filterTasks('normal', this)">Normal</button>
+                    <button class="filter-tab" onclick="window.filterTasks('routine', this)">Routine</button>
+                </div>
+            </div>
+
+            <div class="section-header" style="margin-top: 1rem;">
+                <h3 id="currentFilterTitle">Daftar Tugas</h3>
                 <button class="btn-clear-tasks" onclick="window.clearFinishedTasks()" title="Hapus yang selesai">
                     <i data-lucide="trash-2"></i>
                 </button>
@@ -37,15 +47,11 @@ export const taskView = `
 
             <div class="task-list" id="taskListContainer">
                 <!-- Dynamic Tasks will be injected here -->
-                <div class="empty-state-tasks">
-                    <i data-lucide="list-todo"></i>
-                    <p>Belum ada tugas. Tambahkan sekarang!</p>
-                </div>
             </div>
 
             <div class="task-quote">
                 <i data-lucide="quote"></i>
-                <p id="dynamicQuote">"Data yang akurat menyelamatkan nyawa. Semangat bekerja, PMIK!"</p>
+                <p id="dynamicQuote">"Satu berkas yang lengkap adalah awal dari pelayanan yang hebat."</p>
             </div>
         </div>
     </section>

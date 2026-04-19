@@ -159,10 +159,26 @@ let myTasks = JSON.parse(localStorage.getItem('pormiki_tasks')) || [
     { id: 2, text: 'Verifikasi Klaim BPJS', category: 'normal', completed: true },
     { id: 3, text: 'Laporan Bulanan SIRS', category: 'routine', completed: false }
 ];
+let currentTaskFilter = 'all';
 
 function saveTasks() {
     localStorage.setItem('pormiki_tasks', JSON.stringify(myTasks));
 }
+
+window.filterTasks = (category, btn) => {
+    currentTaskFilter = category;
+    
+    // Update active tab UI
+    document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+    if (btn) btn.classList.add('active');
+
+    // Update Title
+    const titles = { 'all': 'Daftar Tugas', 'urgent': 'Tugas Mendesak', 'normal': 'Tugas Normal', 'routine': 'Tugas Rutin' };
+    const titleEl = document.getElementById('currentFilterTitle');
+    if (titleEl) titleEl.textContent = titles[category];
+
+    renderTasks();
+};
 
 window.addTask = () => {
     const input = document.getElementById('newTaskInput');
@@ -207,15 +223,20 @@ function renderTasks() {
     
     if (!container) return;
 
-    if (myTasks.length === 0) {
+    let filteredTasks = myTasks;
+    if (currentTaskFilter !== 'all') {
+        filteredTasks = myTasks.filter(t => t.category === currentTaskFilter);
+    }
+
+    if (filteredTasks.length === 0) {
         container.innerHTML = `
             <div class="empty-state-tasks">
                 <i data-lucide="list-todo"></i>
-                <p>Belum ada tugas. Tambahkan sekarang!</p>
+                <p>Tidak ada tugas ${currentTaskFilter === 'all' ? '' : 'kategori ini'}.</p>
             </div>
         `;
     } else {
-        container.innerHTML = myTasks.map(task => `
+        container.innerHTML = filteredTasks.map(task => `
             <div class="task-item ${task.category === 'urgent' ? 'prioritized' : ''}" onclick="window.toggleTask(${task.id})">
                 <div class="task-checkbox ${task.completed ? 'active' : ''}">
                     <i data-lucide="check"></i>

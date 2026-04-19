@@ -109,15 +109,20 @@ export const homeView = `
             </div>
         </div>
 
-        <div class="quick-links" style="margin-top: 1rem;">
-            <a href="https://pormiki.or.id" target="_blank" rel="noopener noreferrer" class="q-link hover-lift">
-                <i data-lucide="layout"></i>
-                <span>Website DPP</span>
-            </a>
-            <a href="https://lms.kemkes.go.id" target="_blank" rel="noopener noreferrer" class="q-link hover-lift">
-                <i data-lucide="graduation-cap"></i>
-                <span>LMS Kemkes</span>
-            </a>
+        <div class="resource-section" style="margin-top: 2.5rem; padding-bottom: 2rem;">
+            <div class="section-header">
+                <h3>Tautan Penting</h3>
+            </div>
+            <div class="quick-links">
+                <a href="https://pormiki.or.id" target="_blank" rel="noopener noreferrer" class="q-link hover-lift">
+                    <i data-lucide="layout"></i>
+                    <span>Website DPP</span>
+                </a>
+                <a href="https://lms.kemkes.go.id" target="_blank" rel="noopener noreferrer" class="q-link hover-lift">
+                    <i data-lucide="graduation-cap"></i>
+                    <span>LMS Kemkes</span>
+                </a>
+            </div>
         </div>
     </section>
 `;

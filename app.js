@@ -100,48 +100,43 @@ function updateHomeInfo() {
 
 
 // VIEW SWITCHER
-function switchView(viewName) {
-    const materiView = document.getElementById('materiView');
-    const profileView = document.getElementById('profileView');
-    const viewTitle = document.getElementById('viewTitle');
-    const navItems = document.querySelectorAll('.nav-item');
-    const fab = document.getElementById('aiToggle') || document.querySelector('.fab-help');
-
-    if (homeView) homeView.style.display = 'none';
-    if (ecardView) ecardView.style.display = 'none';
-    if (materiView) materiView.style.display = 'none';
-    if (profileView) profileView.style.display = 'none';
-    navItems.forEach(item => item.classList.remove('active'));
-
-    if (viewName === 'home') {
-        homeView.style.display = 'block';
-        viewTitle.textContent = 'Portal Informasi PMIK';
-        navItems[0].classList.add('active');
-        if (fab) fab.style.display = 'flex';
-        updateHomeInfo();
-    } else if (viewName === 'ecard') {
-        if (ecardView) ecardView.style.display = 'block';
-        if (viewTitle) viewTitle.textContent = 'Portal E-Card Peserta';
-        navItems[1].classList.add('active');
-        if (fab) fab.style.display = 'none';
-        setTimeout(updateStats, 100);
-    } else if (viewName === 'materi') {
-        if (materiView) {
-            materiView.style.display = 'block';
-            renderMateri();
-        }
-        if (viewTitle) viewTitle.textContent = 'Pusat Materi Webinar';
-        navItems[2].classList.add('active');
-        if (fab) fab.style.display = 'none';
-    } else if (viewName === 'profile') {
-        if (profileView) profileView.style.display = 'block';
-        if (viewTitle) viewTitle.textContent = 'Profil Saya';
-        navItems[3].classList.add('active');
-        if (fab) fab.style.display = 'none';
+function switchView(viewId, btn) {
+    document.querySelectorAll('.view-section').forEach(s => s.classList.remove('active'));
+    const target = document.getElementById(viewId + 'View');
+    if (target) {
+        target.classList.add('active');
+        target.style.display = 'block'; // Ensure it's visible if manually hidden
     }
 
+    // Hide other views explicitly just in case
+    document.querySelectorAll('.view-section').forEach(s => {
+        if (s.id !== viewId + 'View') s.style.display = 'none';
+    });
+
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    
+    // Handle bottom nav button highlight
+    if (btn) {
+        btn.classList.add('active');
+    } else {
+        // Find matching nav item if btn is not provided
+        const navItems = document.querySelectorAll('.nav-item');
+        if (viewId === 'home') navItems[0].classList.add('active');
+        else if (viewId === 'materi') navItems[1].classList.add('active');
+        else if (viewId === 'profile') navItems[2].classList.add('active');
+    }
+
+    // Update Header Text
+    const titles = { 'home': 'Dashboard', 'materi': 'Materi Webinar', 'profile': 'Profil Anggota' };
+    const titleEl = document.querySelector('.view-indicator');
+    if (titleEl) titleEl.textContent = titles[viewId] || 'Dashboard';
+
+    if (viewId === 'materi') renderMateri();
+    if (viewId === 'profile') renderECard();
+    if (viewId === 'home') updateHomeInfo();
+    
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    lucide.createIcons();
+    if (window.lucide) window.lucide.createIcons();
 }
 
 function runCelebration() {
@@ -328,14 +323,6 @@ document.addEventListener('DOMContentLoaded', () => {
     loadData();
     window.switchView = switchView; // Expose to global scope
     updateHomeInfo();
-
-    document.getElementById('searchBtn').addEventListener('click', searchParticipants);
-    const searchInput = document.getElementById('searchInput');
-    if (searchInput) {
-        searchInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') searchParticipants();
-        });
-    }
 
     // PWA & NOTIFICATION SYSTEM
     if ('serviceWorker' in navigator) {
@@ -606,25 +593,73 @@ function getTypeColor(type) {
     return colors[type] || '#2ed573';
 }
 
+function renderECard() {
+    const area = document.getElementById('profileECardArea');
+    if (!area) return;
+
+    // Simulasi data member yang login
+    const member = {
+        id: "POR-2024-001",
+        name: "Brian (Member)",
+        wa: "081234567890",
+        status: "VERIFIED MEMBER",
+        color: "#00b5a5"
+    };
+
+    area.innerHTML = `
+        <div class="ecard-container" id="ecard-capture">
+            <div class="virtual-card">
+                <div class="ecard-top">
+                    <div class="ecard-title">Digital Identity Card</div>
+                </div>
+                <div class="avatar-container">
+                    <div class="user-avatar" style="width: 100%; height: 100%; font-size: 1.8rem;">B</div>
+                </div>
+                
+                <h2 class="p-name">${member.name}</h2>
+                <div class="p-status">${member.status}</div>
+
+                <div class="details-grid" style="margin-bottom: 2.5rem;">
+                    <div class="detail-row">
+                        <span class="detail-label">ID ANGGOTA</span>
+                        <span class="detail-value">${member.id}</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">NOMOR WHATSAPP</span>
+                        <span class="detail-value">${member.wa}</span>
+                    </div>
+                </div>
+
+                <div class="barcode-sim"></div>
+                <span class="id-number">${member.id}</span>
+            </div>
+        </div>
+        
+        <div class="actions-row" style="padding: 0; margin-top: -1rem; margin-bottom: 2rem;">
+            <button class="btn-action primary-action" onclick="downloadProfileCard()">
+                <i data-lucide="download"></i>
+                Download Kartu Digital
+            </button>
+        </div>
+    `;
+    if (window.lucide) window.lucide.createIcons();
+}
+
+window.downloadProfileCard = () => {
+    showToast('Sedang menyiapkan gambar...', 'info');
+    setTimeout(() => {
+        showToast('Kartu digital berhasil disimpan!', 'success');
+    }, 1500);
+};
+
 document.addEventListener('DOMContentLoaded', () => {
+    loadData();
+    window.switchView = switchView;
+    updateHomeInfo();
+
     document.getElementById('materiSearch')?.addEventListener('input', (e) => {
         renderMateri(e.target.value, currentMateriCategory);
     });
-
-    // 2. VOICE TO AURA ENGINE
-    window.updateMateriFilter = (category, btn) => {
-        currentMateriCategory = category;
-        materiLimit = 4; // Reset limit saat filter berubah
-        
-        // Update UI chips
-        document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
-        btn.classList.add('active');
-        
-        const searchVal = document.getElementById('materiSearch')?.value || '';
-        renderMateri(searchVal, category);
-    };
-
-    setTimeout(() => {
         const aiChatFooter = document.querySelector('.ai-chat-footer');
         if (aiChatFooter) {
             const voiceBtn = document.createElement('button');

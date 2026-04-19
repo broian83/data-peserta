@@ -716,60 +716,99 @@ function renderECard() {
     // Simulasi data member yang login
     const member = {
         id: "POR-2024-001",
-        name: "Brian (Member)",
+        name: "Brian",
+        role: "Perekam Medis",
+        instansi: "RS Umum Daerah Jakarta",
         wa: "081234567890",
         status: "VERIFIED MEMBER",
-        color: "#00b5a5"
+        tglDaftar: "15 Jan 2024",
+        masaBerlaku: "Seumur Hidup"
     };
+
+    const initials = member.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
 
     area.innerHTML = `
         <div class="ecard-flip-wrapper" onclick="this.classList.toggle('flipped')">
             <div class="ecard-inner">
                 <!-- FRONT FACE -->
-                <div class="virtual-card front">
-                    <div class="ecard-top">
-                        <div class="ecard-title">Digital Identity Card</div>
-                        <div class="ecard-chip"></div>
-                    </div>
-                    <div class="avatar-container">
-                        <div class="user-avatar" style="width: 100%; height: 100%; font-size: 1.8rem;">B</div>
-                    </div>
-                    
-                    <h2 class="p-name">${member.name}</h2>
-                    <div class="p-status"><i data-lucide="shield-check" style="width:12px; height:12px;"></i> ${member.status}</div>
-
-                    <div class="details-grid">
-                        <div class="detail-row">
-                            <span class="detail-label">ID ANGGOTA</span>
-                            <span class="detail-value">${member.id}</span>
+                <div class="ecard-v2 front">
+                    <div class="ecard-v2-header">
+                        <div class="ecard-v2-brand">
+                            <img src="pormiki-logo.png" alt="PORMIKI" class="ecard-v2-logo">
+                            <div class="ecard-v2-org">
+                                <strong>PORMIKI</strong>
+                                <span>DPC Jakarta Timur</span>
+                            </div>
+                        </div>
+                        <div class="ecard-v2-badge">
+                            <i data-lucide="shield-check" style="width:12px;height:12px;"></i>
                         </div>
                     </div>
-                    
-                    <div class="flip-hint">
-                        <i data-lucide="rotate-3d"></i> Tap untuk membalik
+
+                    <div class="ecard-v2-avatar-area">
+                        <div class="ecard-v2-avatar">${initials}</div>
+                        <div class="ecard-v2-name-block">
+                            <h3>${member.name}</h3>
+                            <span>${member.role}</span>
+                        </div>
+                    </div>
+
+                    <div class="ecard-v2-details">
+                        <div class="ecard-v2-row">
+                            <div class="ecard-v2-label"><i data-lucide="id-card" style="width:13px;height:13px;"></i> ID Anggota</div>
+                            <div class="ecard-v2-value">${member.id}</div>
+                        </div>
+                        <div class="ecard-v2-row">
+                            <div class="ecard-v2-label"><i data-lucide="building-2" style="width:13px;height:13px;"></i> Instansi</div>
+                            <div class="ecard-v2-value">${member.instansi}</div>
+                        </div>
+                        <div class="ecard-v2-row">
+                            <div class="ecard-v2-label"><i data-lucide="calendar" style="width:13px;height:13px;"></i> Terdaftar</div>
+                            <div class="ecard-v2-value">${member.tglDaftar}</div>
+                        </div>
+                    </div>
+
+                    <div class="ecard-v2-footer">
+                        <div class="ecard-v2-status">
+                            <i data-lucide="check-circle" style="width:13px;height:13px;"></i>
+                            ${member.status}
+                        </div>
+                        <div class="ecard-v2-flip-hint">
+                            <i data-lucide="rotate-3d" style="width:14px;height:14px;"></i>
+                            Balik
+                        </div>
                     </div>
                 </div>
 
                 <!-- BACK FACE -->
-                <div class="virtual-card back">
-                    <div class="ecard-back-content">
-                        <div class="qr-container">
+                <div class="ecard-v2 back">
+                    <div class="ecard-v2-back-top">
+                        <div class="ecard-v2-magstripe"></div>
+                    </div>
+
+                    <div class="ecard-v2-back-body">
+                        <div class="ecard-v2-qr">
                             <div class="qr-code-sim"></div>
-                            <p>Pindai untuk Validasi</p>
+                            <p>Pindai untuk Validasi Anggota</p>
                         </div>
-                        <div class="back-details">
-                            <div class="detail-row">
-                                <span class="detail-label">WHATSAPP</span>
-                                <span class="detail-value">${member.wa}</span>
+
+                        <div class="ecard-v2-back-info">
+                            <div class="ecard-v2-row">
+                                <div class="ecard-v2-label"><i data-lucide="phone" style="width:13px;height:13px;"></i> WhatsApp</div>
+                                <div class="ecard-v2-value">${member.wa}</div>
                             </div>
-                            <div class="detail-row">
-                                <span class="detail-label">MASA BERLAKU</span>
-                                <span class="detail-value">Seumur Hidup</span>
+                            <div class="ecard-v2-row">
+                                <div class="ecard-v2-label"><i data-lucide="clock" style="width:13px;height:13px;"></i> Masa Berlaku</div>
+                                <div class="ecard-v2-value">${member.masaBerlaku}</div>
                             </div>
                         </div>
-                        <div class="ecard-footer-logo">
-                            <strong>PORMIKI</strong>
-                            <span>DPC Jakarta Timur</span>
+                    </div>
+
+                    <div class="ecard-v2-back-footer">
+                        <img src="pormiki-logo.png" alt="" style="width:24px;height:24px;border-radius:6px;">
+                        <div>
+                            <strong>PORMIKI APPS</strong>
+                            <span>pormiki.netlify.app</span>
                         </div>
                     </div>
                 </div>
@@ -785,6 +824,7 @@ function renderECard() {
     `;
     if (window.lucide) window.lucide.createIcons();
 }
+
 
 window.downloadProfileCard = () => {
     showToast('Sedang menyiapkan gambar...', 'info');

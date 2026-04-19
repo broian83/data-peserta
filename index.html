@@ -61,6 +61,11 @@
             </div>
         </header>
 
+        <!-- LOGIN / REGISTER VIEW (Overlay) -->
+        <section id="loginView" class="login-view">
+            <!-- Content will be injected or handled via app.js -->
+        </section>
+
         <!-- MAIN VIEWS -->
         <main id="mainContent">
             <!-- Modular Views are injected here via app.js -->
@@ -69,6 +74,13 @@
                 <p style="margin-top: 1rem; color: var(--text-muted); font-weight: 600;">Menyiapkan Dashboard...</p>
             </div>
         </main>
+
+        <!-- MODAL DETAIL MATERI -->
+        <div id="materiDetailModal" class="modal-premium" onclick="closeMateriDetail()">
+            <div class="modal-content-premium" onclick="event.stopPropagation()">
+                <div id="modalBody"></div>
+            </div>
+        </div>
 
         <!-- BOTTOM NAVIGATION -->
         <nav class="bottom-nav" role="navigation" aria-label="Navigasi utama">

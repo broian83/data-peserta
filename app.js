@@ -1,8 +1,10 @@
 import { homeView } from './js/views/homeView.js';
 import { materiView } from './js/views/materiView.js';
 import { profileView } from './js/views/profileView.js';
+import { authView } from './js/views/authView.js';
 
 let participants = [];
+let isLoggedIn = false; // Simulation state
 let currentMateriCategory = 'all';
 let materiLimit = 4; // Tampilkan 4 materi awal
 
@@ -537,8 +539,8 @@ function renderMateri(filter = '', category = 'all') {
             </div>
         `;
     } else {
-        let html = paginated.map(m => `
-            <div class="materi-card-premium" style="--card-color: ${getTypeColor(m.type)}">
+        let html = paginated.map((m, idx) => `
+            <div class="materi-card-premium hover-lift" style="--card-color: ${getTypeColor(m.type)}" onclick="showMateriDetail(${idx})">
                 <div class="m-card-header">
                     <span class="m-badge">${m.category}</span>
                     <span class="m-size">${m.size}</span>
@@ -557,10 +559,6 @@ function renderMateri(filter = '', category = 'all') {
                         <span class="type-dot"></span>
                         ${m.type}
                     </div>
-                    <a href="${m.link}" class="btn-download-premium" target="_blank" rel="noopener noreferrer">
-                        <i data-lucide="download"></i>
-                        <span>Unduh</span>
-                    </a>
                 </div>
             </div>
         `).join('');
@@ -580,6 +578,88 @@ function renderMateri(filter = '', category = 'all') {
     }
     if (window.lucide) window.lucide.createIcons();
 }
+
+window.showMateriDetail = (index) => {
+    const m = materiData[index];
+    const modal = document.getElementById('materiDetailModal');
+    const body = document.getElementById('modalBody');
+    if (!modal || !body) return;
+
+    body.innerHTML = `
+        <div class="modal-header-premium">
+            <div class="m-badge" style="background: var(--bg-card); color: var(--primary); padding: 0.5rem 1rem;">${m.category}</div>
+            <button class="close-modal-btn" onclick="closeMateriDetail()"><i data-lucide="x"></i></button>
+        </div>
+        <div class="detail-cover">
+            <i data-lucide="${m.icon}"></i>
+        </div>
+        <h3 style="font-size: 1.25rem; font-weight: 850; margin-bottom: 0.5rem;">${m.title}</h3>
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">Oleh <strong>${m.speaker}</strong></p>
+        
+        <div class="detail-meta-row">
+            <div class="meta-item-box"><span>Tipe File</span><strong>${m.type}</strong></div>
+            <div class="meta-item-box"><span>Ukuran</span><strong>${m.size}</strong></div>
+            <div class="meta-item-box"><span>Akses</span><strong>Anggota</strong></div>
+        </div>
+
+        <p class="detail-desc">Materi ini merupakan bagian dari rangkaian pengembangan berkelanjutan PORMIKI. Silakan unduh untuk referensi belajar atau materi di fasyankes Anda.</p>
+        
+        <div class="detail-actions">
+            <a href="${m.link}" class="btn-action primary-action" style="width: 100%; border-radius: 1rem;" target="_blank">
+                <i data-lucide="download"></i> Unduh File Materi
+            </a>
+            <button class="btn-action" style="width: 100%; border-radius: 1rem; border: 1px solid var(--border-color); background: none; color: var(--text-main)" onclick="closeMateriDetail()">
+                Kembali
+            </button>
+        </div>
+    `;
+
+    modal.classList.add('active');
+    if (window.lucide) window.lucide.createIcons();
+};
+
+window.closeMateriDetail = () => {
+    document.getElementById('materiDetailModal')?.classList.remove('active');
+};
+
+// 7. AUTHENTICATION LOGIC
+function checkAuth() {
+    const loginView = document.getElementById('loginView');
+    if (!isLoggedIn) {
+        if (loginView) {
+            loginView.innerHTML = authView;
+            loginView.style.display = 'flex';
+        }
+        document.querySelector('.bottom-nav')?.style.setProperty('display', 'none', 'important');
+    } else {
+        if (loginView) loginView.style.display = 'none';
+        document.querySelector('.bottom-nav')?.style.display = 'flex';
+        renderECard(); // Pastikan ecard ter-render
+    }
+    if (window.lucide) window.lucide.createIcons();
+}
+
+window.toggleAuthMode = (mode) => {
+    document.getElementById('loginForm').style.display = mode === 'login' ? 'block' : 'none';
+    document.getElementById('registerForm').style.display = mode === 'register' ? 'block' : 'none';
+};
+
+window.handleLogin = () => {
+    showToast('Mengecek Kredensial...', 'info');
+    setTimeout(() => {
+        isLoggedIn = true;
+        checkAuth();
+        showToast('Selamat Datang Kembali!', 'success');
+    }, 1500);
+};
+
+window.handleRegister = () => {
+    showToast('Mendaftarkan Akun...', 'info');
+    setTimeout(() => {
+        showToast('Pendaftaran Berhasil! Silakan Masuk.', 'success');
+        toggleAuthMode('login');
+    }, 1500);
+};
 
 window.loadMoreMateri = () => {
     materiLimit += 4;
@@ -619,38 +699,63 @@ function renderECard() {
     };
 
     area.innerHTML = `
-        <div class="ecard-container" id="ecard-capture">
-            <div class="virtual-card">
-                <div class="ecard-top">
-                    <div class="ecard-title">Digital Identity Card</div>
-                </div>
-                <div class="avatar-container">
-                    <div class="user-avatar" style="width: 100%; height: 100%; font-size: 1.8rem;">B</div>
-                </div>
-                
-                <h2 class="p-name">${member.name}</h2>
-                <div class="p-status">${member.status}</div>
-
-                <div class="details-grid" style="margin-bottom: 2.5rem;">
-                    <div class="detail-row">
-                        <span class="detail-label">ID ANGGOTA</span>
-                        <span class="detail-value">${member.id}</span>
+        <div class="ecard-flip-wrapper" onclick="this.classList.toggle('flipped')">
+            <div class="ecard-inner">
+                <!-- FRONT FACE -->
+                <div class="virtual-card front">
+                    <div class="ecard-top">
+                        <div class="ecard-title">Digital Identity Card</div>
+                        <div class="ecard-chip"></div>
                     </div>
-                    <div class="detail-row">
-                        <span class="detail-label">NOMOR WHATSAPP</span>
-                        <span class="detail-value">${member.wa}</span>
+                    <div class="avatar-container">
+                        <div class="user-avatar" style="width: 100%; height: 100%; font-size: 1.8rem;">B</div>
+                    </div>
+                    
+                    <h2 class="p-name">${member.name}</h2>
+                    <div class="p-status"><i data-lucide="shield-check" style="width:12px; height:12px;"></i> ${member.status}</div>
+
+                    <div class="details-grid">
+                        <div class="detail-row">
+                            <span class="detail-label">ID ANGGOTA</span>
+                            <span class="detail-value">${member.id}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="flip-hint">
+                        <i data-lucide="rotate-3d"></i> Tap untuk membalik
                     </div>
                 </div>
 
-                <div class="barcode-sim"></div>
-                <span class="id-number">${member.id}</span>
+                <!-- BACK FACE -->
+                <div class="virtual-card back">
+                    <div class="ecard-back-content">
+                        <div class="qr-container">
+                            <div class="qr-code-sim"></div>
+                            <p>Pindai untuk Validasi</p>
+                        </div>
+                        <div class="back-details">
+                            <div class="detail-row">
+                                <span class="detail-label">WHATSAPP</span>
+                                <span class="detail-value">${member.wa}</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">MASA BERLAKU</span>
+                                <span class="detail-value">Seumur Hidup</span>
+                            </div>
+                        </div>
+                        <div class="ecard-footer-logo">
+                            <strong>PORMIKI</strong>
+                            <span>DPC Jakarta Timur</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         
-        <div class="actions-row" style="padding: 0; margin-top: -1rem; margin-bottom: 2rem;">
-            <button class="btn-action primary-action" onclick="downloadProfileCard()">
+        <div class="actions-row" style="padding: 0; margin-top: 1.5rem; margin-bottom: 2rem;">
+            <button class="btn-action primary-action" onclick="event.stopPropagation(); downloadProfileCard()">
                 <i data-lucide="download"></i>
-                Download Kartu Digital
+                Simpan Kartu (Gambar)
             </button>
         </div>
     `;
@@ -671,6 +776,7 @@ document.addEventListener('DOMContentLoaded', () => {
         mainContent.innerHTML = homeView + materiView + profileView;
     }
 
+    checkAuth(); // Cek status login pertama kali
     loadData();
     window.switchView = switchView;
     updateHomeInfo();

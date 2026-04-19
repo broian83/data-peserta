@@ -145,7 +145,10 @@ function switchView(viewId, btn) {
     if (titleEl) titleEl.textContent = titles[viewId] || 'Dashboard';
 
     if (viewId === 'materi') renderMateri();
-    if (viewId === 'task') renderTasks();
+    if (viewId === 'task') {
+        renderTasks();
+        renderWeeklyStats();
+    }
     if (viewId === 'profile') renderECard();
     if (viewId === 'home') updateHomeInfo();
     
@@ -212,11 +215,57 @@ window.toggleTask = (id) => {
     const task = myTasks.find(t => t.id === id);
     if (task) {
         task.completed = !task.completed;
-        if (task.completed) runCelebration();
+        if (task.completed) {
+            task.completedAt = new Date().toISOString();
+            runCelebration();
+        } else {
+            task.completedAt = null;
+        }
         saveTasks();
         renderTasks();
+        renderWeeklyStats();
     }
 };
+
+function renderWeeklyStats() {
+    const chartContainer = document.getElementById('weeklyChartContainer');
+    const totalWeeklyEl = document.getElementById('totalWeeklyDone');
+    if (!chartContainer || !totalWeeklyEl) return;
+
+    const days = ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'];
+    const today = new Date();
+    let stats = [0, 0, 0, 0, 0, 0, 0]; // Counts for last 7 days starting from 6 days ago
+
+    // Filter tasks completed in last 7 days
+    const completedTasks = myTasks.filter(t => t.completed && t.completedAt);
+    
+    // Logic to calculate counts per day
+    for (let i = 0; i < 7; i++) {
+        const checkDate = new Date();
+        checkDate.setDate(today.getDate() - i);
+        const dateStr = checkDate.toISOString().split('T')[0];
+        
+        const count = completedTasks.filter(t => t.completedAt.split('T')[0] === dateStr).length;
+        stats[6 - i] = { day: days[checkDate.getDay()], count: count, date: dateStr };
+    }
+
+    const maxCount = Math.max(...stats.map(s => s.count), 1);
+    const totalWeekly = completedTasks.filter(t => {
+        const diff = (today - new Date(t.completedAt)) / (1000 * 60 * 60 * 24);
+        return diff <= 7;
+    }).length;
+
+    totalWeeklyEl.textContent = `${totalWeekly} Tugas Selesai (7 Hari)`;
+
+    chartContainer.innerHTML = stats.map(s => `
+        <div class="chart-day">
+            <div class="bar-fill" style="height: ${(s.count / maxCount) * 100}%">
+                ${s.count > 0 ? `<span class="bar-val">${s.count}</span>` : ''}
+            </div>
+            <span>${s.day}</span>
+        </div>
+    `).join('');
+}
 
 window.clearFinishedTasks = () => {
     myTasks = myTasks.filter(t => !t.completed);

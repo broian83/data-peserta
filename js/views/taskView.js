@@ -17,8 +17,26 @@ export const taskView = `
         </div>
 
         <div class="task-container">
+            <!-- WEEKLY STATS CHART -->
+            <div class="weekly-stats-container">
+                <div class="stats-header">
+                    <h4>Aktivitas 7 Hari Terakhir</h4>
+                    <span id="totalWeeklyDone">0 Tugas Selesai</span>
+                </div>
+                <div class="mini-bar-chart" id="weeklyChartContainer">
+                    <!-- Day bars will be injected here -->
+                    <div class="chart-day"><div class="bar-fill" style="height: 20%"></div><span>Sen</span></div>
+                    <div class="chart-day"><div class="bar-fill" style="height: 50%"></div><span>Sel</span></div>
+                    <div class="chart-day"><div class="bar-fill" style="height: 80%"></div><span>Rab</span></div>
+                    <div class="chart-day"><div class="bar-fill" style="height: 40%"></div><span>Kam</span></div>
+                    <div class="chart-day"><div class="bar-fill" style="height: 10%"></div><span>Jum</span></div>
+                    <div class="chart-day"><div class="bar-fill" style="height: 60%"></div><span>Sab</span></div>
+                    <div class="chart-day"><div class="bar-fill" style="height: 30%"></div><span>Min</span></div>
+                </div>
+            </div>
+
             <!-- SOPHISTICATED QUICK ADD TASK -->
-            <div class="advanced-add-card">
+            <div class="advanced-add-card" style="margin-top: 1.5rem;">
                 <input type="text" id="newTaskInput" placeholder="Tulis tugas baru (misal: Coding 10 RM)...">
                 <div class="add-options-row">
                     <div class="opt-group">
@@ -37,7 +55,7 @@ export const taskView = `
                 </div>
             </div>
 
-            <!-- FILTER TABS WITH HISTORY -->
+            <!-- FILTER TABS -->
             <div class="task-filters-scroll">
                 <div class="task-filter-tabs">
                     <button class="filter-tab active" onclick="window.filterTasks('all', this)">Semua</button>
@@ -63,7 +81,7 @@ export const taskView = `
 
             <div class="task-quote">
                 <i data-lucide="quote"></i>
-                <p id="dynamicQuote">"Efisiensi adalah melakukan hal dengan benar. Efektivitas adalah melakukan hal yang benar."</p>
+                <p id="dynamicQuote">"Satu berkas yang lengkap adalah awal dari pelayanan yang hebat."</p>
             </div>
         </div>
     </section>

@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://unpkg.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://cdn.jsdelivr.net/npm/canvas-confetti; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https: blob:; connect-src 'self' https:; frame-src 'self' https://lms.kemkes.go.id https://be-lms.kemkes.go.id;">
     <title>PORMIKI APPS - Portal PMIK</title>
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#00b5a5">
@@ -12,13 +13,13 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
         rel="stylesheet">
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://unpkg.com/lucide@latest" integrity="sha384-xNz2+6KbxBt2QcKqb8XKqHnMcEwJ3dJ9iOItY4FQM9TnZr2I0d2wFJ2v8tRcw7w4V" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/driver.js@1.0.1/dist/driver.css" />
-    <script src="https://cdn.jsdelivr.net/npm/driver.js@1.0.1/dist/driver.js.iife.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/driver.js@1.0.1/dist/driver.css" integrity="sha384-MFzDqhJ7fXkMJrYcvCmS9D63IMvVgN3x0TMjKJPXwoGqZGhQ7wkK3jXLAmL3MDE" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/driver.js@1.0.1/dist/driver.js.iife.js" integrity="sha384-LtC2LZM7C5r1T9qHwD2NQXlZhF9EQbFPG4x4kV8qIlXb5W4VJ3B6lDbqFqKxdJ" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" integrity="sha512-z8KQpq3j8V4GfV7X9Ti7U3dV53evNGhRppJ3d1U5J5z+G6eUkfLAJ6qJmkG4D5VhaKGNlYwJ2JUV3HM0WwYjA==" crossorigin="anonymous"></script>
     <!-- AI Markdown Support -->
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js" integrity="sha384-k2eC4gYW7GZXWoyoVxH1VZdT7VDZ NUH3qJV+5cSI4SvO4fzYDG5R/jiVQC0J7tx" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -39,7 +40,7 @@
             <div class="top-bar">
                 <div class="brand-side" id="tour-logo">
                     <div class="mini-logo">
-                        <img src="pormiki-logo.png" alt="PORMIKI">
+                        <img src="pormiki-logo.png" alt="Logo PORMIKI">
                     </div>
                     <div class="brand-text">
                         <h1>PORMIKI APPS</h1>
@@ -48,11 +49,11 @@
                 </div>
                 <div class="action-side">
                     <!-- 3. DARK MODE TOGGLE -->
-                    <button class="icon-btn" id="darkModeToggle" title="Ganti Mode">
+                    <button class="icon-btn" id="darkModeToggle" title="Ganti Mode" aria-label="Ganti mode gelap-terang">
                         <i data-lucide="moon" id="moonIcon"></i>
                         <i data-lucide="sun" id="sunIcon" style="display:none"></i>
                     </button>
-                    <button class="icon-btn" onclick="alert('Belum ada notifikasi baru')">
+                    <button class="icon-btn" onclick="alert('Belum ada notifikasi baru')" aria-label="Notifikasi">
                         <i data-lucide="bell"></i>
                         <span class="dot"></span>
                     </button>
@@ -113,26 +114,26 @@
                 <!-- UPCOMING EVENTS CAROUSEL -->
                 <div class="section-header">
                     <h3>Agenda Mendatang</h3>
-                    <a href="https://lms.kemkes.go.id" target="_blank" class="see-all">Ke LMS</a>
+                    <a href="https://lms.kemkes.go.id" target="_blank" rel="noopener noreferrer" class="see-all">Ke LMS</a>
                 </div>
                 <div class="event-carousel">
                     <!-- Webinar 1 -->
-                    <a href="https://lms.kemkes.go.id/courses/46646913-62a7-434c-bf75-18557d7ccfbe" target="_blank"
+                    <a href="https://lms.kemkes.go.id/courses/46646913-62a7-434c-bf75-18557d7ccfbe" target="_blank" rel="noopener noreferrer"
                         class="event-card">
                         <div class="event-tag">WEBINAR</div>
                         <img src="https://be-lms.kemkes.go.id/v1/view?path=gp/uploads/images/1776327382645-fcf9ca20-7c7c-408e-96ec-7581cf1388a3.jpg"
-                            alt="Health Data Analyst">
+                            alt="Poster webinar PMIK sebagai Health Data Analyst" loading="lazy">
                         <div class="event-info">
                             <strong>PMIK sebagai Health Data Analyst</strong>
                             <span>Daftar melalui LMS Kemkes</span>
                         </div>
                     </a>
                     <!-- Webinar 2 -->
-                    <a href="https://lms.kemkes.go.id/courses/a79f23f4-78d6-408e-a7a5-b3722b356d2a" target="_blank"
+                    <a href="https://lms.kemkes.go.id/courses/a79f23f4-78d6-408e-a7a5-b3722b356d2a" target="_blank" rel="noopener noreferrer"
                         class="event-card">
                         <div class="event-tag">WEBINAR</div>
                         <img src="https://be-lms.kemkes.go.id/v1/view?path=gp/uploads/images/1774846479631-79637f30-e1b0-4d7a-abe9-bc04c6b95e80.jpeg"
-                            alt="Komunikasi Profesional">
+                            alt="Poster webinar Penguatan Komunikasi Profesional" loading="lazy">
                         <div class="event-info">
                             <strong>Penguatan Komunikasi Profesional</strong>
                             <span>Daftar melalui LMS Kemkes</span>
@@ -165,7 +166,7 @@
                                 <span>Peraturan Menteri Kesehatan</span>
                             </div>
                             <a href="https://peraturan.bpk.go.id/Download/301563/Permenkes%20Nomor%2024%20Tahun%202022.pdf"
-                                target="_blank" class="res-btn">
+                                target="_blank" rel="noopener noreferrer" class="res-btn">
                                 <i data-lucide="download"></i>
                             </a>
                         </div>
@@ -178,7 +179,7 @@
                                 <span>Petunjuk Pengelolaan SKP</span>
                             </div>
                             <a href="https://www.ipkindonesia.or.id/media/2025/03/KMK-HK-0107-1561-2024-Pedoman-Pengelolaan-Pemenuhan-Kecukupan-SKP-Tenaga-Medis-dan-Tenaga-Kesehatan.pdf"
-                                target="_blank" class="res-btn">
+                                target="_blank" rel="noopener noreferrer" class="res-btn">
                                 <i data-lucide="download"></i>
                             </a>
                         </div>
@@ -186,11 +187,11 @@
                 </div>
 
                 <div class="quick-links" style="margin-top: 1rem;">
-                    <a href="https://pormiki.or.id" target="_blank" class="q-link">
+                    <a href="https://pormiki.or.id" target="_blank" rel="noopener noreferrer" class="q-link">
                         <i data-lucide="layout"></i>
                         <span>Website DPP</span>
                     </a>
-                    <a href="https://lms.kemkes.go.id" target="_blank" class="q-link">
+                    <a href="https://lms.kemkes.go.id" target="_blank" rel="noopener noreferrer" class="q-link">
                         <i data-lucide="graduation-cap"></i>
                         <span>LMS Kemkes</span>
                     </a>
@@ -241,7 +242,7 @@
                 <div id="resultsContainer" class="results-container">
                     <div class="welcome-card-new">
                         <div class="welcome-illustration">
-                            <img src="pormiki-logo.png" alt="PORMIKI">
+                            <img src="pormiki-logo.png" alt="Logo PORMIKI">
                         </div>
                         <h3>Mencari Sertifikat?</h3>
                         <p>Pastikan email yang Anda masukkan sama dengan saat pendaftaran webinar.</p>
@@ -345,20 +346,20 @@
         </main>
 
         <!-- BOTTOM NAVIGATION -->
-        <nav class="bottom-nav">
-            <a href="javascript:void(0)" class="nav-item active" onclick="switchView('home')">
+        <nav class="bottom-nav" role="navigation" aria-label="Navigasi utama">
+            <a href="javascript:void(0)" class="nav-item active" onclick="switchView('home')" role="menuitem" aria-label="Beranda">
                 <i data-lucide="home"></i>
                 <span>Beranda</span>
             </a>
-            <a href="javascript:void(0)" class="nav-item" onclick="switchView('ecard')">
+            <a href="javascript:void(0)" class="nav-item" onclick="switchView('ecard')" role="menuitem" aria-label="E-Card">
                 <i data-lucide="credit-card"></i>
                 <span>E-Card</span>
             </a>
-            <a href="javascript:void(0)" class="nav-item" onclick="switchView('materi')">
+            <a href="javascript:void(0)" class="nav-item" onclick="switchView('materi')" role="menuitem" aria-label="Materi">
                 <i data-lucide="book-open"></i>
                 <span>Materi</span>
             </a>
-            <a href="javascript:void(0)" class="nav-item" onclick="switchView('profile')">
+            <a href="javascript:void(0)" class="nav-item" onclick="switchView('profile')" role="menuitem" aria-label="Profil">
                 <i data-lucide="user"></i>
                 <span>Profil</span>
             </a>
@@ -370,8 +371,11 @@
             <span>Tanya AI</span>
         </button>
 
+        <!-- TOAST CONTAINER -->
+        <div id="toastContainer" class="toast-container" aria-live="polite"></div>
+
         <!-- AI CHATMODAL -->
-        <div class="ai-chat-modal" id="aiModal">
+        <div class="ai-chat-modal" id="aiModal" role="dialog" aria-modal="true" aria-labelledby="aiChatTitle" hidden>
             <div class="ai-chat-header">
                 <div class="ai-status">
                     <div class="ai-avatar">AI</div>

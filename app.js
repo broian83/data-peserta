@@ -1,6 +1,55 @@
 // Configuration & State
 let participants = [];
 
+// Toast Notification System
+function showToast(message, type = 'info', duration = 4000) {
+    const container = document.getElementById('toastContainer');
+    if (!container) return;
+
+    const toast = document.createElement('div');
+    toast.className = `toast ${type}`;
+    
+    const icons = {
+        success: 'check-circle',
+        error: 'x-circle',
+        warning: 'alert-triangle',
+        info: 'info'
+    };
+
+    toast.innerHTML = `
+        <i data-lucide="${icons[type]}" class="toast-icon"></i>
+        <span class="toast-message">${message}</span>
+        <button class="toast-close" aria-label="Tutup">
+            <i data-lucide="x" style="width:16px;height:16px;"></i>
+        </button>
+    `;
+
+    container.appendChild(toast);
+    window.lucide.createIcons();
+
+    // Close button
+    toast.querySelector('.toast-close').onclick = () => removeToast(toast);
+
+    // Auto remove
+    setTimeout(() => removeToast(toast), duration);
+}
+
+function removeToast(toast) {
+    toast.style.animation = 'toastSlideOut 0.3s ease-out forwards';
+    setTimeout(() => toast.remove(), 300);
+}
+
+// Replace alert with toast
+const originalAlert = window.alert;
+window.alert = function(message) {
+    // Check if it's a navigation alert
+    if (message.includes('Belum ada') || message.includes('sedang dalam pembaruan')) {
+        showToast(message, 'info');
+    } else {
+        originalAlert(message);
+    }
+};
+
 // Inject Confetti Script
 const confettiScript = document.createElement('script');
 confettiScript.src = 'https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js';
@@ -227,11 +276,11 @@ async function shareCard(btnElement) {
             link.href = canvas.toDataURL('image/png');
             link.download = 'E-Card-PORMIKI.png';
             link.click();
-            alert('Gambar berhasil diunduh! Silakan bagikan ke WhatsApp Status Anda.');
+            showToast('Gambar berhasil diunduh! Silakan bagikan ke WhatsApp Status Anda.', 'success');
         }
     } catch (err) {
         console.error('Error sharing:', err);
-        alert('Gagal membagikan gambar. Silakan coba simpan secara manual atau screenshot.');
+        showToast('Gagal membagikan gambar. Silakan coba simpan secara manual atau screenshot.', 'error');
     } finally {
         shareElements.forEach(el => el.style.display = '');
         btnElement.innerHTML = originalContent;
@@ -288,7 +337,7 @@ function displayResults(results) {
                             </button>
                         </div>
                         
-                        <button class="btn-action-outline" onclick="navigator.clipboard.writeText('${idPeserta}'); alert('ID Disalin!')">
+                        <button class="btn-action-outline" onclick="navigator.clipboard.writeText('${idPeserta}'); showToast('ID ${idPeserta} disalin!', 'success')">
                             <i data-lucide="copy" size="16"></i> Salin ID: ${idPeserta}
                         </button>
                     </div>
@@ -362,6 +411,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (aiToggle) {
         aiToggle.addEventListener('click', () => {
             aiModal.classList.add('active');
+            aiModal.hidden = false;
+            aiInput?.focus();
             if (aiMessages.children.length <= 1) {
                 const welcome = document.createElement('div');
                 welcome.className = 'ai-msg bot';
@@ -371,7 +422,18 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    if (aiClose) aiClose.addEventListener('click', () => aiModal.classList.remove('active'));
+    if (aiClose) aiClose.addEventListener('click', () => {
+        aiModal.classList.remove('active');
+        aiModal.hidden = true;
+    });
+
+    // Keyboard accessibility - Escape to close modal
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && aiModal.classList.contains('active')) {
+            aiModal.classList.remove('active');
+            aiModal.hidden = true;
+        }
+    });
 
     const handleSendMessage = async () => {
         const text = aiInput.value.trim();

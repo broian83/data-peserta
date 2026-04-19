@@ -57,7 +57,7 @@ export const homeView = `
             </div>
             <div class="article-list">
                 <div class="article-card hover-lift">
-                    <img src="https://images.unsplash.com/photo-1576091160550-217359f4ecf8?auto=format&fit=crop&w=300&q=80" alt="RME" class="article-img">
+                    <img src="rme-article.png" alt="RME" class="article-img">
                     <div class="article-info">
                         <strong>Transformasi RME di Indonesia</strong>
                         <p>Langkah strategis percepatan Rekam Medis Elektronik...</p>
@@ -68,7 +68,7 @@ export const homeView = `
                     </div>
                 </div>
                 <div class="article-card hover-lift">
-                    <img src="https://images.unsplash.com/photo-1454165833767-027eeef1593e?auto=format&fit=crop&w=300&q=80" alt="Karier" class="article-img">
+                    <img src="career-article.png" alt="Karier" class="article-img">
                     <div class="article-info">
                         <strong>Masa Depan Karier PMIK</strong>
                         <p>Peluang baru PMIK sebagai Data Analyst di era digital...</p>

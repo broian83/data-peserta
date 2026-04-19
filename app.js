@@ -163,10 +163,16 @@ let myTasks = JSON.parse(localStorage.getItem('pormiki_tasks')) || [
     { id: 3, text: 'Laporan Bulanan SIRS', category: 'routine', completed: false }
 ];
 let currentTaskFilter = 'all';
+let taskSearchQuery = '';
 
 function saveTasks() {
     localStorage.setItem('pormiki_tasks', JSON.stringify(myTasks));
 }
+
+window.handleTaskSearch = (val) => {
+    taskSearchQuery = val.toLowerCase();
+    renderTasks();
+};
 
 window.filterTasks = (category, btn) => {
     currentTaskFilter = category;
@@ -284,22 +290,29 @@ function renderTasks() {
     if (!container) return;
 
     let filteredTasks = myTasks;
+
+    // Filter by Category
     if (currentTaskFilter === 'completed') {
         filteredTasks = myTasks.filter(t => t.completed);
     } else if (currentTaskFilter !== 'all') {
         filteredTasks = myTasks.filter(t => t.category === currentTaskFilter && !t.completed);
     } else {
-        // Mode "Semua" tapi sembunyikan yang sudah selesai agar tidak menumpuk di view utama?
-        // Atau biarkan tapi yang selesai di bawah?
-        // Saya pilih: "Semua" hanya menampilkan yang belum selesai, "Selesai" untuk riwayat.
         filteredTasks = myTasks.filter(t => !t.completed);
+    }
+
+    // Filter by Search
+    if (taskSearchQuery) {
+        filteredTasks = filteredTasks.filter(t => 
+            t.text.toLowerCase().includes(taskSearchQuery) || 
+            t.category.toLowerCase().includes(taskSearchQuery)
+        );
     }
 
     if (filteredTasks.length === 0) {
         container.innerHTML = `
             <div class="empty-state-tasks">
-                <i data-lucide="${currentTaskFilter === 'completed' ? 'check-circle' : 'list-todo'}"></i>
-                <p>${currentTaskFilter === 'completed' ? 'Belum ada riwayat tugas selesai.' : 'Tidak ada tugas kategori ini.'}</p>
+                <i data-lucide="${taskSearchQuery ? 'search-x' : (currentTaskFilter === 'completed' ? 'check-circle' : 'list-todo')}"></i>
+                <p>${taskSearchQuery ? 'Tugas tidak ditemukan' : (currentTaskFilter === 'completed' ? 'Belum ada riwayat tugas selesai.' : 'Tidak ada tugas kategori ini.')}</p>
             </div>
         `;
     } else {

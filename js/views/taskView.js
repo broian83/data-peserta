@@ -28,7 +28,7 @@ export const taskView = `
                 </div>
             </div>
 
-            <!-- MOBILE-OPTIMIZED QUICK ADD TASK (VERTICAL) -->
+            <!-- FULL VERTICAL QUICK ADD -->
             <div class="advanced-add-card" style="margin-top: 1.5rem;">
                 <input type="text" id="newTaskInput" placeholder="Tulis tugas baru (misal: Coding 10 RM)...">
                 
@@ -50,6 +50,12 @@ export const taskView = `
                 <button onclick="window.addTask()" class="btn-primary-add">
                     <i data-lucide="plus"></i> Tambah Tugas
                 </button>
+            </div>
+
+            <!-- NEW: SEARCH BAR -->
+            <div class="task-search-wrapper">
+                <i data-lucide="search"></i>
+                <input type="text" id="taskSearchInput" placeholder="Cari tugas atau kategori..." oninput="window.handleTaskSearch(this.value)">
             </div>
 
             <!-- FILTER TABS -->
@@ -78,7 +84,7 @@ export const taskView = `
 
             <div class="task-quote">
                 <i data-lucide="quote"></i>
-                <p id="dynamicQuote">"Satu berkas yang lengkap adalah awal dari pelayanan yang hebat."</p>
+                <p id="dynamicQuote">"Efisiensi adalah melakukan hal dengan benar. Efektivitas adalah melakukan hal yang benar."</p>
             </div>
         </div>
     </section>

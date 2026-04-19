@@ -259,8 +259,10 @@ function renderWeeklyStats() {
 
     chartContainer.innerHTML = stats.map(s => `
         <div class="chart-day">
-            <div class="bar-fill" style="height: ${(s.count / maxCount) * 100}%">
-                ${s.count > 0 ? `<span class="bar-val">${s.count}</span>` : ''}
+            <div class="bar-track">
+                <div class="bar-fill" style="height: ${(s.count / maxCount) * 100}%">
+                    ${s.count > 0 ? `<span class="bar-val">${s.count}</span>` : ''}
+                </div>
             </div>
             <span>${s.day}</span>
         </div>

@@ -47,6 +47,10 @@
                     </div>
                 </div>
                 <div class="action-side">
+                    <!-- GLOBAL SEARCH TRIGGER -->
+                    <button class="icon-btn" onclick="window.showSearchOverlay()" title="Cari">
+                        <i data-lucide="search"></i>
+                    </button>
                     <!-- 3. DARK MODE TOGGLE -->
                     <button class="icon-btn" id="darkModeToggle" title="Ganti Mode" aria-label="Ganti mode gelap-terang">
                         <i data-lucide="moon" id="moonIcon"></i>
@@ -137,6 +141,20 @@
             <div class="ai-chat-footer">
                 <input type="text" id="aiInput" placeholder="Ketik pesan Anda...">
                 <button id="aiSend"><i data-lucide="send"></i></button>
+            </div>
+        </div>
+
+        <!-- SEARCH OVERLAY -->
+        <div id="searchOverlay" class="overlay">
+            <div class="overlay-header">
+                <div class="search-input-box">
+                    <i data-lucide="search"></i>
+                    <input type="text" id="globalSearchInput" placeholder="Cari materi atau tugas..." oninput="window.handleGlobalSearch(this.value)">
+                    <button class="btn-close-overlay" onclick="window.closeSearchOverlay()">Tutup</button>
+                </div>
+            </div>
+            <div class="overlay-body">
+                <div id="searchResults" class="search-results-list"></div>
             </div>
         </div>
     </div>

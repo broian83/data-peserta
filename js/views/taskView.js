@@ -30,37 +30,41 @@ export const taskView = `
 
             <!-- FULL VERTICAL QUICK ADD -->
             <div class="advanced-add-card" style="margin-top: 1.5rem;">
-                <input type="text" id="newTaskInput" placeholder="Tulis tugas baru (misal: Coding 10 RM)...">
-                
-                <!-- QUICK TAG CHIPS -->
-                <div class="quick-tags-scroll">
-                    <div class="quick-tags-list">
-                        <button class="tag-chip" onclick="window.setQuickTask('Coding Berkas ')"><i data-lucide="code-2"></i> Coding</button>
-                        <button class="tag-chip" onclick="window.setQuickTask('Assembling RM ')"><i data-lucide="files"></i> Assembling</button>
-                        <button class="tag-chip" onclick="window.setQuickTask('Klaim BPJS ')"><i data-lucide="shield-check"></i> Klaim</button>
-                        <button class="tag-chip" onclick="window.setQuickTask('Laporan SIRS ')"><i data-lucide="area-chart"></i> SIRS</button>
-                        <button class="tag-chip" onclick="window.setQuickTask('Indeksing ')"><i data-lucide="list-ordered"></i> Indeksing</button>
+                <div class="vertical-add-form">
+                    <div class="input-premium-wrapper">
+                        <i data-lucide="pencil-line"></i>
+                        <input type="text" id="newTaskInput" placeholder="Tulis tugas baru (misal: Coding 10 RM)...">
                     </div>
-                </div>
+                    
+                    <div class="form-grid-task">
+                        <div class="input-premium-wrapper">
+                            <i data-lucide="tag"></i>
+                            <select id="taskCategorySelect">
+                                <option value="normal">Normal</option>
+                                <option value="urgent">Urgent</option>
+                                <option value="routine">Routine</option>
+                            </select>
+                        </div>
+                        <div class="input-premium-wrapper">
+                            <i data-lucide="calendar"></i>
+                            <input type="datetime-local" id="taskDateInput">
+                        </div>
+                    </div>
 
-                <div class="add-options-row">
-                    <div class="opt-group">
-                        <i data-lucide="tag"></i>
-                        <select id="taskCategorySelect">
-                            <option value="normal">Normal</option>
-                            <option value="urgent">Urgent</option>
-                            <option value="routine">Routine</option>
-                        </select>
+                    <!-- QUICK TAG CHIPS -->
+                    <div class="quick-tags-scroll">
+                        <div class="quick-tags-list">
+                            <button class="tag-chip" onclick="window.setQuickTask('Coding Berkas ')"><i data-lucide="code-2"></i> Coding</button>
+                            <button class="tag-chip" onclick="window.setQuickTask('Assembling RM ')"><i data-lucide="files"></i> Assembling</button>
+                            <button class="tag-chip" onclick="window.setQuickTask('Klaim BPJS ')"><i data-lucide="shield-check"></i> Klaim</button>
+                            <button class="tag-chip" onclick="window.setQuickTask('Laporan SIRS ')"><i data-lucide="area-chart"></i> SIRS</button>
+                        </div>
                     </div>
-                    <div class="opt-group">
-                        <i data-lucide="calendar"></i>
-                        <input type="datetime-local" id="taskDateInput">
-                    </div>
-                </div>
 
-                <button onclick="window.addTask()" class="btn-primary-add">
-                    <i data-lucide="plus"></i> Tambah Tugas
-                </button>
+                    <button onclick="window.addTask()" class="btn-primary-add">
+                        <i data-lucide="plus"></i> Tambah Tugas
+                    </button>
+                </div>
             </div>
 
             <!-- SEARCH BAR -->

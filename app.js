@@ -143,6 +143,9 @@ function switchView(viewId, btn) {
     };
     const titleEl = document.querySelector('.view-indicator');
     if (titleEl) titleEl.textContent = titles[viewId] || 'Dashboard';
+    
+    // Global Access
+    window.currentView = viewId;
 
     if (viewId === 'materi') renderMateri();
     if (viewId === 'task') {
@@ -150,11 +153,25 @@ function switchView(viewId, btn) {
         renderWeeklyStats();
     }
     if (viewId === 'profile') renderECard();
-    if (viewId === 'home') updateHomeInfo();
+    if (viewId === 'home') {
+        updateHomeInfo();
+        renderHomeTasks();
+    }
     
     window.scrollTo({ top: 0, behavior: 'smooth' });
     if (window.lucide) window.lucide.createIcons();
 }
+
+window.navigateTo = (viewId) => {
+    const navItems = document.querySelectorAll('.nav-item');
+    let btn = null;
+    if (viewId === 'home') btn = navItems[0];
+    else if (viewId === 'materi') btn = navItems[1];
+    else if (viewId === 'task') btn = navItems[2];
+    else if (viewId === 'profile') btn = navItems[3];
+    
+    switchView(viewId, btn);
+};
 
 // TASK SYSTEM LOGIC
 let myTasks = JSON.parse(localStorage.getItem('pormiki_tasks')) || [
@@ -328,6 +345,44 @@ window.exportTasksToCSV = () => {
     showToast('Laporan berhasil diunduh!', 'success');
 };
 
+function renderHomeTasks() {
+    const container = document.getElementById('homeSummaryTasks');
+    if (!container) return;
+
+    // Filter uncompleted tasks, prioritize urgent
+    const uncompleted = myTasks.filter(t => !t.completed)
+        .sort((a, b) => {
+            if (a.category === 'urgent' && b.category !== 'urgent') return -1;
+            if (a.category !== 'urgent' && b.category === 'urgent') return 1;
+            return 0;
+        })
+        .slice(0, 3);
+
+    if (uncompleted.length === 0) {
+        container.innerHTML = `
+            <div class="empty-mini-task">
+                <p>☕ Semua tugas beres! Waktunya istirahat.</p>
+            </div>
+        `;
+        return;
+    }
+
+    container.innerHTML = uncompleted.map(task => `
+        <div class="mini-task-item ${task.category === 'urgent' ? 'priority' : ''}" onclick="window.navigateTo('task')">
+            <div class="mini-check">
+                <i data-lucide="${task.category === 'urgent' ? 'alert-circle' : 'circle'}" style="width:14px;height:14px;"></i>
+            </div>
+            <div class="mini-task-info">
+                <strong>${task.text}</strong>
+                <span>${task.category.toUpperCase()} ${task.dueDate ? '• ' + new Date(task.dueDate).toLocaleDateString('id-ID', {day:'numeric', month:'short'}) : ''}</span>
+            </div>
+            <i data-lucide="chevron-right" style="width:16px;opacity:0.3;"></i>
+        </div>
+    `).join('');
+
+    if (window.lucide) window.lucide.createIcons();
+}
+
 function renderTasks() {
     const container = document.getElementById('taskListContainer');
     const statsEl = document.getElementById('taskStats');
@@ -482,6 +537,80 @@ function searchParticipants() {
     }, 400);
 }
 
+// GLOBAL SEARCH ENGINE
+window.showSearchOverlay = () => {
+    const overlay = document.getElementById('searchOverlay');
+    if (overlay) {
+        overlay.classList.add('active');
+        document.getElementById('globalSearchInput')?.focus();
+    }
+};
+
+window.closeSearchOverlay = () => {
+    const overlay = document.getElementById('searchOverlay');
+    if (overlay) overlay.classList.remove('active');
+};
+
+window.handleGlobalSearch = (query) => {
+    const resultsContainer = document.getElementById('searchResults');
+    if (!resultsContainer) return;
+
+    if (!query.trim()) {
+        resultsContainer.innerHTML = '';
+        return;
+    }
+
+    const q = query.toLowerCase();
+    
+    // Search in Materi
+    const materiResults = materiData.filter(m => 
+        m.title.toLowerCase().includes(q) || 
+        m.speaker.toLowerCase().includes(q) ||
+        m.category.toLowerCase().includes(q)
+    ).map(m => ({
+        title: m.title,
+        sub: m.speaker + ' • ' + m.category,
+        type: 'Materi',
+        icon: 'book-open',
+        action: () => { window.closeSearchOverlay(); window.navigateTo('materi'); }
+    }));
+
+    // Search in Tasks
+    const taskResults = myTasks.filter(t => !t.completed && t.text.toLowerCase().includes(q))
+    .map(t => ({
+        title: t.text,
+        sub: t.category.toUpperCase(),
+        type: 'Tugas',
+        icon: 'clipboard-list',
+        action: () => { window.closeSearchOverlay(); window.navigateTo('task'); }
+    }));
+
+    const allResults = [...materiResults, ...taskResults];
+
+    if (allResults.length === 0) {
+        resultsContainer.innerHTML = '<div class="empty-mini-task">Hasil tidak ditemukan.</div>';
+        return;
+    }
+
+    resultsContainer.innerHTML = allResults.map((r, i) => `
+        <div class="search-result-item" onclick="window.searchResultsAction(${i})">
+            <div class="sr-icon"><i data-lucide="${r.icon}"></i></div>
+            <div class="sr-info">
+                <strong>${r.title}</strong>
+                <p>${r.sub}</p>
+            </div>
+            <span class="sr-type">${r.type}</span>
+        </div>
+    `).join('');
+
+    // Global action handler for search
+    window.searchResultsAction = (index) => {
+        allResults[index].action();
+    };
+
+    if (window.lucide) window.lucide.createIcons();
+};
+
 function getValueByPossibleKeys(obj, possibleKeys) {
     for (let key of possibleKeys) {
         const trimmedKey = key.trim();
@@ -610,6 +739,7 @@ document.addEventListener('DOMContentLoaded', () => {
     loadData();
     window.switchView = switchView; // Expose to global scope
     updateHomeInfo();
+    renderHomeTasks();
 
     // PWA & NOTIFICATION SYSTEM
     if ('serviceWorker' in navigator) {

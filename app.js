@@ -583,6 +583,14 @@ window.loadMoreMateri = () => {
     renderMateri(searchVal, currentMateriCategory);
 };
 
+window.updateMateriFilter = (category, btn) => {
+    currentMateriCategory = category;
+    document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+    btn.classList.add('active');
+    const searchVal = document.getElementById('materiSearch')?.value || '';
+    renderMateri(searchVal, category);
+};
+
 function getTypeColor(type) {
     const colors = {
         'PDF': '#ff4757',

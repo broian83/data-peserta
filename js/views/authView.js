@@ -2,7 +2,7 @@ export const authView = `
     <div id="authContent" class="auth-container">
         <div class="auth-header">
             <div class="auth-logo-box">
-                <img src="https://pormiki.or.id/wp-content/uploads/2022/01/logo-pormiki.png" alt="Logo PORMIKI">
+                <img src="pormiki-logo.png" alt="Logo PORMIKI">
             </div>
             <h1>Selamat Datang</h1>
             <p>Silakan masuk ke akun anggota Anda untuk mengakses materi dan kartu digital.</p>

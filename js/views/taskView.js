@@ -84,9 +84,14 @@ export const taskView = `
 
             <div class="section-header" style="margin-top: 1rem;">
                 <h3 id="currentFilterTitle">Daftar Tugas Anda</h3>
-                <button class="btn-clear-tasks" onclick="window.clearFinishedTasks()" title="Hapus yang selesai">
-                    <i data-lucide="trash-2"></i> Hapus Semua
-                </button>
+                <div class="header-actions">
+                    <button class="btn-export-tasks" onclick="window.exportTasksToCSV()" title="Ekspor ke Excel/CSV">
+                        <i data-lucide="file-spreadsheet"></i> Ekspor
+                    </button>
+                    <button class="btn-clear-tasks" onclick="window.clearFinishedTasks()" title="Hapus yang selesai">
+                        <i data-lucide="trash-2"></i>
+                    </button>
+                </div>
             </div>
 
             <div class="task-list" id="taskListContainer">
@@ -95,7 +100,7 @@ export const taskView = `
 
             <div class="task-quote">
                 <i data-lucide="quote"></i>
-                <p id="dynamicQuote">"Satu berkas yang lengkap adalah awal dari pelayanan yang hebat."</p>
+                <p id="dynamicQuote">"Efisiensi adalah melakukan hal dengan benar. Efektivitas adalah melakukan hal yang benar."</p>
             </div>
         </div>
     </section>

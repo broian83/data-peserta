@@ -287,7 +287,45 @@ window.clearFinishedTasks = () => {
     myTasks = myTasks.filter(t => !t.completed);
     saveTasks();
     renderTasks();
+    renderWeeklyStats();
     showToast('Tugas selesai dihapus', 'info');
+};
+
+window.exportTasksToCSV = () => {
+    const completedTasks = myTasks.filter(t => t.completed);
+    if (completedTasks.length === 0) {
+        showToast('Tidak ada tugas selesai untuk diekspor', 'warning');
+        return;
+    }
+
+    // Header CSV
+    let csvContent = "data:text/csv;charset=utf-8,";
+    csvContent += "ID,Tugas,Kategori,Deadline,Selesai Pada\n";
+
+    // Data rows
+    completedTasks.forEach(t => {
+        const row = [
+            t.id,
+            `"${t.text.replace(/"/g, '""')}"`,
+            t.category.toUpperCase(),
+            t.dueDate || "-",
+            t.completedAt ? new Date(t.completedAt).toLocaleString('id-ID') : "-"
+        ].join(",");
+        csvContent += row + "\n";
+    });
+
+    // Download trigger
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    const timestamp = new Date().toISOString().split('T')[0];
+    
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", `Laporan_Kinerja_PMIK_${timestamp}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    
+    showToast('Laporan berhasil diunduh!', 'success');
 };
 
 function renderTasks() {

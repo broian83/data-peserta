@@ -2156,6 +2156,37 @@ main { padding: 1.5rem 1.25rem 8rem 1.25rem; flex: 1; }
     opacity: 0.2;
 }
 
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.25rem;
+}
+
+.header-actions {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.btn-export-tasks {
+    background: #ecfdf5;
+    color: #059669;
+    border: 1px solid #d1fae5;
+    padding: 0.5rem 0.8rem;
+    border-radius: 0.8rem;
+    font-size: 0.7rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-export-tasks i { width: 14px; height: 14px; }
+.btn-export-tasks:active { transform: scale(0.95); }
+
 .btn-clear-tasks, .btn-del-single {
     background: transparent;
     border: none;

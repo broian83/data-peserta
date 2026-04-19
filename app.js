@@ -1,5 +1,5 @@
-// Configuration & State
 let participants = [];
+let currentMateriCategory = 'all';
 
 // Toast Notification System
 function showToast(message, type = 'info', duration = 4000) {
@@ -517,46 +517,89 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // 5. RESOURCE CENTER ENGINE
 const materiData = [
-    { title: "Komunikasi Profesional PMIK", speaker: "Dr. Budi Santoso", type: "PDF", link: "#", icon: "file-text", size: "2.4 MB" },
-    { title: "Standardisasi RME 2024", speaker: "Siti Aminah, M.Kom", type: "PPTX", link: "#", icon: "presentation", size: "5.1 MB" },
-    { title: "Aspek Hukum Informasi Kesehatan", speaker: "Adv. Robertus Lee", type: "PDF", link: "#", icon: "file-text", size: "1.8 MB" },
-    { title: "Audit Medis Berbasis Data", speaker: "Dra. Elly Risman", type: "VIDEO", link: "#", icon: "video", size: "45 MB" }
+    { title: "Komunikasi Profesional PMIK", speaker: "Dr. Budi Santoso", type: "PDF", category: "Komunikasi", link: "https://pormiki.netlify.app/", icon: "file-text", size: "2.4 MB" },
+    { title: "Standardisasi RME 2024", speaker: "Siti Aminah, M.Kom", type: "PPTX", category: "Rekam Medis", link: "https://pormiki.netlify.app/", icon: "presentation", size: "5.1 MB" },
+    { title: "Aspek Hukum Informasi Kesehatan", speaker: "Adv. Robertus Lee", type: "PDF", category: "Hukum", link: "https://pormiki.netlify.app/", icon: "file-text", size: "1.8 MB" },
+    { title: "Audit Medis Berbasis Data", speaker: "Dra. Elly Risman", type: "VIDEO", category: "Audit", link: "https://pormiki.netlify.app/", icon: "video", size: "45 MB" },
+    { title: "Manajemen Resiko Klinis", speaker: "Dr. H. Siswanto", type: "PDF", category: "Manajemen", link: "https://pormiki.netlify.app/", icon: "shield", size: "3.2 MB" }
 ];
 
-function renderMateri(filter = '') {
+function renderMateri(filter = '', category = 'all') {
     const list = document.getElementById('materiList');
     if (!list) return;
-    const filtered = materiData.filter(m =>
-        m.title.toLowerCase().includes(filter.toLowerCase()) ||
-        m.speaker.toLowerCase().includes(filter.toLowerCase())
+
+    let filtered = materiData.filter(m =>
+        (m.title.toLowerCase().includes(filter.toLowerCase()) ||
+        m.speaker.toLowerCase().includes(filter.toLowerCase())) &&
+        (category === 'all' || m.type === category)
     );
-    list.innerHTML = filtered.map(m => `
-        <div class="materi-card">
-            <div class="materi-icon-wrap">
-                <i data-lucide="${m.icon}"></i>
+
+    if (filtered.length === 0) {
+        list.innerHTML = `
+            <div class="empty-state-mini">
+                <i data-lucide="search-x"></i>
+                <p>Materi tidak ditemukan</p>
             </div>
-            <div class="materi-info">
-                <h4>${m.title}</h4>
-                <div class="materi-meta">
-                    <span><i data-lucide="user"></i> ${m.speaker}</span>
-                    <span class="m-type">${m.type}</span>
-                    <span class="m-type" style="background:transparent; padding:0;">${m.size}</span>
+        `;
+    } else {
+        list.innerHTML = filtered.map(m => `
+            <div class="materi-card-premium" style="--card-color: ${getTypeColor(m.type)}">
+                <div class="m-card-header">
+                    <span class="m-badge">${m.category}</span>
+                    <span class="m-size">${m.size}</span>
+                </div>
+                <div class="m-card-body">
+                    <div class="m-icon-box">
+                        <i data-lucide="${m.icon}"></i>
+                    </div>
+                    <div class="m-text-box">
+                        <h4>${m.title}</h4>
+                        <p><i data-lucide="user"></i> ${m.speaker}</p>
+                    </div>
+                </div>
+                <div class="m-card-footer">
+                    <div class="m-type-label">
+                        <span class="type-dot"></span>
+                        ${m.type}
+                    </div>
+                    <a href="${m.link}" class="btn-download-premium" target="_blank" rel="noopener noreferrer">
+                        <i data-lucide="download"></i>
+                        <span>Unduh</span>
+                    </a>
                 </div>
             </div>
-            <a href="${m.link}" class="btn-download" title="Unduh">
-                <i data-lucide="download"></i>
-            </a>
-        </div>
-    `).join('');
+        `).join('');
+    }
     if (window.lucide) window.lucide.createIcons();
+}
+
+function getTypeColor(type) {
+    const colors = {
+        'PDF': '#ff4757',
+        'PPTX': '#ffa502',
+        'VIDEO': '#3742fa',
+        'ZIP': '#2f3542'
+    };
+    return colors[type] || '#2ed573';
 }
 
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('materiSearch')?.addEventListener('input', (e) => {
-        renderMateri(e.target.value);
+        renderMateri(e.target.value, currentMateriCategory);
     });
 
     // 2. VOICE TO AURA ENGINE
+    window.updateMateriFilter = (category, btn) => {
+        currentMateriCategory = category;
+        
+        // Update UI chips
+        document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+        btn.classList.add('active');
+        
+        const searchVal = document.getElementById('materiSearch')?.value || '';
+        renderMateri(searchVal, category);
+    };
+
     setTimeout(() => {
         const aiChatFooter = document.querySelector('.ai-chat-footer');
         if (aiChatFooter) {

@@ -120,7 +120,7 @@ export const authView = `
             </div>
 
             <div class="auth-footer">
-                <p>&copy; 2024 PORMIKI DPC Jakarta Timur</p>
+                <p>&copy; 2024 DPP PORMIKI</p>
                 <p>Platform Pengembangan Profesional PMIK</p>
             </div>
         </div>

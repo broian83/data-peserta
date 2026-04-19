@@ -1,6 +1,6 @@
 export const homeView = `
     <section id="homeView" class="view-section active">
-        <div class="hero-banner hover-glow">
+        <div class="hero-banner">
             <div class="hero-content">
                 <div class="hero-top-info">
                     <span id="currentDate" class="date-badge">Memuat Tanggal...</span>

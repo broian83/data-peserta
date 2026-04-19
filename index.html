@@ -76,15 +76,6 @@
                 </div>
 
 
-                <!-- QUICK SEARCH SHORTCUT -->
-                <div class="search-shortcut" onclick="switchView('ecard')">
-                    <div class="ss-icon"><i data-lucide="search"></i></div>
-                    <div class="ss-text">
-                        <strong>Cari E-Card Peserta</strong>
-                        <span>Klik di sini untuk cek ID & Sertifikat</span>
-                    </div>
-                    <i data-lucide="chevron-right" class="ss-arrow"></i>
-                </div>
 
                 <!-- UPCOMING EVENTS CAROUSEL -->
                 <div class="section-header">
@@ -173,49 +164,7 @@
                 </div>
             </section>
 
-            <!-- E-CARD VIEW (SEARCH) -->
-            <section id="ecardView" class="view-section" style="display: none;">
-                <!-- SEARCH HEADER -->
-                <div class="section-intro" style="margin-bottom: 1.5rem;">
-                    <h2 style="font-size: 1.4rem; font-weight: 850; margin-bottom: 0.5rem;">Cari E-Card Anda</h2>
-                    <p style="font-size: 0.85rem; color: var(--text-muted);">Temukan Kartu Peserta dan akses Sertifikat
-                        Webinar Anda di sini.</p>
-                </div>
-
-                <div class="search-container-box">
-                    <div class="search-input-wrapper">
-                        <i data-lucide="mail" class="si-icon"></i>
-                        <input type="email" id="emailSearch" placeholder="Ketik alamat email Anda..."
-                            autocomplete="email">
-                    </div>
-                    <button id="searchBtn" class="search-action-btn">
-                        <i data-lucide="search" size="18"></i>
-                        <span>Cari</span>
-                    </button>
-                </div>
-
-                <div class="stats-row"
-                    style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
-                    <div class="participant-badge">
-                        <i data-lucide="verified" size="14"></i>
-                        <span id="totalStats">Memuat...</span>
-                    </div>
-                    <div class="support-badge" onclick="switchView('home')"
-                        style="font-size: 0.72rem; color: var(--primary); font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 0.4rem;">
-                        <i data-lucide="info" size="14"></i>
-                        <span>Butuh Bantuan?</span>
-                    </div>
-                </div>
-
-                <div id="skeletonLoader" class="skeleton-card" style="display: none;">
-                    <div class="s-header"></div>
-                    <div class="s-line"></div>
-                    <div class="s-line"></div>
-                    <div class="s-line short"></div>
-                </div>
-
-            <!-- ECARD VIEW (MOVED TO PROFILE) -->
-            <section id="ecardView" class="view-section" style="display: none;"></section>
+            </section>
 
             <!-- RESOURCE CENTER VIEW -->
             <section id="materiView" class="view-section">

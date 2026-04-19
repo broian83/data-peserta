@@ -2007,18 +2007,50 @@ main { padding: 1.5rem 1.25rem 8rem 1.25rem; flex: 1; }
     box-shadow: 0 10px 30px rgba(0,0,0,0.05);
 }
 
-.advanced-add-card input[type="text"] {
-    border: none;
-    background: #f1f5f9;
-    padding: 1.1rem 1.25rem;
-    border-radius: 1rem;
-    font-size: 1rem;
-    outline: none;
-    color: var(--text-main);
-    width: 100%;
-    box-sizing: border-box;
-    margin-bottom: 0.2rem;
+.advanced-add-card input[type="text"]:focus {
+    background: #fff;
+    border: 1px solid var(--primary);
+    box-shadow: 0 0 0 4px rgba(0, 181, 165, 0.05);
 }
+
+/* QUICK TAGS */
+.quick-tags-scroll {
+    overflow-x: auto;
+    scrollbar-width: none;
+    margin: 0 -0.25rem;
+}
+.quick-tags-scroll::-webkit-scrollbar { display: none; }
+
+.quick-tags-list {
+    display: flex;
+    gap: 0.6rem;
+    padding: 0.2rem 0.5rem;
+}
+
+.tag-chip {
+    background: white;
+    border: 1px solid #e2e8f0;
+    padding: 0.5rem 0.8rem;
+    border-radius: 2rem;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--text-main);
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.tag-chip i { width: 12px; height: 12px; color: var(--primary); }
+
+.tag-chip:active {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+}
+.tag-chip:active i { color: white; }
 
 .add-options-row {
     display: flex;

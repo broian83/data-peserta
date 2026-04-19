@@ -174,6 +174,14 @@ window.handleTaskSearch = (val) => {
     renderTasks();
 };
 
+window.setQuickTask = (text) => {
+    const input = document.getElementById('newTaskInput');
+    if (input) {
+        input.value = text;
+        input.focus();
+    }
+};
+
 window.filterTasks = (category, btn) => {
     currentTaskFilter = category;
     

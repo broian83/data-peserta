@@ -1970,7 +1970,7 @@ main { padding: 1.5rem 1.25rem 8rem 1.25rem; flex: 1; }
 
 .quick-add-task-card button:hover { background: #009688; transform: translateY(-2px); }
 
-/* ADVANCED TASK UI - REFINED */
+/* ADVANCED TASK UI - MOBILE OPTIMIZED (VERTICAL STACK) */
 .advanced-add-card {
     background: var(--bg-card);
     border: 1px solid var(--border-color);
@@ -1979,84 +1979,76 @@ main { padding: 1.5rem 1.25rem 8rem 1.25rem; flex: 1; }
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.03);
-    position: relative;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
 }
 
 .advanced-add-card input[type="text"] {
     border: none;
-    background: #f8fafc;
-    padding: 1rem 1.2rem;
-    border-radius: 1rem;
-    font-size: 0.95rem;
+    background: #f1f5f9;
+    padding: 1.1rem 1.25rem;
+    border-radius: 1.2rem;
+    font-size: 1rem;
     outline: none;
     color: var(--text-main);
     width: 100%;
+    box-sizing: border-box;
 }
 
 .add-options-row {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Dua kolom sejajar */
     gap: 0.75rem;
-    align-items: center;
     width: 100%;
 }
 
 .opt-group {
-    background: #f8fafc;
-    padding: 0.6rem 0.8rem;
+    background: #f1f5f9;
+    padding: 0.75rem 1rem;
     border-radius: 1rem;
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    flex: 2; /* Biarkan area input lebih lebar */
+    gap: 0.6rem;
     min-height: 48px;
+    box-sizing: border-box;
 }
 
-.opt-group.cat-group { flex: 1; }
-
 .opt-group i { 
-    width: 16px; 
-    height: 16px; 
+    width: 18px; 
+    height: 18px; 
     color: var(--primary);
-    opacity: 0.8;
 }
 
 .opt-group select, .opt-group input {
     background: transparent;
     border: none;
     outline: none;
-    font-size: 0.8rem;
-    font-weight: 600;
+    font-size: 0.85rem;
+    font-weight: 700;
     color: var(--text-main);
     width: 100%;
-    font-family: inherit; /* Pastikan font tetap harmonis */
-}
-
-/* Hilangkan styling default datetime yang jelek di beberapa browser */
-.opt-group input[type="datetime-local"] {
-    appearance: none;
-    cursor: pointer;
+    font-family: inherit;
 }
 
 .btn-primary-add {
     background: var(--primary);
     color: white;
     border: none;
-    width: 48px;
-    height: 48px;
-    border-radius: 1rem;
+    width: 100%; /* Lebar penuh di bawah */
+    padding: 1rem;
+    border-radius: 1.2rem;
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 0.5rem;
     cursor: pointer;
-    flex-shrink: 0;
+    font-weight: 800;
+    font-size: 1rem;
     transition: var(--transition);
-    box-shadow: 0 4px 12px rgba(0, 181, 165, 0.3);
+    box-shadow: 0 6px 20px rgba(0, 181, 165, 0.2);
 }
 
-.btn-primary-add:hover {
-    transform: scale(1.05);
-    background: #009688;
+.btn-primary-add:active {
+    transform: scale(0.98);
 }
 
 .task-meta-info {

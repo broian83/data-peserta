@@ -28,11 +28,12 @@ export const taskView = `
                 </div>
             </div>
 
-            <!-- REFINED QUICK ADD TASK -->
+            <!-- MOBILE-OPTIMIZED QUICK ADD TASK (VERTICAL) -->
             <div class="advanced-add-card" style="margin-top: 1.5rem;">
                 <input type="text" id="newTaskInput" placeholder="Tulis tugas baru (misal: Coding 10 RM)...">
+                
                 <div class="add-options-row">
-                    <div class="opt-group cat-group">
+                    <div class="opt-group">
                         <i data-lucide="tag"></i>
                         <select id="taskCategorySelect">
                             <option value="normal">Normal</option>
@@ -44,8 +45,11 @@ export const taskView = `
                         <i data-lucide="calendar"></i>
                         <input type="datetime-local" id="taskDateInput">
                     </div>
-                    <button onclick="window.addTask()" class="btn-primary-add"><i data-lucide="plus"></i></button>
                 </div>
+
+                <button onclick="window.addTask()" class="btn-primary-add">
+                    <i data-lucide="plus"></i> Tambah Tugas
+                </button>
             </div>
 
             <!-- FILTER TABS -->

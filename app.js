@@ -173,7 +173,13 @@ window.filterTasks = (category, btn) => {
     if (btn) btn.classList.add('active');
 
     // Update Title
-    const titles = { 'all': 'Daftar Tugas', 'urgent': 'Tugas Mendesak', 'normal': 'Tugas Normal', 'routine': 'Tugas Rutin' };
+    const titles = { 
+        'all': 'Daftar Tugas', 
+        'urgent': 'Tugas Mendesak', 
+        'normal': 'Tugas Normal', 
+        'routine': 'Tugas Rutin',
+        'completed': 'Riwayat Selesai' 
+    };
     const titleEl = document.getElementById('currentFilterTitle');
     if (titleEl) titleEl.textContent = titles[category];
 
@@ -227,15 +233,22 @@ function renderTasks() {
     if (!container) return;
 
     let filteredTasks = myTasks;
-    if (currentTaskFilter !== 'all') {
-        filteredTasks = myTasks.filter(t => t.category === currentTaskFilter);
+    if (currentTaskFilter === 'completed') {
+        filteredTasks = myTasks.filter(t => t.completed);
+    } else if (currentTaskFilter !== 'all') {
+        filteredTasks = myTasks.filter(t => t.category === currentTaskFilter && !t.completed);
+    } else {
+        // Mode "Semua" tapi sembunyikan yang sudah selesai agar tidak menumpuk di view utama?
+        // Atau biarkan tapi yang selesai di bawah?
+        // Saya pilih: "Semua" hanya menampilkan yang belum selesai, "Selesai" untuk riwayat.
+        filteredTasks = myTasks.filter(t => !t.completed);
     }
 
     if (filteredTasks.length === 0) {
         container.innerHTML = `
             <div class="empty-state-tasks">
-                <i data-lucide="list-todo"></i>
-                <p>Tidak ada tugas ${currentTaskFilter === 'all' ? '' : 'kategori ini'}.</p>
+                <i data-lucide="${currentTaskFilter === 'completed' ? 'check-circle' : 'list-todo'}"></i>
+                <p>${currentTaskFilter === 'completed' ? 'Belum ada riwayat tugas selesai.' : 'Tidak ada tugas kategori ini.'}</p>
             </div>
         `;
     } else {

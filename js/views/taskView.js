@@ -37,20 +37,23 @@ export const taskView = `
                 </div>
             </div>
 
-            <!-- FILTER TABS -->
+            <!-- FILTER TABS WITH HISTORY -->
             <div class="task-filters-scroll">
                 <div class="task-filter-tabs">
                     <button class="filter-tab active" onclick="window.filterTasks('all', this)">Semua</button>
                     <button class="filter-tab" onclick="window.filterTasks('urgent', this)">Urgent</button>
                     <button class="filter-tab" onclick="window.filterTasks('normal', this)">Normal</button>
                     <button class="filter-tab" onclick="window.filterTasks('routine', this)">Routine</button>
+                    <button class="filter-tab history-tab" onclick="window.filterTasks('completed', this)">
+                        <i data-lucide="history"></i> Selesai
+                    </button>
                 </div>
             </div>
 
             <div class="section-header" style="margin-top: 1rem;">
                 <h3 id="currentFilterTitle">Daftar Tugas Anda</h3>
-                <button class="btn-clear-tasks" onclick="window.clearFinishedTasks()" title="Hapus yang selesai">
-                    <i data-lucide="trash-2"></i>
+                <button class="btn-clear-tasks" onclick="window.clearFinishedTasks()" title="Hapus Permanen yang selesai">
+                    <i data-lucide="trash-2"></i> Hapus Semua
                 </button>
             </div>
 
@@ -60,7 +63,7 @@ export const taskView = `
 
             <div class="task-quote">
                 <i data-lucide="quote"></i>
-                <p id="dynamicQuote">"Satu berkas yang lengkap adalah awal dari pelayanan yang hebat."</p>
+                <p id="dynamicQuote">"Efisiensi adalah melakukan hal dengan benar. Efektivitas adalah melakukan hal yang benar."</p>
             </div>
         </div>
     </section>

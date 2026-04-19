@@ -1088,14 +1088,14 @@ main { padding: 1.5rem 1.25rem 8rem 1.25rem; flex: 1; }
 }
 .btn-action {
     width: 100%; display: flex; align-items: center; justify-content: center;
-    gap: 0.85rem; padding: 1.15rem; border-radius: 1.5rem;
-    font-size: 1rem; font-weight: 850; cursor: pointer;
+    gap: 0.75rem; padding: 0.85rem 1.25rem; border-radius: 1.15rem;
+    font-size: 0.95rem; font-weight: 850; cursor: pointer;
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     border: none;
 }
 .primary-action {
-    background: #1e293b; color: white;
-    box-shadow: 0 15px 30px -10px rgba(30, 41, 59, 0.3);
+    background: var(--primary); color: white;
+    box-shadow: 0 10px 20px -5px rgba(0, 181, 165, 0.3);
 }
 .secondary-action {
     background: #ffffff; color: #1e293b;

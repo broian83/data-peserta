@@ -937,7 +937,7 @@ function renderECard() {
             </div>
         </div>
         
-        <div class="actions-row" style="padding: 0; margin-top: 1.5rem; margin-bottom: 2rem;">
+        <div class="actions-row" style="margin-top: 1.5rem; margin-bottom: 2rem;">
             <button class="btn-action primary-action" onclick="event.stopPropagation(); downloadProfileCard()">
                 <i data-lucide="download"></i>
                 Simpan Kartu (Gambar)

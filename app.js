@@ -642,8 +642,30 @@ function checkAuth() {
 }
 
 window.toggleAuthMode = (mode) => {
-    document.getElementById('loginForm').style.display = mode === 'login' ? 'block' : 'none';
-    document.getElementById('registerForm').style.display = mode === 'register' ? 'block' : 'none';
+    const loginForm = document.getElementById('loginForm');
+    const registerForm = document.getElementById('registerForm');
+    if (mode === 'login') {
+        registerForm.style.display = 'none';
+        loginForm.style.display = 'block';
+        loginForm.style.animation = 'authFadeIn 0.4s ease';
+    } else {
+        loginForm.style.display = 'none';
+        registerForm.style.display = 'block';
+        registerForm.style.animation = 'authFadeIn 0.4s ease';
+    }
+    if (window.lucide) window.lucide.createIcons();
+};
+
+window.togglePasswordVisibility = (btn) => {
+    const input = btn.parentElement.querySelector('input');
+    if (input.type === 'password') {
+        input.type = 'text';
+        btn.innerHTML = '<i data-lucide="eye-off"></i>';
+    } else {
+        input.type = 'password';
+        btn.innerHTML = '<i data-lucide="eye"></i>';
+    }
+    if (window.lucide) window.lucide.createIcons();
 };
 
 window.handleLogin = () => {
@@ -659,7 +681,7 @@ window.handleRegister = () => {
     showToast('Mendaftarkan Akun...', 'info');
     setTimeout(() => {
         showToast('Pendaftaran Berhasil! Silakan Masuk.', 'success');
-        toggleAuthMode('login');
+        window.toggleAuthMode('login');
     }, 1500);
 };
 

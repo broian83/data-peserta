@@ -62,167 +62,12 @@
         </header>
 
         <!-- MAIN VIEWS -->
-        <main>
-            <!-- HOME VIEW -->
-            <section id="homeView" class="view-section active">
-                <div class="hero-banner">
-                    <div class="hero-content">
-                        <div class="hero-top-info">
-                            <span id="currentDate" class="date-badge">Memuat Tanggal...</span>
-                        </div>
-                        <h2 id="greetingText">Halo, PMIK PMIK! 👋</h2>
-                        <p>Wujudkan digitalisasi kesehatan yang akurat dan profesional bersama PORMIKI.</p>
-                    </div>
-                </div>
-
-
-
-                <!-- UPCOMING EVENTS CAROUSEL -->
-                <div class="section-header">
-                    <h3>Agenda Mendatang</h3>
-                    <a href="https://lms.kemkes.go.id" target="_blank" rel="noopener noreferrer" class="see-all">Ke LMS</a>
-                </div>
-                <div class="event-carousel">
-                    <!-- Webinar 1 -->
-                    <a href="https://lms.kemkes.go.id/courses/46646913-62a7-434c-bf75-18557d7ccfbe" target="_blank" rel="noopener noreferrer"
-                        class="event-card">
-                        <div class="event-tag">WEBINAR</div>
-                        <img src="https://be-lms.kemkes.go.id/v1/view?path=gp/uploads/images/1776327382645-fcf9ca20-7c7c-408e-96ec-7581cf1388a3.jpg"
-                            alt="Poster webinar PMIK sebagai Health Data Analyst" loading="lazy">
-                        <div class="event-info">
-                            <strong>PMIK sebagai Health Data Analyst</strong>
-                            <span>Daftar melalui LMS Kemkes</span>
-                        </div>
-                    </a>
-                    <!-- Webinar 2 -->
-                    <a href="https://lms.kemkes.go.id/courses/a79f23f4-78d6-408e-a7a5-b3722b356d2a" target="_blank" rel="noopener noreferrer"
-                        class="event-card">
-                        <div class="event-tag">WEBINAR</div>
-                        <img src="https://be-lms.kemkes.go.id/v1/view?path=gp/uploads/images/1774846479631-79637f30-e1b0-4d7a-abe9-bc04c6b95e80.jpeg"
-                            alt="Poster webinar Penguatan Komunikasi Profesional" loading="lazy">
-                        <div class="event-info">
-                            <strong>Penguatan Komunikasi Profesional</strong>
-                            <span>Daftar melalui LMS Kemkes</span>
-                        </div>
-                    </a>
-                </div>
-
-                <div class="info-grid">
-                    <div class="info-card" onclick="alert('Panduan Etika sedang dalam pembaruan')">
-                        <div class="ic-icon"><i data-lucide="shield-check"></i></div>
-                        <h4>Etika Profesi</h4>
-                        <p>Panduan perilaku PMIK.</p>
-                    </div>
-                    <div class="info-card" onclick="alert('Detail STR sedang dalam pembaruan')">
-                        <div class="ic-icon gold"><i data-lucide="award"></i></div>
-                        <h4>STR & SKP</h4>
-                        <p>Update tata cara LMS.</p>
-                    </div>
-                </div>
-
-                <!-- RESOURCE CENTER -->
-                <div class="resource-section">
-                    <h3>Pusat Unduhan (PDF)</h3>
-                    <div class="resource-list">
-                        <!-- Dokumen 1 -->
-                        <div class="resource-item">
-                            <div class="res-icon"><i data-lucide="file-text"></i></div>
-                            <div class="res-body">
-                                <strong>PMK 24/2022 (Rekam Medis)</strong>
-                                <span>Peraturan Menteri Kesehatan</span>
-                            </div>
-                            <a href="https://peraturan.bpk.go.id/Download/301563/Permenkes%20Nomor%2024%20Tahun%202022.pdf"
-                                target="_blank" rel="noopener noreferrer" class="res-btn">
-                                <i data-lucide="download"></i>
-                            </a>
-                        </div>
-
-                        <!-- Dokumen 2 -->
-                        <div class="resource-item">
-                            <div class="res-icon"><i data-lucide="award"></i></div>
-                            <div class="res-body">
-                                <strong>Pedoman Pemenuhan SKP</strong>
-                                <span>Petunjuk Pengelolaan SKP</span>
-                            </div>
-                            <a href="https://www.ipkindonesia.or.id/media/2025/03/KMK-HK-0107-1561-2024-Pedoman-Pengelolaan-Pemenuhan-Kecukupan-SKP-Tenaga-Medis-dan-Tenaga-Kesehatan.pdf"
-                                target="_blank" rel="noopener noreferrer" class="res-btn">
-                                <i data-lucide="download"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="quick-links" style="margin-top: 1rem;">
-                    <a href="https://pormiki.or.id" target="_blank" rel="noopener noreferrer" class="q-link">
-                        <i data-lucide="layout"></i>
-                        <span>Website DPP</span>
-                    </a>
-                    <a href="https://lms.kemkes.go.id" target="_blank" rel="noopener noreferrer" class="q-link">
-                        <i data-lucide="graduation-cap"></i>
-                        <span>LMS Kemkes</span>
-                    </a>
-                </div>
-            </section>
-
-
-            <!-- RESOURCE CENTER VIEW -->
-            <section id="materiView" class="view-section">
-                <div class="section-intro" style="margin-bottom: 1.5rem;">
-                    <h2 style="font-size: 1.4rem; font-weight: 850; margin-bottom: 0.5rem;">Pusat Materi</h2>
-                    <p style="font-size: 0.85rem; color: var(--text-muted);">Unduh file presentasi, video, dan dokumen resmi webinar.</p>
-                </div>
-
-                <div class="search-container-box">
-                    <div class="search-input-wrapper">
-                        <i data-lucide="search" class="si-icon"></i>
-                        <input type="text" id="materiSearch" placeholder="Cari materi atau pembicara...">
-                    </div>
-                </div>
-
-                <div class="materi-filters">
-                    <button class="filter-chip active" onclick="updateMateriFilter('all', this)">Semua</button>
-                    <button class="filter-chip" onclick="updateMateriFilter('PDF', this)">PDF</button>
-                    <button class="filter-chip" onclick="updateMateriFilter('PPTX', this)">PowerPoint</button>
-                    <button class="filter-chip" onclick="updateMateriFilter('VIDEO', this)">Video</button>
-                </div>
-
-                <div class="materi-list" id="materiList">
-                    <!-- Materi akan diisi via JS -->
-                </div>
-            </section>
-
-            <!-- PROFILE VIEW -->
-            <section id="profileView" class="view-section">
-                <!-- DIGITAL CARD SECTION IN PROFILE -->
-                <div class="section-header" style="margin: 0 0 1rem 0; padding-top: 1rem;">
-                    <h3>Identitas Digital</h3>
-                </div>
-                
-                <div id="profileECardArea">
-                    <!-- E-Card akan di-render di sini -->
-                </div>
-
-                <div class="profile-menu-list">
-                    <p class="menu-group-label">Pengaturan Akun</p>
-                    <a href="#" class="profile-menu-item">
-                        <div class="p-icon blue"><i data-lucide="edit-3"></i></div>
-                        <span>Edit Profil Pribadi</span>
-                        <i data-lucide="chevron-right"></i>
-                    </a>
-                    <a href="#" class="profile-menu-item">
-                        <div class="p-icon pink"><i data-lucide="lock"></i></div>
-                        <span>Ubah Kata Sandi</span>
-                        <i data-lucide="chevron-right"></i>
-                    </a>
-                    
-                    <p class="menu-group-label">Lainnya</p>
-                    <a href="#" class="profile-menu-item logout" onclick="showToast('Logout Berhasil', 'success')">
-                        <div class="p-icon red"><i data-lucide="log-out"></i></div>
-                        <span>Keluar Akun</span>
-                        <i data-lucide="chevron-right"></i>
-                    </a>
-                </div>
-            </section>
+        <main id="mainContent">
+            <!-- Modular Views are injected here via app.js -->
+            <div class="loading-state-modular" style="text-align: center; padding: 5rem 2rem;">
+                <div class="spinner-premium"></div>
+                <p style="margin-top: 1rem; color: var(--text-muted); font-weight: 600;">Menyiapkan Dashboard...</p>
+            </div>
         </main>
 
         <!-- BOTTOM NAVIGATION -->
@@ -280,8 +125,7 @@
         </div>
     </div>
 
-    <script src="app.js"></script>
-    <script>lucide.createIcons();</script>
+    <script type="module" src="app.js"></script>
 </body>
 
 </html>

@@ -1,3 +1,7 @@
+import { homeView } from './js/views/homeView.js';
+import { materiView } from './js/views/materiView.js';
+import { profileView } from './js/views/profileView.js';
+
 let participants = [];
 let currentMateriCategory = 'all';
 let materiLimit = 4; // Tampilkan 4 materi awal
@@ -661,6 +665,12 @@ window.downloadProfileCard = () => {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
+    // Inject Modular Views
+    const mainContent = document.getElementById('mainContent');
+    if (mainContent) {
+        mainContent.innerHTML = homeView + materiView + profileView;
+    }
+
     loadData();
     window.switchView = switchView;
     updateHomeInfo();

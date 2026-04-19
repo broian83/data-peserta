@@ -1,5 +1,6 @@
 let participants = [];
 let currentMateriCategory = 'all';
+let materiLimit = 4; // Tampilkan 4 materi awal
 
 // Toast Notification System
 function showToast(message, type = 'info', duration = 4000) {
@@ -534,7 +535,10 @@ function renderMateri(filter = '', category = 'all') {
         (category === 'all' || m.type === category)
     );
 
-    if (filtered.length === 0) {
+    const totalResults = filtered.length;
+    const paginated = filtered.slice(0, materiLimit);
+
+    if (totalResults === 0) {
         list.innerHTML = `
             <div class="empty-state-mini">
                 <i data-lucide="search-x"></i>
@@ -542,7 +546,7 @@ function renderMateri(filter = '', category = 'all') {
             </div>
         `;
     } else {
-        list.innerHTML = filtered.map(m => `
+        let html = paginated.map(m => `
             <div class="materi-card-premium" style="--card-color: ${getTypeColor(m.type)}">
                 <div class="m-card-header">
                     <span class="m-badge">${m.category}</span>
@@ -569,9 +573,28 @@ function renderMateri(filter = '', category = 'all') {
                 </div>
             </div>
         `).join('');
+
+        if (totalResults > materiLimit) {
+            html += `
+                <div class="load-more-container">
+                    <button class="btn-load-more" onclick="loadMoreMateri()">
+                        Tampilkan Lebih Banyak (${totalResults - materiLimit})
+                        <i data-lucide="chevron-down"></i>
+                    </button>
+                </div>
+            `;
+        }
+
+        list.innerHTML = html;
     }
     if (window.lucide) window.lucide.createIcons();
 }
+
+window.loadMoreMateri = () => {
+    materiLimit += 4;
+    const searchVal = document.getElementById('materiSearch')?.value || '';
+    renderMateri(searchVal, currentMateriCategory);
+};
 
 function getTypeColor(type) {
     const colors = {
@@ -591,6 +614,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 2. VOICE TO AURA ENGINE
     window.updateMateriFilter = (category, btn) => {
         currentMateriCategory = category;
+        materiLimit = 4; // Reset limit saat filter berubah
         
         // Update UI chips
         document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));

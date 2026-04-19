@@ -310,9 +310,20 @@ function renderTasks() {
             let dateText = task.dueDate || 'Tanpa Limit';
 
             if (dateObj) {
-                if (diffDays === 0) { dateText = 'HARI INI'; dateClass = 'due-today'; }
-                else if (diffDays < 0) { dateText = 'TERLAMBAT'; dateClass = 'overdue'; }
-                else if (diffDays === 1) { dateText = 'BESOK'; }
+                const now = new Date();
+                const isOverdue = dateObj < now;
+                const isToday = dateObj.toDateString() === now.toDateString();
+
+                const options = { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' };
+                dateText = dateObj.toLocaleString('id-ID', options);
+
+                if (isOverdue && !task.completed) { 
+                    dateClass = 'overdue'; 
+                    dateText = 'TERLAMBAT (' + dateText + ')';
+                } else if (isToday && !task.completed) { 
+                    dateClass = 'due-today'; 
+                    dateText = 'HARI INI (' + dateText.split(',')[1].trim() + ')';
+                }
             }
 
             return `
@@ -1174,8 +1185,13 @@ document.addEventListener('DOMContentLoaded', () => {
         // Set default date for task input
         const dateInput = document.getElementById('taskDateInput');
         if (dateInput) {
-            const today = new Date().toISOString().split('T')[0];
-            dateInput.value = today;
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            dateInput.value = `${year}-${month}-${day}T${hours}:${minutes}`;
         }
     }
 

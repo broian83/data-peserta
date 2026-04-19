@@ -24,18 +24,11 @@ export const taskView = `
                     <span id="totalWeeklyDone">0 Tugas Selesai</span>
                 </div>
                 <div class="mini-bar-chart" id="weeklyChartContainer">
-                    <!-- Day bars will be injected here -->
-                    <div class="chart-day"><div class="bar-fill" style="height: 20%"></div><span>Sen</span></div>
-                    <div class="chart-day"><div class="bar-fill" style="height: 50%"></div><span>Sel</span></div>
-                    <div class="chart-day"><div class="bar-fill" style="height: 80%"></div><span>Rab</span></div>
-                    <div class="chart-day"><div class="bar-fill" style="height: 40%"></div><span>Kam</span></div>
-                    <div class="chart-day"><div class="bar-fill" style="height: 10%"></div><span>Jum</span></div>
-                    <div class="chart-day"><div class="bar-fill" style="height: 60%"></div><span>Sab</span></div>
-                    <div class="chart-day"><div class="bar-fill" style="height: 30%"></div><span>Min</span></div>
+                    <!-- Day bars injected here -->
                 </div>
             </div>
 
-            <!-- SOPHISTICATED QUICK ADD TASK -->
+            <!-- QUICK ADD TASK WITH DATE & TIME -->
             <div class="advanced-add-card" style="margin-top: 1.5rem;">
                 <input type="text" id="newTaskInput" placeholder="Tulis tugas baru (misal: Coding 10 RM)...">
                 <div class="add-options-row">
@@ -48,8 +41,8 @@ export const taskView = `
                         </select>
                     </div>
                     <div class="opt-group">
-                        <i data-lucide="calendar"></i>
-                        <input type="date" id="taskDateInput">
+                        <i data-lucide="clock"></i>
+                        <input type="datetime-local" id="taskDateInput">
                     </div>
                     <button onclick="window.addTask()" class="btn-primary-add"><i data-lucide="plus"></i></button>
                 </div>
@@ -70,7 +63,7 @@ export const taskView = `
 
             <div class="section-header" style="margin-top: 1rem;">
                 <h3 id="currentFilterTitle">Daftar Tugas Anda</h3>
-                <button class="btn-clear-tasks" onclick="window.clearFinishedTasks()" title="Hapus Permanen yang selesai">
+                <button class="btn-clear-tasks" onclick="window.clearFinishedTasks()" title="Hapus yang selesai">
                     <i data-lucide="trash-2"></i> Hapus Semua
                 </button>
             </div>
